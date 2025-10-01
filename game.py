@@ -1,10 +1,14 @@
-from db import yhteys  # import the connection from db.py
+from db import yhteys
 
-def lentoasema():
-    sql = "SELECT count(*) FROM game_airports"
-    kursori = yhteys.cursor()
-    kursori.execute(sql)
-    tulos = kursori.fetchall()
-    return tulos
+def get_count_game():
+    sql = ""
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    print(result)
+    return result
 
-print(lentoasema())
+
+
+
+
