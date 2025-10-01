@@ -21,7 +21,30 @@ def loggin():
     kursori.execute(sql)
     count = kursori.fetchone()[0]  
 
-    if count == 0:
+    while count != 0:
+         
+        print("This name already exists in the darabase")
+        print("Try amother name")
+
+        name = input('Give me your name: ')
+
+        sql = f"SELECT COUNT(*) FROM players WHERE user_name = '{name}';"
+        kursori = yhteys.cursor()
+        kursori.execute(sql)
+        count = kursori.fetchone()[0]
+
+    sql = f"SELECT ident FROM game_airports ORDER BY RAND() LIMIT 1;"
+    kursori = yhteys.cursor()
+    kursori.execute(sql)
+    ident = kursori.fetchone()[0]  
+
+    sql = f"SELECT COUNT(*) FROM players WHERE starting_airport = '{ident}';"
+    kursori = yhteys.cursor()
+    kursori.execute(sql)
+    count_airport = kursori.fetchone()[0] 
+
+    while count_airport != 0:
+
         sql = f"SELECT ident FROM game_airports ORDER BY RAND() LIMIT 1;"
         kursori = yhteys.cursor()
         kursori.execute(sql)
@@ -30,35 +53,16 @@ def loggin():
         sql = f"SELECT COUNT(*) FROM players WHERE starting_airport = '{ident}';"
         kursori = yhteys.cursor()
         kursori.execute(sql)
-        count_airport = kursori.fetchone()[0] 
+        count_airport = kursori.fetchone()[0]
 
-        while count_airport != 0:
-
-            print(ident)
-
-            sql = f"SELECT ident FROM game_airports ORDER BY RAND() LIMIT 1;"
-            kursori = yhteys.cursor()
-            kursori.execute(sql)
-            ident = kursori.fetchone()[0]  
-
-            sql = f"SELECT COUNT(*) FROM players WHERE starting_airport = '{ident}';"
-            kursori = yhteys.cursor()
-            kursori.execute(sql)
-            count_airport = kursori.fetchone()[0]
-
-            print("Airport already has a pilot")   
-
-            print(ident)
-
-        sql = f"INSERT INTO players (user_name, starting_airport) VALUES ('{name}','{ident}');"
-        kursori = yhteys.cursor()
-        kursori.execute(sql)
-        yhteys.commit()
-    
-    else:
-        print("Already exists")
+    sql = f"INSERT INTO players (user_name, starting_airport) VALUES ('{name}','{ident}');"
+    kursori = yhteys.cursor()
+    kursori.execute(sql)
+    yhteys.commit()
 
     return 
+
+loggin()
 
 # -------------------------------------------------------------------------------------------------------
 
