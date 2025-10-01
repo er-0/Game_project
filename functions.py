@@ -1,4 +1,5 @@
 import mysql.connector
+import sys
 
 yhteys = mysql.connector.connect(
     host='127.0.0.1',
@@ -60,9 +61,7 @@ def loggin():
     kursori.execute(sql)
     yhteys.commit()
 
-    return 
-
-loggin()
+    return name
 
 # -------------------------------------------------------------------------------------------------------
 
@@ -77,30 +76,89 @@ def player_information(name):
     
     return users_information
 
-name = input('Give me your name: ')
+# name = input('Give me your name: ')
 
-users_information = player_information(name)
+# users_information = player_information(name)
 
-for user_information in users_information:
-        airport_name, airport_continent, airport_municipality, airport_country = user_information
+# for user_information in users_information:
+#         airport_name, airport_continent, airport_municipality, airport_country = user_information
 
-print(airport_name)
-print(airport_continent)
-print(airport_municipality)
-print(airport_country)
+# print(airport_name)
+# print(airport_continent)
+# print(airport_municipality)
+# print(airport_country)
 
 # -----------------------------------------------------------------------------------------------------
 
-# print("Hello player! Have you played before:" \
-# "If yes select 1" \
-# "If no select 2")
+print("Hello player!\n" \
+"This is our pilot simulator game\n" \
+"Have you played before:\n" \
+"1 - Yes, I have played before\n" \
+"2 - No, I am a new player\n")
 
-# yes_no = int(input('Give your answer: '))
+yes_no = int(input('Give your answer: '))
 
-# if yes_no == 1:
-#     print("Yes")
-# elif yes_no == 2:
-#     print("You need to register as a new pilot")
-#     print("Select a unique name for yourself")
+if yes_no == 1:
+    
+    user_name = input('Lets find your pilot liscence. Give us you pilot name: ')
 
-#     loggin()
+    sql = f"SELECT COUNT(*) FROM players WHERE user_name = '{user_name}';"
+    kursori = yhteys.cursor()
+    kursori.execute(sql)
+    count = kursori.fetchone()[0]
+
+    tries = 0
+
+    while count == 0:
+
+        tries = tries + 1
+
+        if tries <= 3:
+            print("There is no such name in the table")
+            print("Maybe you got it wrong. Try again")
+
+            user_name = input('Lets find your pilot liscence. Give us you pilot name: ')
+
+            sql = f"SELECT COUNT(*) FROM players WHERE user_name = '{user_name}';"
+            kursori = yhteys.cursor()
+            kursori.execute(sql)
+            count = kursori.fetchone()[0]
+        
+        if tries > 3:
+            print("You have axceeded the amount of tries")
+            print("You are not registered as a pilot in our database")
+            print("Do you want to register as a new pilot? or exit game.")
+            print("1 - register as a new pilot" \
+            "2 - exit game")
+
+            decision = int(input('Give me your coice: '))
+
+            if decision == 1:
+                user_name = loggin()
+                print("Global user name is " + user_name)
+
+                count = 1
+
+                break
+
+            elif decision == 2:
+                sys.exit()
+
+    users_information = player_information(user_name)
+
+    for user_information in users_information:
+        airport_name, airport_continent, airport_municipality, airport_country = user_information
+
+    print(airport_name)
+    print(airport_continent)
+    print(airport_municipality)
+    print(airport_country)
+            
+            
+elif yes_no == 2:
+    print("You need to register as a new pilot")
+    print("Select a unique name for yourself")
+
+    loggin()
+
+
