@@ -1,10 +1,6 @@
 from db import yhteys  # import the connection from db.py
+import count_game
 
-def lentoasema():
-    sql = "SELECT count(*) FROM game_airports"
-    kursori = yhteys.cursor()
-    kursori.execute(sql)
-    tulos = kursori.fetchall()
-    return tulos
+count_game()
 
 print(lentoasema())
