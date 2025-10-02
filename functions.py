@@ -1,21 +1,13 @@
-import mysql.connector
 import sys
 
-yhteys = mysql.connector.connect(
-    host='127.0.0.1',
-    port= 3306,
-    database='school_project',
-    user='elizavetazhogol',
-    password='HelloElizaveta!_2025',
-    autocommit=True
-    )
+from db import yhteys
 
 
 # Function to register users ---------------------------------------------------------------------------
 
 def loggin():
 
-    name = input('Give me your name: ')
+    name = input('\nGive me your name: ')
 
     sql = f"SELECT COUNT(*) FROM players WHERE user_name = '{name}';"
     kursori = yhteys.cursor()
@@ -24,10 +16,10 @@ def loggin():
 
     while count != 0:
          
-        print("This name already exists in the darabase")
-        print("Try amother name")
+        print("\nThis name already exists in the darabase")
+        print("\nTry amother name")
 
-        name = input('Give me your name: ')
+        name = input('\nGive me your name: ')
 
         sql = f"SELECT COUNT(*) FROM players WHERE user_name = '{name}';"
         kursori = yhteys.cursor()
@@ -69,24 +61,42 @@ def loggin():
 
 def player_information(name):
 
-    sql = f"SELECT a.name, a.continent, a.municipality, a.country_name FROM game_airports AS a INNER JOIN players AS p ON p.starting_airport = a.ident where p.user_name = '{name}';"
+    sql = f"SELECT a.ident, a.name, a.latitude_deg, a.longitude_deg, a.continent, a.municipality, a.country_name, p.id, p.games_played, p.last_game FROM game_airports AS a INNER JOIN players AS p ON p.starting_airport = a.ident where p.user_name = '{name}';"
     kursori = yhteys.cursor()
     kursori.execute(sql)
     users_information = kursori.fetchall()
     
     return users_information
 
-# name = input('Give me your name: ')
+# -----------------------------------------------------------------------------------------------------
 
-# users_information = player_information(name)
+# Fuction to create a new game ------------------------------------------------------------------------
 
-# for user_information in users_information:
-#         airport_name, airport_continent, airport_municipality, airport_country = user_information
+def create_game(player_id, airport_country):
 
-# print(airport_name)
-# print(airport_continent)
-# print(airport_municipality)
-# print(airport_country)
+    sql = f"SELECT ident FROM game_airports WHERE country_name != '{airport_country}' ORDER BY RAND() LIMIT 1;"
+    kursori = yhteys.cursor()
+    kursori.execute(sql)
+    goal_ident = kursori.fetchone()[0]
+
+    sql = f"INSERT INTO games (player_id, goal_airport) VALUES ('{player_id}','{goal_ident}') RETURNING game_id;"
+    kursori = yhteys.cursor()
+    kursori.execute(sql)
+    game_id = kursori.fetchone()[0]
+    yhteys.commit()
+
+    return game_id
+
+# -----------------------------------------------------------------------------------------------------
+
+# Function to fetch all information about player games ------------------------------------------------
+
+def game_information(id):
+
+
+
+    return
+
 
 # -----------------------------------------------------------------------------------------------------
 
@@ -114,10 +124,10 @@ if yes_no == 1:
         tries = tries + 1
 
         if tries <= 3:
-            print("There is no such name in the table")
-            print("Maybe you got it wrong. Try again")
+            print("\nThere is no such name in the table")
+            print("\nMaybe you got it wrong. Try again")
 
-            user_name = input('Lets find your pilot liscence. Give us you pilot name: ')
+            user_name = input('\nLets find your pilot liscence. Give us you pilot name: ')
 
             sql = f"SELECT COUNT(*) FROM players WHERE user_name = '{user_name}';"
             kursori = yhteys.cursor()
@@ -125,17 +135,17 @@ if yes_no == 1:
             count = kursori.fetchone()[0]
         
         if tries > 3:
-            print("You have axceeded the amount of tries")
-            print("You are not registered as a pilot in our database")
-            print("Do you want to register as a new pilot? or exit game.")
-            print("1 - register as a new pilot" \
-            "2 - exit game")
+            print("\nYou have axceeded the amount of tries")
+            print("\nYou are not registered as a pilot in our database")
+            print("\nDo you want to register as a new pilot? or exit game.")
+            print("\n1 - register as a new pilot" \
+            "\n2 - exit game")
 
-            decision = int(input('Give me your coice: '))
+            decision = int(input('\nGive me your coice: '))
 
             if decision == 1:
                 user_name = loggin()
-                print("Global user name is " + user_name)
+                print("\nGlobal user name is " + user_name)
 
                 count = 1
 
@@ -147,18 +157,41 @@ if yes_no == 1:
     users_information = player_information(user_name)
 
     for user_information in users_information:
-        airport_name, airport_continent, airport_municipality, airport_country = user_information
+        airport_ident, airport_name, latitude_deg, longitude_deg, airport_continent, airport_municipality, airport_country, player_id, games_played, last_game = user_information
 
     print(airport_name)
     print(airport_continent)
     print(airport_municipality)
     print(airport_country)
-            
-            
-elif yes_no == 2:
-    print("You need to register as a new pilot")
-    print("Select a unique name for yourself")
+    print(games_played)
 
-    loggin()
+    print(user_information)
+                   
+elif yes_no == 2:
+    print("\nYou need to register as a new pilot")
+    print("\nSelect a unique name for yourself")
+
+    user_name = loggin()
+
+    users_information = player_information(user_name)
+
+    for user_information in users_information:
+        airport_ident, airport_name, latitude_deg, longitude_deg, airport_continent, airport_municipality, airport_country, player_id, games_played, last_game = user_information
+
+    print(airport_name)
+    print(airport_continent)
+    print(airport_municipality)
+    print(airport_country)
+
+if last_game == 0:
+
+    print("\nNever played")
+    game_id = create_game(player_id, airport_country)
+    print(game_id)
+
+elif last_game != 0:
+
+    print("Played before")
+    print(last_game)
 
 

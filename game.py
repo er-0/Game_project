@@ -1,14 +1,4 @@
-from db import yhteys
+from db import yhteys  # import the connection from db.py
+import count_game
 
-def get_count_game():
-    sql = ""
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute(sql)
-    result = cursor.fetchall()
-    print(result)
-    return result
-
-
-
-
-
+count_game()
