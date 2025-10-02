@@ -93,9 +93,12 @@ def create_game(player_id, airport_country):
 
 def game_information(id):
 
+    sql = f"SELECT a.ident, a.name, a.latitude_deg, a.longitude_deg, a.continent, a.municipality, a.country_name, g.goal_airport, g.kilometers_traveled, g.score, g.level_reached from games as g LEFT JOIN game_airports AS a ON g.goal_airport = a.ident WHERE g.game_id = '{id}';"
+    kursori = yhteys.cursor()
+    kursori.execute(sql)
+    information = kursori.fetchall()
 
-
-    return
+    return information
 
 
 # -----------------------------------------------------------------------------------------------------
@@ -188,6 +191,15 @@ if last_game == 0:
     print("\nNever played")
     game_id = create_game(player_id, airport_country)
     print(game_id)
+
+    games_info = game_information(game_id)
+
+    for game_info in games_info:
+        goal_ident, goal_name, goal_latitude_deg, goal_longitude_deg, goal_continent, goal_municipality, goal_country_name, goal_airport, kilometers_traveled, score, level_reached = game_info
+
+    print("\nCurrent game info\n")
+
+    print(game_info) 
 
 elif last_game != 0:
 
