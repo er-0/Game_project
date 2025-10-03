@@ -155,6 +155,7 @@ if yes_no == 1:
                 break
 
             elif decision == 2:
+
                 sys.exit()
 
     users_information = player_information(user_name)
@@ -188,31 +189,66 @@ elif yes_no == 2:
 
 if last_game == 0:
 
-    print("\nNever played")
-    game_id = create_game(player_id, airport_country)
-    print(game_id)
+    print("You need to start a new game")
+    print("1 - Create a new game" \
+    "2 - Exit game")
 
-    games_info = game_information(game_id)
+    answer = int(input('Give me your answer: '))
 
-    for game_info in games_info:
-        goal_ident, goal_name, goal_latitude_deg, goal_longitude_deg, goal_continent, goal_municipality, goal_country_name, goal_airport, kilometers_traveled, score, level_reached = game_info
+    if answer == 1:
 
-    print("\nCurrent game info\n")
+        game_id = create_game(player_id, airport_country)
+        print(game_id)
 
-    print(game_info) 
+        games_info = game_information(game_id)
+
+        for game_info in games_info:
+            goal_ident, goal_name, goal_latitude_deg, goal_longitude_deg, goal_continent, goal_municipality, goal_country_name, goal_airport, kilometers_traveled, score, level_reached = game_info
+
+        print("\nCurrent game info\n")
+
+        print(game_info)
+
+    elif answer == 2:
+
+        sys.exit()     
 
 elif last_game != 0:
 
-    print("Played before")
-    print(last_game)
+    print("You have an unfinished game. Do you want to load game ar start a new game?")
+    print("1 - New game" \
+    "2 - Old" \
+    "3 - Exit")
 
-    print("\nLast game information\n")
+    answer = int(input("Give me your answer"))
 
-    games_info = game_information(last_game)
+    if answer == 1:
 
-    for game_info in games_info:
-        goal_ident, goal_name, goal_latitude_deg, goal_longitude_deg, goal_continent, goal_municipality, goal_country_name, goal_airport, kilometers_traveled, score, level_reached = game_info
+        game_id = create_game(player_id, airport_country)
+        print(game_id)
 
-    print("\nCurrent game info\n")
+        games_info = game_information(game_id)
 
-    print(game_info)
+        for game_info in games_info:
+            goal_ident, goal_name, goal_latitude_deg, goal_longitude_deg, goal_continent, goal_municipality, goal_country_name, goal_airport, kilometers_traveled, score, level_reached = game_info
+
+        print("\nCurrent game info\n")
+
+        print(game_info)
+
+    elif answer == 2:
+
+        print("\nLast game information\n")
+
+        games_info = game_information(last_game)
+
+        for game_info in games_info:
+            goal_ident, goal_name, goal_latitude_deg, goal_longitude_deg, goal_continent, goal_municipality, goal_country_name, goal_airport, kilometers_traveled, score, level_reached = game_info
+
+        print("\nCurrent game info\n")
+
+        print(game_info)
+    
+    elif answer == 3:
+
+        sys.exit()
