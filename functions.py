@@ -206,4 +206,13 @@ elif last_game != 0:
     print("Played before")
     print(last_game)
 
+    print("\nLast game information\n")
 
+    games_info = game_information(last_game)
+
+    for game_info in games_info:
+        goal_ident, goal_name, goal_latitude_deg, goal_longitude_deg, goal_continent, goal_municipality, goal_country_name, goal_airport, kilometers_traveled, score, level_reached = game_info
+
+    print("\nCurrent game info\n")
+
+    print(game_info)
