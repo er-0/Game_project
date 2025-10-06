@@ -117,6 +117,44 @@ def distance_in_kilometers(first_lat, first_long, second_lat, second_long):
 
 # -----------------------------------------------------------------------------------------------------
 
+# This will be the first game function ----------------------------------------------------------------
+
+def first_mini_game():
+
+    score = int(input('Give an outcome for the first game (0-100): '))
+
+    return score
+
+# -----------------------------------------------------------------------------------------------------
+
+# This will be the second game function ---------------------------------------------------------------
+
+def second_mini_game():
+
+    score = int(input('Give an outcome for the second game (0-100): '))
+
+    return score
+
+# -----------------------------------------------------------------------------------------------------
+
+# This will be the third game function ----------------------------------------------------------------
+
+def third_mini_game():
+
+    score = int(input('Give an outcome for the third game (0-100): '))
+
+    return score
+
+# -----------------------------------------------------------------------------------------------------
+
+# Function to update score and level of the player --------------------------------------------------------------
+
+def update_user_score():
+
+    return
+
+# -----------------------------------------------------------------------------------------------------
+
 # Get user name or create a new one
 
 print("Hello player!\n" \
@@ -289,7 +327,46 @@ if new_game == True:
 
     print(distance_in_kilometers(latitude_deg, longitude_deg, goal_latitude_deg, goal_longitude_deg))
 
-    # Here goes function for game 1
+    # Here the game actually begins
+
+    print("\nAre you ready to start the game?" \
+    "\n1 - Yes, I am ready!" \
+    "\n2 - No, I want to exit game!")
+
+    answer = int(input('Give me your answer: '))
+
+    if answer == 1:
+
+        # Game play for the first game 
+
+        score = first_mini_game()
+
+        print(score)
+
+        while score < 55:
+
+            print("\nYou lost. Not enough points")
+            print("Do you eant to try again or finish game?" \
+            "1 - Try again" \
+            "2 - Finish game")
+
+            answer = int(input('Give me your answer: '))
+
+            if answer == 1:
+
+                score = first_mini_game()
+            
+            elif answer == 2: 
+
+                sys.exit()
+                      
+    elif answer == 2:
+
+        sys.exit() 
+
+    # We finish the first game and now we update user information
+
+    
 
 
 elif new_game == False:
