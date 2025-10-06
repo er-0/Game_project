@@ -1,10 +1,19 @@
-from db import yhteys
+import mysql.connector
 import time
+
+yhteys = mysql.connector.connect(
+         host='127.0.0.1',
+         port= 3306,
+         database='school_project',
+         user='hanna',
+         password='hannevk',
+         autocommit=True
+         )
 
 print("Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! Voit saada lisää polttoainetta ratkaisemalla tämän pelin. Jos epäonnistut, joudut tekemään hätälaskun.")
 
 total_score = 0
-level = 2
+player_id = 2
 
 def get_tasks(cursor, level, limit):
     cursor.execute(
@@ -20,7 +29,7 @@ def update_player(cursor, db, player_id, points):
     )
     db.commit()
 
-def count_game(player_id=1):
+def count_game():
     db = yhteys
     cursor = db.cursor()
 
@@ -60,7 +69,8 @@ score_count_game =
 
 
     if points_count_game >=55:
-        print(f"Ilmatankkaus onnistui! Voit jatkaa lentoasi. Tämän pelin pistemääräsi on {score_count_game}. Kokonaistuloksesi on "{total_score}")
+        print(f"print(f"Ilmatankkaus onnistui! Voit jatkaa lentoasi. Tämän pelin pistemääräsi on {score_count_game}. Kokonaistuloksesi on {total_score}.")
+")
         update_player(cursor, db, pelaaja_id, total_score)
         choice = input("Haluatko jatkaa pelaamista?(Kyllä/Poistu)")
         if choice == 'Kyllä':
