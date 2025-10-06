@@ -163,6 +163,7 @@ if yes_no == 1:
             decision = int(input('\nGive me your coice: '))
 
             if decision == 1:
+
                 user_name = loggin()
                 print("\nGlobal user name is " + user_name)
 
@@ -208,11 +209,11 @@ elif yes_no == 2:
 
 if last_game == 0:
 
-    print("You need to start a new game")
-    print("1 - Create a new game" \
-    "2 - Exit game")
+    print("\nYou need to start a new game")
+    print("\n1 - Create a new game" \
+    "\n2 - Exit game")
 
-    answer = int(input('Give me your answer: '))
+    answer = int(input('\nGive me your answer: '))
 
     if answer == 1:
 
@@ -236,12 +237,12 @@ if last_game == 0:
 
 elif last_game != 0:
 
-    print("You have an unfinished game. Do you want to load game ar start a new game?")
-    print("1 - New game" \
-    "2 - Old" \
-    "3 - Exit")
+    print("\nYou have an unfinished game. Do you want to load game ar start a new game?")
+    print("\n1 - New game" \
+    "\n2 - Old" \
+    "\n3 - Exit")
 
-    answer = int(input("Give me your answer"))
+    answer = int(input("\nGive me your answer: "))
 
     if answer == 1:
 
@@ -293,7 +294,7 @@ if new_game == True:
 
 elif new_game == False:
 
-    print("We continue with the old game")
+    print("\nWe continue with the old game")
 
     print("\n The distance between " + airport_name + " and airport " + goal_name + " is: \n")
 
