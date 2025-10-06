@@ -1,5 +1,17 @@
-from db import yhteys
+finnish = open("every-finnish-word.txt", encoding="utf-8")
+finnish_words = [word.strip().lower() for word in finnish]
+finnish.close()
 
-#sanapeli: laskeutuminen
+def is_it_finnish(word):
+    return word.lower() in finnish_words
 
-print("Olet melkein perillä. Jäljellä on vielä onnistunut lasku. Laskeutuaksesi turvalli-sesti ratkaise tämä peli.")
+#testi
+
+while True:
+    word = input("anna sana: ")
+    if not word:
+        break
+    if is_it_finnish(word):
+        print("Oikein.")
+    else:
+        print("Sanaa ei löytynyt.")
