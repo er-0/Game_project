@@ -3,7 +3,6 @@ import time
 import random
 
 
-
 print("Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! Voit saada lisää polttoainetta ratkaisemalla tämän pelin. Jos epäonnistut, joudut tekemään hätälaskun.")
 
 player_id = 2
@@ -34,7 +33,7 @@ def play_level(level, limit, time_limit):
         try:
             if int(player_input) == int(answer):
                 level_score += points
-                print(f"Oikein! +{points} pistettä.")
+                print(f"Oikein! {points} pistettä.")
             else:
                 print(f"Väärin. Oikea vastaus oli {answer}.")
         except ValueError:
@@ -56,23 +55,23 @@ def count_game():
 
 
     if score_count_game >=55:
-        print(f"Ilmatankkaus onnistui! Voit jatkaa lentoasi. Tämän pelin pistemääräsi on {score_count_game}. Kokonaistuloksesi on [total].")
-        #update_player(cursor, db, pelaaja_id, total_score)
+        print(f"Ilmatankkaus onnistui! Voit jatkaa lentoasi. Tämän pelin pistemääräsi on {score_count_game}.")
         choice = input("Haluatko jatkaa pelaamista?(Kyllä/Poistu)")
         if choice == 'Kyllä':
             print("Lento jatkuu!")
         else:
-            print(f"Sait {score_count_game} pistettä.")
+            print("Peli sulkeutuu")
 
 
     else:
-        print("Epäonnistuit ja jouduit tekemään hätälaskun. Sait {pisteet} pistettä.")
+        print(f"Epäonnistuit ja jouduit tekemään hätälaskun. Sait {score_count_game} pistettä.")
         choice = input("Haluatko yrittää uudelleen? (Kyllä/Poistu)")
         if choice == 'Kyllä':
             print("Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! Voit saada lisää polttoainetta ratkaisemalla tämän pelin. Jos epäonnistut, joudut tekemään hätälaskun.")
-            count_game(pelaaja_id)
+            count_game()
         else:
             print(f"Sait {score_count_game} pistettä.")
+
 
 
 if __name__ == "__main__":
