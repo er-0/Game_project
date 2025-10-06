@@ -1,6 +1,7 @@
 import sys
 
 from db import yhteys
+from geopy import distance
 
 
 # Function to register users ---------------------------------------------------------------------------
@@ -100,6 +101,19 @@ def game_information(id):
 
     return information
 
+
+# -----------------------------------------------------------------------------------------------------
+
+# Function to calculate the destance between airports -------------------------------------------------
+
+def distance_in_kilometers(first_lat, first_long, second_lat, second_long):
+
+    start_coordinates = (first_lat, first_long)
+    finish_coordinates = (second_lat, second_long)
+
+    kilometers = distance.distance(start_coordinates, finish_coordinates).km
+
+    return kilometers
 
 # -----------------------------------------------------------------------------------------------------
 
@@ -268,7 +282,14 @@ elif last_game != 0:
 
 if new_game == True:
 
-    print("We start a new game")
+    print("\nWe start a new game\n")
+
+    print("\n The distance between " + airport_name + " and airport " + goal_name + "is: \n")
+
+    print(distance_in_kilometers(latitude_deg, longitude_deg, goal_latitude_deg, goal_longitude_deg))
+
+    # Here goes function for game 1
+
 
 elif new_game == False:
 
