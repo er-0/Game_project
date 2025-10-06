@@ -103,6 +103,8 @@ def game_information(id):
 
 # -----------------------------------------------------------------------------------------------------
 
+# Get user name or create a new one
+
 print("Hello player!\n" \
 "This is our pilot simulator game\n" \
 "Have you played before:\n" \
@@ -172,6 +174,7 @@ if yes_no == 1:
     print(user_information)
                    
 elif yes_no == 2:
+
     print("\nYou need to register as a new pilot")
     print("\nSelect a unique name for yourself")
 
@@ -186,6 +189,8 @@ elif yes_no == 2:
     print(airport_continent)
     print(airport_municipality)
     print(airport_country)
+
+# Check for an existance of the last game and get information either on new or last game
 
 if last_game == 0:
 
@@ -208,6 +213,8 @@ if last_game == 0:
         print("\nCurrent game info\n")
 
         print(game_info)
+
+        new_game = True
 
     elif answer == 2:
 
@@ -236,6 +243,8 @@ elif last_game != 0:
 
         print(game_info)
 
+        new_game = True
+
     elif answer == 2:
 
         print("\nLast game information\n")
@@ -248,7 +257,20 @@ elif last_game != 0:
         print("\nCurrent game info\n")
 
         print(game_info)
+
+        new_game = False
     
     elif answer == 3:
 
         sys.exit()
+
+# Start new game or continue old game
+
+if new_game == True:
+
+    print("We start a new game")
+
+elif new_game == False:
+
+    print("We continue with the old game")
+    
