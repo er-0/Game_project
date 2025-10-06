@@ -24,7 +24,7 @@ pisteet = (peli 2)
 if pisteet >=55:
     print(f"Ilmatankkaus onnistui! Voit jatkaa lentoasi. Tämän pelin pistemääräsi on {pisteet}. Kokonaistuloksesi on "{kokonaispisteet}")
     input("Haluatko jatkaa pelaamista?(Kyllä/Poistu)")
-    if Kyllä:
+    if 'Kyllä':
         print("")
     else:
     print(f"Kokonaispisteesi on {kokonaispisteet}")
