@@ -1,6 +1,7 @@
 import sys
 
 from db import yhteys
+from geopy import distance
 
 
 # Function to register users ---------------------------------------------------------------------------
@@ -103,6 +104,21 @@ def game_information(id):
 
 # -----------------------------------------------------------------------------------------------------
 
+# Function to calculate the destance between airports -------------------------------------------------
+
+def distance_in_kilometers(first_lat, first_long, second_lat, second_long):
+
+    start_coordinates = (first_lat, first_long)
+    finish_coordinates = (second_lat, second_long)
+
+    kilometers = distance.distance(start_coordinates, finish_coordinates).km
+
+    return kilometers
+
+# -----------------------------------------------------------------------------------------------------
+
+# Get user name or create a new one
+
 print("Hello player!\n" \
 "This is our pilot simulator game\n" \
 "Have you played before:\n" \
@@ -172,6 +188,7 @@ if yes_no == 1:
     print(user_information)
                    
 elif yes_no == 2:
+
     print("\nYou need to register as a new pilot")
     print("\nSelect a unique name for yourself")
 
@@ -186,6 +203,8 @@ elif yes_no == 2:
     print(airport_continent)
     print(airport_municipality)
     print(airport_country)
+
+# Check for an existance of the last game and get information either on new or last game
 
 if last_game == 0:
 
@@ -208,6 +227,8 @@ if last_game == 0:
         print("\nCurrent game info\n")
 
         print(game_info)
+
+        new_game = True
 
     elif answer == 2:
 
@@ -236,6 +257,8 @@ elif last_game != 0:
 
         print(game_info)
 
+        new_game = True
+
     elif answer == 2:
 
         print("\nLast game information\n")
@@ -248,7 +271,31 @@ elif last_game != 0:
         print("\nCurrent game info\n")
 
         print(game_info)
+
+        new_game = False
     
     elif answer == 3:
 
         sys.exit()
+
+# Start new game or continue old game
+
+if new_game == True:
+
+    print("\nWe start a new game\n")
+
+    print("\n The distance between " + airport_name + " and airport " + goal_name + " is: \n")
+
+    print(distance_in_kilometers(latitude_deg, longitude_deg, goal_latitude_deg, goal_longitude_deg))
+
+    # Here goes function for game 1
+
+
+elif new_game == False:
+
+    print("We continue with the old game")
+
+    print("\n The distance between " + airport_name + " and airport " + goal_name + " is: \n")
+
+    print(distance_in_kilometers(latitude_deg, longitude_deg, goal_latitude_deg, goal_longitude_deg))
+    
