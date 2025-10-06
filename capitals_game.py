@@ -6,6 +6,7 @@ def fetch_questions(level, amount):
     cursor = yhteys.cursor()
     cursor.execute(sql, (level, amount))
     rows = cursor.fetchall()
+    print(rows)
     return rows
 
 def fetch_wrong_answers():
@@ -14,6 +15,7 @@ def fetch_wrong_answers():
     cursor.execute(sql)
     rows = cursor.fetchall()
     wrong_answers = [row[0] for row in rows]
+    print(wrong_answers)
     return wrong_answers
 
 def update_score(game_id, user_points):
