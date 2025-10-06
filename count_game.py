@@ -1,5 +1,6 @@
 from db import yhteys
 import time
+import random
 
 
 
@@ -19,6 +20,7 @@ def get_tasks(level, limit):
 def play_level(level, limit, time_limit):
     level_score = 0
     tasks = get_tasks(level, limit)
+    random.shuffle(tasks)
     for question, answer, points in tasks:
         print(f"\nLaske: {question}")
         start_time = time.time()
