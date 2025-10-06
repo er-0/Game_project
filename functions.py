@@ -284,7 +284,7 @@ if new_game == True:
 
     print("\nWe start a new game\n")
 
-    print("\n The distance between " + airport_name + " and airport " + goal_name + "is: \n")
+    print("\n The distance between " + airport_name + " and airport " + goal_name + " is: \n")
 
     print(distance_in_kilometers(latitude_deg, longitude_deg, goal_latitude_deg, goal_longitude_deg))
 
@@ -294,4 +294,8 @@ if new_game == True:
 elif new_game == False:
 
     print("We continue with the old game")
+
+    print("\n The distance between " + airport_name + " and airport " + goal_name + " is: \n")
+
+    print(distance_in_kilometers(latitude_deg, longitude_deg, goal_latitude_deg, goal_longitude_deg))
     
