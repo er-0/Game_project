@@ -1,9 +1,9 @@
 from db import yhteys
 import time
+import random
 
 
-
-print("Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! Voit saada lisää polttoainetta ratkaisemalla tämän pelin. Jos epäonnistut, joudut tekemään hätälaskun.")
+print("Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! Voit saada lisää polttoainetta ratkaisemalla tämän laskupelin. Jos epäonnistut, joudut tekemään hätälaskun.")
 
 player_id = 2
 
@@ -41,7 +41,7 @@ def play_level(level, limit, time_limit):
 
 def count_game():
     score_count_game = 0
-
+    random.shuffle
     score_count_game += play_level(1, 5, time_limit=5)
     score_count_game += play_level(2, 5, time_limit=10)
     score_count_game += play_level(3, 2, time_limit=15)
