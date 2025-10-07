@@ -19,15 +19,15 @@ def get_tasks(level, limit):
 def play_level(level, limit, time_limit):
     level_score = 0
     tasks = get_tasks(level, limit)
+    random.shuffle(tasks)
     for question, answer, points in tasks:
         print(f"\nLaske: {question}")
-        random.shuffle(tasks)
         start_time = time.time()
         player_input = input(f"Sinulla on {time_limit} sekuntia vastata: ")
         elapsed = time.time() - start_time
 
         if elapsed > time_limit:
-            print(f"Aika loppui! Et saanut pisteitä tästä laskusta. Oikea vastaus oli {answer}")
+            print(f"Aika loppui! Et saanut pisteitä tästä laskusta. Oikea vastaus oli {answer}.")
             continue
 
         try:
