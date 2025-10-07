@@ -1,4 +1,4 @@
-
+from db import yhteys
 import random
 
 # tiedostosta listaan
