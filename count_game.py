@@ -33,7 +33,7 @@ def play_level(level, limit, time_limit):
         try:
             if int(player_input) == int(answer):
                 level_score += points
-                print(f"Oikein! +{points} pistettä.")
+                print(f"Oikein! {points} pistettä.")
             else:
                 print(f"Väärin. Oikea vastaus oli {answer}.")
         except ValueError:
