@@ -5,8 +5,6 @@ import time
 
 print("Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! Voit saada lisää polttoainetta ratkaisemalla tämän pelin. Jos epäonnistut, joudut tekemään hätälaskun.")
 
-player_id = 2
-
 def get_tasks(level, limit):
     db = yhteys
     cursor = db.cursor()
@@ -45,10 +43,10 @@ def count_game():
     score_count_game += play_level(1, 5, time_limit=5)
     score_count_game += play_level(2, 5, time_limit=10)
     score_count_game += play_level(3, 2, time_limit=15)
-    print(score_count_game)
+    return score_count_game
 
 
-
+'''
 # vähimmäispisteet laskupelistä = 55
 
 
@@ -72,6 +70,8 @@ def count_game():
         else:
             print(f"Sait {score_count_game} pistettä.")
 
+    return score_count_game
+'''
 
 if __name__ == "__main__":
     count_game()

@@ -89,3 +89,5 @@ def word_game():
         print(f"Lopullinen pistemääräsi on {total_points}. Menetit lentolupasi etkä voi lentää.")
         print("Tarvitset lisäkoulutuksen. Kun olet valmis yrittämään uudelleen, palaa takaisin.")
         print(f"Lopullinen piste pistemääräsi on {total_points}. Lensit traagiset [kilometrit] kilometriä reitillä [aloituskenttä] – [kohdekenttä].")
+
+    return total_points
