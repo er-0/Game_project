@@ -34,56 +34,58 @@ def word_points(word):
     else:
         return 0
 
-# pelin aloitus
-total_points = 0
-goal_points = 100
-letters = random_letters()
+def word_game():
+    # pelin aloitus
+    total_points = 0
+    goal_points = 100
+    letters = random_letters()
 
-print("Olet melkein perillä. Jäljellä on vielä onnistunut lasku. Laskeutuaksesi turvallisesti pelaa tämä peli läpi.\n")
-print("PELIN SÄÄNNÖT\n")
-print("Sanapelissä sinulle arvotaan 10 kirjainta, joista muodostat suomenkielisiä sanoja. \nSanan tule olla vähintään kaksi kirjainta pitkä. Saat käyttää samaa kirjainta monta kertaa. ")
-print("Jos et pysty muodostamaan sanaa arvotuista kirjaimista, paina enter ja sinulle arvotaan uudet kirjaimet. \nVoit lopettaa pelin kirjoittamalla vastauskenttään 'exit'.\n")
-print(f"Arvotut kirjaimet: {letters}")
+    print("Olet melkein perillä. Jäljellä on vielä onnistunut lasku. Laskeutuaksesi turvallisesti pelaa tämä peli läpi.\n")
+    print("PELIN SÄÄNNÖT\n")
+    print("Sanapelissä sinulle arvotaan 10 kirjainta, joista muodostat suomenkielisiä sanoja. \nSanan tule olla vähintään kaksi kirjainta pitkä. Saat käyttää samaa kirjainta monta kertaa. ")
+    print("Jos et pysty muodostamaan sanaa arvotuista kirjaimista, paina enter ja sinulle arvotaan uudet kirjaimet. \nVoit lopettaa pelin kirjoittamalla vastauskenttään 'exit'.\n")
+    print(f"Arvotut kirjaimet: {letters}")
 
-# pääohjelma
-while total_points < goal_points:
-    word = input("\nArvaa sana: ").lower()
+    # pääohjelma
 
-    if word == "exit":
-        print("Peli lopetettu.")
-        break
+    while total_points < goal_points:
+        word = input("\nArvaa sana: ").lower()
 
-    elif word == "":
-        letters = random_letters()
-        print("Valitsit uudet kirjaimet:")
-        print(letters)
-        continue
+        if word == "exit":
+            print("Peli lopetettu.")
+            break
 
-    letters_ok = valid_letters(word, letters)
-    finnish_ok = is_finnish(word)
+        elif word == "":
+            letters = random_letters()
+            print("Valitsit uudet kirjaimet:")
+            print(letters)
+            continue
 
-    if not letters_ok:
-        print("Sana sisältää kirjaimia, joita ei ole annettu.")
-        points = 0
+        letters_ok = valid_letters(word, letters)
+        finnish_ok = is_finnish(word)
 
-    elif not finnish_ok:
-        print("Sana ei ole suomenkielinen.")
-        points = 0
+        if not letters_ok:
+            print("Sana sisältää kirjaimia, joita ei ole annettu.")
+            points = 0
 
+        elif not finnish_ok:
+            print("Sana ei ole suomenkielinen.")
+            points = 0
+
+        else:
+            points = word_points(word)
+            total_points += points
+            print(f"Sana '{word}' on oikein! Sait {points} pistettä.")
+            letters = random_letters()
+            print("Seuraavat 10 kirjainta:")
+            print(letters)
+
+    # lopputulos
+    if total_points >= goal_points:
+        print(f"Hienoa työtä! Olet onnistuneesti laskeutunut ja suorittanut lentosi. Kokonaispistemääräsi on {total_points}.")
     else:
-        points = word_points(word)
-        total_points += points
-        print(f"Sana '{word}' on oikein! Sait {points} pistettä.")
-        letters = random_letters()
-        print("Seuraavat 10 kirjainta:")
-        print(letters)
-
-# lopputulos
-if total_points >= goal_points:
-    print(f"Hienoa työtä! Olet onnistuneesti laskeutunut ja suorittanut lentosi. Kokonaispistemääräsi on {total_points}.")
-else:
-    print("Laskeutuminen meni huonosti. Matkustajat kokivat laskeutumisen vaarallisena ja epämukavana.")
-    print("Matkatavarat vahingoittuivat ja yhtiö joutui maksamaan korvausmaksuja.")
-    print(f"Lopullinen pistemääräsi on {total_points}. Menetit lentolupasi etkä voi lentää.")
-    print("Tarvitset lisäkoulutuksen. Kun olet valmis yrittämään uudelleen, palaa takaisin.")
-    print(f"Lopullinen piste pistemääräsi on {total_points}. Lensit traagiset [kilometrit] kilometriä reitillä [aloituskenttä] – [kohdekenttä].")
+        print("Laskeutuminen meni huonosti. Matkustajat kokivat laskeutumisen vaarallisena ja epämukavana.")
+        print("Matkatavarat vahingoittuivat ja yhtiö joutui maksamaan korvausmaksuja.")
+        print(f"Lopullinen pistemääräsi on {total_points}. Menetit lentolupasi etkä voi lentää.")
+        print("Tarvitset lisäkoulutuksen. Kun olet valmis yrittämään uudelleen, palaa takaisin.")
+        print(f"Lopullinen piste pistemääräsi on {total_points}. Lensit traagiset [kilometrit] kilometriä reitillä [aloituskenttä] – [kohdekenttä].")
