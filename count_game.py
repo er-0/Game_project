@@ -48,15 +48,11 @@ def count_game():
     score_count_game += play_level(3, 2, time_limit=15)
     print(score_count_game)
 
-
-
 # vähimmäispisteet laskupelistä = 55
 
 
-
     if score_count_game >=55:
-        print(f"Ilmatankkaus onnistui! Voit jatkaa lentoasi. Tämän pelin pistemääräsi on {score_count_game}. Kokonaistuloksesi on [total].")
-        #update_player(cursor, db, pelaaja_id, total_score)
+        print(f"Ilmatankkaus onnistui! Voit jatkaa lentoasi. Tämän pelin pistemääräsi on {score_count_game}.")
         choice = input("Haluatko jatkaa pelaamista?(Kyllä/Poistu)")
         if choice == 'Kyllä':
             print("Lento jatkuu!")
