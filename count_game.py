@@ -1,9 +1,9 @@
 from db import yhteys
 import time
+import random
 
 
-
-print("Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! Voit saada lisää polttoainetta ratkaisemalla tämän pelin. Jos epäonnistut, joudut tekemään hätälaskun.")
+print("Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! Voit saada lisää polttoainetta ratkaisemalla tämän laskupelin. Jos epäonnistut, joudut tekemään hätälaskun.")
 
 player_id = 2
 
@@ -19,6 +19,7 @@ def get_tasks(level, limit):
 def play_level(level, limit, time_limit):
     level_score = 0
     tasks = get_tasks(level, limit)
+    random.shuffle(tasks)
     for question, answer, points in tasks:
         print(f"\nLaske: {question}")
         start_time = time.time()
@@ -26,13 +27,13 @@ def play_level(level, limit, time_limit):
         elapsed = time.time() - start_time
 
         if elapsed > time_limit:
-            print("Aika loppui! Et saanut pisteitä tästä laskusta.")
+            print(f"Aika loppui! Et saanut pisteitä tästä laskusta. Oikea vastaus oli {answer}.")
             continue
 
         try:
             if int(player_input) == int(answer):
                 level_score += points
-                print(f"Oikein! +{points} pistettä.")
+                print(f"Oikein! {points} pistettä.")
             else:
                 print(f"Väärin. Oikea vastaus oli {answer}.")
         except ValueError:
@@ -47,15 +48,11 @@ def count_game():
     score_count_game += play_level(3, 2, time_limit=15)
     print(score_count_game)
 
-
-
 # vähimmäispisteet laskupelistä = 55
 
 
-
     if score_count_game >=55:
-        print(f"Ilmatankkaus onnistui! Voit jatkaa lentoasi. Tämän pelin pistemääräsi on {score_count_game}. Kokonaistuloksesi on [total].")
-        #update_player(cursor, db, pelaaja_id, total_score)
+        print(f"Ilmatankkaus onnistui! Voit jatkaa lentoasi. Tämän pelin pistemääräsi on {score_count_game}.")
         choice = input("Haluatko jatkaa pelaamista?(Kyllä/Poistu)")
         if choice == 'Kyllä':
             print("Lento jatkuu!")
@@ -64,13 +61,13 @@ def count_game():
 
 
     else:
-        print("Epäonnistuit ja jouduit tekemään hätälaskun. Sait {pisteet} pistettä.")
+        print(f"Epäonnistuit ja jouduit tekemään hätälaskun. Sait {score_count_game} pistettä.")
         choice = input("Haluatko yrittää uudelleen? (Kyllä/Poistu)")
         if choice == 'Kyllä':
-            print("Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! Voit saada lisää polttoainetta ratkaisemalla tämän pelin. Jos epäonnistut, joudut tekemään hätälaskun.")
-            count_game(pelaaja_id)
+            print("Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! Voit saada lisää polttoainetta ratkaisemalla tämän laskupelin. Jos epäonnistut, joudut tekemään hätälaskun.")
+            count_game()
         else:
-            print(f"Sait {score_count_game} pistettä.")
+            print("Peli sulkeutuu")
 
 
 if __name__ == "__main__":
