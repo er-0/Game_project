@@ -369,7 +369,14 @@ def intro():
 
             sys.exit()
 
-    # First written path for the new game when new_game == True which means that we dont load an old game but start a new game from the beginning
+    kilometers_for_table = distance_in_kilometers(latitude_deg, longitude_deg, goal_latitude_deg, goal_longitude_deg)
+
+    print(kilometers_for_table)
+
+    sql = f"UPDATE games SET  kilometers_traveled = '{kilometers_for_table}' WHERE player_id = '{player_id}';"
+    kursori = yhteys.cursor()
+    kursori.execute(sql)
+    yhteys.commit()
 
     if level_reached == 0:
 
