@@ -68,7 +68,7 @@ def count_game():
         print("Epäonnistuit ja jouduit tekemään hätälaskun. Sait {pisteet} pistettä.")
         choice = input("Haluatko yrittää uudelleen? (Kyllä/Poistu)")
         if choice == 'Kyllä':
-            print("Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! Voit saada lisää polttoainetta ratkaisemalla tämän pelin. Jos epäonnistut, joudut tekemään hätälaskun.")
+            print("Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! Voit saada lisää polttoainetta ratkaisemalla tämän laskupelin. Jos epäonnistut, joudut tekemään hätälaskun.")
             count_game()
         else:
             print(f"Sait {score_count_game} pistettä.")
