@@ -555,7 +555,7 @@ elif new_game == False:
 
     print("\n The distance between " + airport_name + " and airport " + goal_name + " is: \n")
 
-    print(distance_in_kilometers(latitude_deg, longitude_deg, goal_latitude_deg, goal_longitude_deg))
+    kilometers_for_table = distance_in_kilometers(latitude_deg, longitude_deg, goal_latitude_deg, goal_longitude_deg)
 
     # If level reached is 1, we start player with the second mini game
 
@@ -622,6 +622,8 @@ elif new_game == False:
 
                 print("\nYou won third and final game!")
 
+                update_kilometers(kilometers_for_table, player_id)
+
                 update_user_score(score, last_game)
 
                 # Set last_game in players back to 0, because we will not load this game
@@ -657,6 +659,8 @@ elif new_game == False:
             if score == 100:
 
                 print("\nYou won third and final game!")
+
+                update_kilometers(kilometers_for_table, player_id)
 
                 update_user_score(score, last_game)
 
