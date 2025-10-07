@@ -397,7 +397,14 @@ if new_game == True:
 
     print("\n The distance between " + airport_name + " and airport " + goal_name + " is: \n")
 
-    print(distance_in_kilometers(latitude_deg, longitude_deg, goal_latitude_deg, goal_longitude_deg))
+    kilometers_for_table = distance_in_kilometers(latitude_deg, longitude_deg, goal_latitude_deg, goal_longitude_deg)
+
+    print(kilometers_for_table)
+
+    sql = f"UPDATE games SET  kilometers_traveled = '{kilometers_for_table}' WHERE player_id = '{player_id}';"
+    kursori = yhteys.cursor()
+    kursori.execute(sql)
+    yhteys.commit()
 
     # Here the first game actually begins
 
@@ -652,5 +659,6 @@ elif new_game == False:
 
         elif answer == 2:
 
-            sys.exit()         
-    
+            sys.exit()    
+
+print("The end!")     
