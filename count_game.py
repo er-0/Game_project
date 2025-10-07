@@ -21,6 +21,7 @@ def play_level(level, limit, time_limit):
     tasks = get_tasks(level, limit)
     for question, answer, points in tasks:
         print(f"\nLaske: {question}")
+        random.shuffle(tasks)
         start_time = time.time()
         player_input = input(f"Sinulla on {time_limit} sekuntia vastata: ")
         elapsed = time.time() - start_time
@@ -41,7 +42,7 @@ def play_level(level, limit, time_limit):
 
 def count_game():
     score_count_game = 0
-    random.shuffle
+
     score_count_game += play_level(1, 5, time_limit=5)
     score_count_game += play_level(2, 5, time_limit=10)
     score_count_game += play_level(3, 2, time_limit=15)
