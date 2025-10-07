@@ -27,7 +27,7 @@ def play_level(level, limit, time_limit):
         elapsed = time.time() - start_time
 
         if elapsed > time_limit:
-            print("Aika loppui! Et saanut pisteitä tästä laskusta.")
+            print(f"Aika loppui! Et saanut pisteitä tästä laskusta. Oikea vastaus oli {answer}")
             continue
 
         try:
