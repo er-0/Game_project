@@ -5,6 +5,7 @@ from geopy import distance
 
 from capitals_game import capitals_game
 from count_game import count_game
+from word_game import word_game
 
 
 # Function to register users ---------------------------------------------------------------------------
@@ -61,7 +62,7 @@ def loggin():
 
 # -------------------------------------------------------------------------------------------------------
 
-# Function to fetch all information from the databse on the user ----------------------------------------
+# Function to fetch all information from the database on the user ----------------------------------------
 
 def player_information(name):
 
@@ -74,7 +75,7 @@ def player_information(name):
 
 # -----------------------------------------------------------------------------------------------------
 
-# Fuction to create a new game ------------------------------------------------------------------------
+# Function to create a new game ------------------------------------------------------------------------
 
 def create_game(player_id, airport_country):
 
@@ -107,7 +108,7 @@ def game_information(id):
 
 # -----------------------------------------------------------------------------------------------------
 
-# Function to calculate the destance between airports -------------------------------------------------
+# Function to calculate the distance between airports -------------------------------------------------
 
 def distance_in_kilometers(first_lat, first_long, second_lat, second_long):
 
@@ -163,13 +164,14 @@ def delete_user(id, name):
     kursori.execute(sql)
     yhteys.commit()
 
-    tulos = print("You lost youe liscence")
+    tulos = print("You lost your licence")
 
     return tulos
 
 # -----------------------------------------------------------------------------------------------------
 
-# This is the begging of the game. We say hello to the player, tell him about the game and ask him if is already regestered
+# This is the begging of the game. We say hello to the player, tell him about the game and ask him if is already
+# registered
 def intro():
     print("Hello player!\n" \
           "This is our pilot simulator game\n" \
@@ -183,7 +185,7 @@ def intro():
 
     if yes_no == 1:
 
-        user_name = input('Lets find your pilot liscence. Give us you pilot name: ')
+        user_name = input('Lets find your pilot licence. Give us you pilot name: ')
 
         # Check if the name in the database
 
@@ -194,7 +196,8 @@ def intro():
 
         tries = 0
 
-        # If there is no such name count will be equal to 0, if there is such a name, count will be 1. We want count to be 1
+        # If there is no such name count will be equal to 0, if there is such a name, count will be 1.
+        # We want count to be 1.
 
         while count == 0:
 
@@ -206,7 +209,7 @@ def intro():
                 print("\nThere is no such name in the table")
                 print("\nMaybe you got it wrong. Try again")
 
-                user_name = input('\nLets find your pilot liscence. Give us you pilot name: ')
+                user_name = input('\nLets find your pilot licence. Give us you pilot name: ')
 
                 sql = f"SELECT COUNT(*) FROM players WHERE user_name = '{user_name}';"
                 kursori = yhteys.cursor()
@@ -216,13 +219,13 @@ def intro():
             # After too many tries we inform the user that he has failed and ask him to create a new account
 
             if tries > 3:
-                print("\nYou have axceeded the amount of tries")
+                print("\nYou have exceeded the amount of tries")
                 print("\nYou are not registered as a pilot in our database")
                 print("\nDo you want to register as a new pilot? or exit game.")
                 print("\n1 - register as a new pilot" \
                       "\n2 - exit game")
 
-                decision = int(input('\nGive me your coice: '))
+                decision = int(input('\nGive me your choice: '))
 
                 # User creates a new pilot name
 
@@ -277,9 +280,10 @@ def intro():
         print(airport_municipality)
         print(airport_country)
 
-    # Check for an existance of the last game. If user has a lat game not equal to 0 we can load an old game information or crate new game, if last game is 0, we create new game
+    # Check for an existence of the last game. If user has a lat game not equal to 0 we can load an old game
+    # information or create new game, if last game is 0, we create new game
 
-    # This is the path for no previos game
+    # This is the path for no previous game
 
     if last_game == 0:
 
@@ -307,7 +311,7 @@ def intro():
 
             print(game_info)
 
-            new_game = True
+           # new_game = True
 
         elif answer == 2:
 
@@ -340,7 +344,7 @@ def intro():
 
             print(game_info)
 
-            new_game = True
+           # new_game = True
 
         # Load game and get information about the previous game
 
@@ -357,15 +361,17 @@ def intro():
 
             print(game_info)
 
-            new_game = False
+            # new_game = False
+
+            game_id = last_game
 
         elif answer == 3:
 
             sys.exit()
 
-    # First written path for the new game when new_game == True which mmeans that we dont load an old game but start a new game from the beginning
+    # First written path for the new game when new_game == True which means that we dont load an old game but start a new game from the beginning
 
-    if new_game == True:
+    if level_reached == 0:
 
         # Reming player where he is traveling and long the flight is
 
@@ -373,7 +379,7 @@ def intro():
 
         print(distance_in_kilometers(latitude_deg, longitude_deg, goal_latitude_deg, goal_longitude_deg))
 
-    return user_name, game_id
+    return user_name, game_id, level_reached
 
         # Here the first game actually begins
 
@@ -396,25 +402,21 @@ def part_one(user_name, game_id):
             # Try until player either wins the game or desides to quit
 
             while score < 55:
-
                 print("\nYou lost. Not enough points")
                 print("\nDo you eant to try again or finish game?" \
                       "\n1 - Try again" \
                       "\n2 - Finish game")
-
                 answer = int(input('Give me your answer: '))
 
                 if answer == 1:
-
                     score = capitals_game(game_id)
 
                 elif answer == 2:
-
                     sys.exit()
 
         elif answer == 2:
-
             sys.exit()
+            return None
 
         print("\n You won the first mini game!")
 
@@ -426,12 +428,12 @@ def part_one(user_name, game_id):
         kursori = yhteys.cursor()
         kursori.execute(sql)
         yhteys.commit()
-        print("ok!")
+        print("ok game 1!")
         return score
 
 
 
-def part_two(game_id):
+def part_two(user_name, game_id):
     print("\nAre you ready to start the second game?" \
     "\n1 - Yes, I am ready!" \
     "\n2 - No, I want to exit game!")
@@ -447,57 +449,49 @@ def part_two(game_id):
         print(score)
 
         # Once again we wait for player to win the game
-        if score >= 55:
-            print(
-                f"Ilmatankkaus onnistui! Voit jatkaa lentoasi. Tämän pelin pistemääräsi on {score}.")
-            # update_player(cursor, db, pelaaja_id, total_score)
-            choice = input("Haluatko jatkaa pelaamista?(Kyllä/Poistu)")
-            if choice == 'Kyllä':
-                print("Lento jatkuu!")
-            else:
-                print(f"Sait {score} pistettä.")
 
-
-        else:
-            print(f"Epäonnistuit ja jouduit tekemään hätälaskun. Sait {score} pistettä.")
-            choice = input("Haluatko yrittää uudelleen? (Kyllä/Poistu)")
-            if choice == 'Kyllä':
-                print(
-                    "Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! Voit saada lisää polttoainetta ratkaisemalla tämän pelin. Jos epäonnistut, joudut tekemään hätälaskun.")
-                count_game(pelaaja_id)
-            else:
-                print(f"Sait {score_count_game} pistettä.")
         while score < 55:
 
-            print("\nEpäonnistuit ja jouduit tekemään hätälaskun. Sait {score} pistettä.")
+            print(f"\nEpäonnistuit ja jouduit tekemään hätälaskun. Sait {score} pistettä.")
             choice = input("Haluatko yrittää uudelleen? (Kyllä/Poistu)")
 
-            answer = int(input('\nGive me your answer: '))
-
-            if answer == 1:
-
+            if choice == 'Kyllä':
+                print("Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! Voit saada lisää polttoainetta ratkaisemalla tämän pelin. Jos epäonnistut, joudut tekemään hätälaskun.")
                 score = count_game()
 
-            elif answer == 2:
-
+            elif choice == 'Poistu':
+                print(f"Sait {score} pistettä.")
                 sys.exit()
 
     elif answer == 2:
-
         sys.exit()
+        return None
 
-    print("\n You won the second mini game!")
+    print(f"Ilmatankkaus onnistui! Voit jatkaa lentoasi. Tämän pelin pistemääräsi on {score}.")
+    choice = input("Haluatko jatkaa pelaamista?(Kyllä/Poistu)")
+    if choice == 'Kyllä':
+        print("Lento jatkuu!")
+    else:
+        print(f"Sait {score} pistettä.")
 
-    # We again update score and level_reached in the games table
+    # We finish the second game and update user score information in the games table and game information in the
+    # players table
+
+    sql = f"UPDATE players SET games_played = games_played + 1, last_game = {game_id} WHERE user_name = '{user_name}';"
+    kursori = yhteys.cursor()
+    kursori.execute(sql)
+    yhteys.commit()
+    print("ok game 2!")
 
     update_user_score(score, game_id)
     return score
 
-def part_three(game_id):
+
+def part_three(user_name, game_id):
     # Now we can start with the third mini game
     print("\nAre you ready to start the third game?" \
           "\n1 - Yes, I am ready!" \
-    "\n2 - No, I want to exit game!")
+          "\n2 - No, I want to exit game!")
 
     answer = int(input('\nGive me your answer: '))
 
@@ -505,11 +499,11 @@ def part_three(game_id):
 
         # Game play for the third game
 
-        score = count_game()
+        score = word_game()
 
         print(score)
 
-        if score == 100:
+        if score => 100:
 
             print("\nYou won third and final game!")
 
@@ -526,134 +520,7 @@ def part_three(game_id):
             #delete_user(player_id, user_name)
 
     elif answer == 2:
-
         sys.exit()
+        return None
 
     return score
-
-if __name__ == "__main__":
-    # The second path for loading the game when new_game == False
-
-    '''elif new_game == False:
-
-        print("\nWe continue with the old game")
-
-        print("\n The distance between " + airport_name + " and airport " + goal_name + " is: \n")
-
-        print(distance_in_kilometers(latitude_deg, longitude_deg, goal_latitude_deg, goal_longitude_deg))
-
-        # If level reached is 1, we start player with the second mini game
-
-        if level_reached == 1:
-
-            # Now we can start with the second mini game
-
-            print("\nAre you ready to start the second game?" \
-            "\n1 - Yes, I am ready!" \
-            "\n2 - No, I want to exit game!")
-
-            answer = int(input('\nGive me your answer: '))
-
-            if answer == 1:
-
-                # Game play for the second game
-
-                score = second_mini_game()
-
-                print(score)
-
-                while score < 55:
-
-                    print("\nYou lost. Not enough points")
-                    print("\nDo you eant to try again or finish game?" \
-                    "\n1 - Try again" \
-                    "\n2 - Finish game")
-
-                    answer = int(input('\nGive me your answer: '))
-
-                    if answer == 1:
-
-                        score = word_game()
-
-                    elif answer == 2:
-
-                        sys.exit()
-
-            elif answer == 2:
-
-                sys.exit()
-
-            print("\n You won the second mini game!")
-
-            # We again update score and level_reached in the games table
-
-            update_user_score(score, last_game)
-
-            print("\nAre you ready to start the third game?" \
-            "\n1 - Yes, I am ready!" \
-            "\n2 - No, I want to exit game!")
-
-            answer = int(input('\nGive me your answer: '))
-
-            if answer == 1:
-
-                # Game play for the second game
-
-                score = third_mini_game()
-
-                print(score)
-
-                if score == 100:
-
-                    print("\nYou won third and final game!")
-
-                    update_user_score(score, last_game)
-
-                    # Set last_game in players back to 0, because we will not load this game
-
-                    update_last_game(user_name)
-
-                if score < 100:
-
-                    delete_user(player_id, user_name)
-
-            elif answer == 2:
-
-                sys.exit()
-
-        # In case level reached is equal to 2, we start player from the third mini game
-
-        elif level_reached == 2:
-
-            print("\nAre you ready to start the third game?" \
-            "\n1 - Yes, I am ready!" \
-            "\n2 - No, I want to exit game!")
-
-            answer = int(input('\nGive me your answer: '))
-
-            if answer == 1:
-
-                # Game play for the second game
-
-                score = third_mini_game()
-
-                print(score)
-
-                if score == 100:
-
-                    print("\nYou won third and final game!")
-
-                    update_user_score(score, last_game)
-
-                    # Set last_game in players back to 0, because we will not load this game
-
-                    update_last_game(user_name)
-
-                if score < 100:
-
-                    delete_user(player_id, user_name)
-
-            elif answer == 2:
-
-                sys.exit()
-    '''

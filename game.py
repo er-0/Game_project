@@ -1,26 +1,23 @@
-from capitals_game import capitals_game
-from count_game import count_game
-from word_game import word_game
 from functions import intro, part_one, part_two, part_three
 
 game_score = 0
+quit_game = False
 
-user_name, game_id = intro()
-print(game_id, "game_id")
-print(user_name, "username")
-#score = part_one(user_name, game_id)
-score = 100
-game_score += score
-print(score, "score1")
-print(game_score, "gamescore")
-#score = part_two(game_id)
-score = 100
-print(score, "score2")
-game_score += score
-print(game_score, "gamescore")
-#score = part_three(game_id)
-score = 80
-print(score, "score3")
-game_score += score
+user_name, game_id, level_reached = intro()
+while level_reached <= 2 and not quit_game:
+    if level_reached == 0:
+        score = part_one(user_name, game_id)
+        if score is None:
+            quit_game = True
+    elif level_reached == 1:
+        score = part_two(user_name, game_id)
+        if score is None:
+            quit_game = True
+    elif level_reached == 2:
+        score = part_three(user_name, game_id)
+
+    game_score += score
+    level_reached += 1
+
 print(game_score, "total")
 
