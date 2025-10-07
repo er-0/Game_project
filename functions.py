@@ -474,16 +474,10 @@ def part_two(user_name, game_id):
     else:
         print(f"Sait {score} pistettä.")
 
-    # We finish the second game and update user score information in the games table and game information in the
-    # players table
-
-    sql = f"UPDATE players SET games_played = games_played + 1, last_game = {game_id} WHERE user_name = '{user_name}';"
-    kursori = yhteys.cursor()
-    kursori.execute(sql)
-    yhteys.commit()
-    print("ok game 2!")
+    # We finish the second game and update user score information in the games table
 
     update_user_score(score, game_id)
+    print("ok game 2!")
     return score
 
 
@@ -503,7 +497,7 @@ def part_three(user_name, game_id):
 
         print(score)
 
-        if score => 100:
+        if score >= 100:
 
             print("\nYou won third and final game!")
 
