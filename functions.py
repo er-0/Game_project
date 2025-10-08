@@ -14,9 +14,9 @@ def loggin():
 
     name = input('\nGive me your name: ')
 
-    sql = f"SELECT COUNT(*) FROM players WHERE user_name = '{name}';"
+    sql = f"SELECT COUNT(*) FROM players WHERE user_name = %s;"
     kursori = yhteys.cursor()
-    kursori.execute(sql)
+    kursori.execute(sql, (name,))
     count = kursori.fetchone()[0]  
 
     while count != 0:
@@ -26,9 +26,9 @@ def loggin():
 
         name = input('\nGive me your name: ')
 
-        sql = f"SELECT COUNT(*) FROM players WHERE user_name = '{name}';"
+        sql = f"SELECT COUNT(*) FROM players WHERE user_name = %s;"
         kursori = yhteys.cursor()
-        kursori.execute(sql)
+        kursori.execute(sql, (name,))
         count = kursori.fetchone()[0]
 
     sql = f"SELECT ident FROM game_airports ORDER BY RAND() LIMIT 1;"
@@ -36,9 +36,9 @@ def loggin():
     kursori.execute(sql)
     ident = kursori.fetchone()[0]  
 
-    sql = f"SELECT COUNT(*) FROM players WHERE starting_airport = '{ident}';"
+    sql = f"SELECT COUNT(*) FROM players WHERE starting_airport = %s;"
     kursori = yhteys.cursor()
-    kursori.execute(sql)
+    kursori.execute(sql, (ident,))
     count_airport = kursori.fetchone()[0] 
 
     while count_airport != 0:
@@ -48,14 +48,14 @@ def loggin():
         kursori.execute(sql)
         ident = kursori.fetchone()[0]  
 
-        sql = f"SELECT COUNT(*) FROM players WHERE starting_airport = '{ident}';"
+        sql = f"SELECT COUNT(*) FROM players WHERE starting_airport = %s;"
         kursori = yhteys.cursor()
-        kursori.execute(sql)
+        kursori.execute(sql, (ident,))
         count_airport = kursori.fetchone()[0]
 
-    sql = f"INSERT INTO players (user_name, starting_airport) VALUES ('{name}','{ident}');"
+    sql = f"INSERT INTO players (user_name, starting_airport) VALUES (%s, %s);"
     kursori = yhteys.cursor()
-    kursori.execute(sql)
+    kursori.execute(sql, (name, ident))
     yhteys.commit()
 
     return name
@@ -66,9 +66,9 @@ def loggin():
 
 def player_information(name):
 
-    sql = f"SELECT a.ident, a.name, a.latitude_deg, a.longitude_deg, a.continent, a.municipality, a.country_name, p.id, p.games_played, p.last_game FROM game_airports AS a INNER JOIN players AS p ON p.starting_airport = a.ident where p.user_name = '{name}';"
+    sql = f"SELECT a.ident, a.name, a.latitude_deg, a.longitude_deg, a.continent, a.municipality, a.country_name, p.id, p.games_played, p.last_game FROM game_airports AS a INNER JOIN players AS p ON p.starting_airport = a.ident where p.user_name = %s;"
     kursori = yhteys.cursor()
-    kursori.execute(sql)
+    kursori.execute(sql, (name,))
     users_information = kursori.fetchall()
     
     return users_information
@@ -79,14 +79,14 @@ def player_information(name):
 
 def create_game(player_id, airport_country):
 
-    sql = f"SELECT ident FROM game_airports WHERE country_name != '{airport_country}' ORDER BY RAND() LIMIT 1;"
+    sql = f"SELECT ident FROM game_airports WHERE country_name != %s ORDER BY RAND() LIMIT 1;"
     kursori = yhteys.cursor()
-    kursori.execute(sql)
+    kursori.execute(sql, (airport_country,))
     goal_ident = kursori.fetchone()[0]
 
-    sql = f"INSERT INTO games (player_id, goal_airport) VALUES ('{player_id}','{goal_ident}') RETURNING game_id;"
+    sql = f"INSERT INTO games (player_id, goal_airport) VALUES (%s, %s) RETURNING game_id;"
     kursori = yhteys.cursor()
-    kursori.execute(sql)
+    kursori.execute(sql, (player_id, goal_ident))
     game_id = kursori.fetchone()[0]
     yhteys.commit()
 
@@ -98,9 +98,9 @@ def create_game(player_id, airport_country):
 
 def game_information(id):
 
-    sql = f"SELECT a.ident, a.name, a.latitude_deg, a.longitude_deg, a.continent, a.municipality, a.country_name, g.goal_airport, g.kilometers_traveled, g.score, g.level_reached from games as g LEFT JOIN game_airports AS a ON g.goal_airport = a.ident WHERE g.game_id = '{id}';"
+    sql = f"SELECT a.ident, a.name, a.latitude_deg, a.longitude_deg, a.continent, a.municipality, a.country_name, g.goal_airport, g.kilometers_traveled, g.score, g.level_reached from games as g LEFT JOIN game_airports AS a ON g.goal_airport = a.ident WHERE g.game_id = %s;"
     kursori = yhteys.cursor()
-    kursori.execute(sql)
+    kursori.execute(sql, (id,))
     information = kursori.fetchall()
 
     return information
@@ -126,9 +126,9 @@ def distance_in_kilometers(first_lat, first_long, second_lat, second_long):
 
 def update_user_score(score, game_id):
 
-    sql = f"UPDATE games SET score = score + {score}, level_reached = level_reached + 1 WHERE game_id = {game_id};"
+    sql = f"UPDATE games SET score = score + %s, level_reached = level_reached + 1 WHERE game_id = %s;"
     kursori = yhteys.cursor()
-    kursori.execute(sql)
+    kursori.execute(sql, (score, game_id))
     yhteys.commit()
 
     tulos = print("Score has been changed")
@@ -141,9 +141,9 @@ def update_user_score(score, game_id):
 
 def update_last_game(name):
 
-    sql = f"UPDATE players SET last_game = 0 WHERE user_name = '{name}';"
+    sql = f"UPDATE players SET last_game = 0 WHERE user_name = %s;"
     kursori = yhteys.cursor()
-    kursori.execute(sql)
+    kursori.execute(sql, (name,))
     yhteys.commit()
 
     return
@@ -154,14 +154,14 @@ def update_last_game(name):
 
 def delete_user(id, name):
 
-    sql = f"DELETE FROM games WHERE player_id = '{id}';"
+    sql = f"DELETE FROM games WHERE player_id = %s;"
     kursori = yhteys.cursor()
-    kursori.execute(sql)
+    kursori.execute(sql, (id,))
     yhteys.commit()
 
-    sql = f"DELETE FROM players WHERE user_name = '{name}';"
+    sql = f"DELETE FROM players WHERE user_name = %s;"
     kursori = yhteys.cursor()
-    kursori.execute(sql)
+    kursori.execute(sql, (name,))
     yhteys.commit()
 
     tulos = print("You lost your licence")
@@ -202,9 +202,9 @@ def intro():
 
         # Check if the name in the database
 
-        sql = f"SELECT COUNT(*) FROM players WHERE user_name = '{user_name}';"
+        sql = f"SELECT COUNT(*) FROM players WHERE user_name = %s;"
         kursori = yhteys.cursor()
-        kursori.execute(sql)
+        kursori.execute(sql, (user_name,))
         count = kursori.fetchone()[0]
 
         tries = 0
@@ -224,9 +224,9 @@ def intro():
 
                 user_name = input('\nLets find your pilot licence. Give us you pilot name: ')
 
-                sql = f"SELECT COUNT(*) FROM players WHERE user_name = '{user_name}';"
+                sql = f"SELECT COUNT(*) FROM players WHERE user_name = %s;"
                 kursori = yhteys.cursor()
-                kursori.execute(sql)
+                kursori.execute(sql, (user_name,))
                 count = kursori.fetchone()[0]
 
             # After too many tries we inform the user that he has failed and ask him to create a new account
