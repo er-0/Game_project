@@ -170,6 +170,19 @@ def delete_user(id, name):
 
 # -----------------------------------------------------------------------------------------------------
 
+# Function to update kilometers_traveled in the games -------------------------------------------------
+
+def update_kilometers(kilometers_for_table, player_id):
+
+    sql = f"UPDATE games SET kilometers_traveled = %s WHERE player_id = %s;"
+    kursori = yhteys.cursor()
+    kursori.execute(sql, (kilometers_for_table, player_id))
+    yhteys.commit()
+
+    return
+
+# -----------------------------------------------------------------------------------------------------
+
 # This is the begging of the game. We say hello to the player, tell him about the game and ask him if is already
 # registered
 def intro():
@@ -205,7 +218,7 @@ def intro():
 
             # Player will have limited tries to enter the name
 
-            if tries <= 3:
+            if tries < 3:
                 print("\nThere is no such name in the table")
                 print("\nMaybe you got it wrong. Try again")
 
@@ -373,11 +386,6 @@ def intro():
 
     print(kilometers_for_table)
 
-    sql = f"UPDATE games SET  kilometers_traveled = '{kilometers_for_table}' WHERE player_id = '{player_id}';"
-    kursori = yhteys.cursor()
-    kursori.execute(sql)
-    yhteys.commit()
-
     if level_reached == 0:
 
         # Reming player where he is traveling and long the flight is
@@ -386,7 +394,7 @@ def intro():
 
         print(distance_in_kilometers(latitude_deg, longitude_deg, goal_latitude_deg, goal_longitude_deg))
 
-    return user_name, game_id, level_reached
+    return player_id, user_name, game_id, level_reached, kilometers_for_table
 
         # Here the first game actually begins
 
@@ -423,17 +431,15 @@ def part_one(user_name, game_id):
 
         elif answer == 2:
             sys.exit()
-            return None
 
         print("\n You won the first mini game!")
 
         # We finish the first game and now we update user score information in the games table and game information in the players table
 
         update_user_score(score, game_id)
-
-        sql = f"UPDATE players SET games_played = games_played + 1, last_game = {game_id} WHERE user_name = '{user_name}';"
-        kursori = yhteys.cursor()
-        kursori.execute(sql)
+        sql = "UPDATE players SET games_played = games_played + 1, last_game = %s WHERE user_name = %s;"
+        cursor = yhteys.cursor()
+        cursor.execute(sql, (game_id, user_name))
         yhteys.commit()
         print("ok game 1!")
         return score
@@ -472,23 +478,22 @@ def part_two(user_name, game_id):
 
     elif answer == 2:
         sys.exit()
-        return None
 
     print(f"Ilmatankkaus onnistui! Voit jatkaa lentoasi. Tämän pelin pistemääräsi on {score}.")
+    update_user_score(score, game_id)
+
     choice = input("Haluatko jatkaa pelaamista?(Kyllä/Poistu)")
     if choice == 'Kyllä':
         print("Lento jatkuu!")
     else:
-        print(f"Sait {score} pistettä.")
+        sys.exit()
 
     # We finish the second game and update user score information in the games table
 
-    update_user_score(score, game_id)
-    print("ok game 2!")
     return score
 
 
-def part_three(user_name, game_id):
+def part_three(player_id, user_name, game_id, kilometers_for_table):
     # Now we can start with the third mini game
     print("\nAre you ready to start the third game?" \
           "\n1 - Yes, I am ready!" \
@@ -508,20 +513,21 @@ def part_three(user_name, game_id):
 
             print("\nYou won third and final game!")
 
+            update_kilometers(kilometers_for_table, player_id)
+
             update_user_score(score, game_id)
 
             # Set last_game in players back to 0, because we will not load this game
 
             update_last_game(user_name)
 
-        #if score < 100:
+        if score < 100:
 
             # If player lost in the final game, the information about him is deleted both from games and players tables
 
-            #delete_user(player_id, user_name)
+            delete_user(player_id, user_name)
 
     elif answer == 2:
         sys.exit()
-        return None
 
     return score

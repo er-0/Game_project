@@ -39,12 +39,12 @@ def play_level(level, limit, time_limit):
     return level_score
 
 def count_game():
-    score_count_game = 0
+    score = 0
 
-    score_count_game += play_level(1, 5, time_limit=5)
-    score_count_game += play_level(2, 5, time_limit=10)
-    score_count_game += play_level(3, 2, time_limit=15)
-    return score_count_game
+    score += play_level(1, 5, time_limit=5)
+    score += play_level(2, 5, time_limit=10)
+    score += play_level(3, 2, time_limit=15)
+    return score
 
 
 '''
