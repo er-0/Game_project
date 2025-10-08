@@ -51,8 +51,6 @@ def capitals_game(game_id):
     user_points += play_level(3, 2)
     return user_points
 
-print(capitals_game(1))
-
 '''
 Helppo: 5 kysymystä, 4 p. Vastaukset kirjoitetaan itse.
 Normaali: 5 kysymystä, 10 p. Pelaaja näkee 4 vastausvaihtoehtoa ja syöttää valintansa itse.
