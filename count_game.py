@@ -57,7 +57,7 @@ def count_game():
         if choice == 'Kyllä':
             print("Lento jatkuu!")
         else:
-            print(f"Sait {score_count_game} pistettä.")
+            print("Peli sulkeutuu.")
 
 
     else:
