@@ -11,14 +11,16 @@ finnish.close()
 
 # funktiot
 def random_letters():
-    letters = "acefhijklmnoprstuvyäö"
-    return random.sample(letters, 10)
+    letters = "ABCDEFGHIJKLMNOPRSTUVÄÖ"
+    chosen = random.sample(letters, 10)
+    return " ".join(chosen)
+
 
 def is_finnish(word):
     return word in finnish_words
 
 def valid_letters(word, letters):
-    for character in word:
+    for character in word.upper():
         if character not in letters:
             return False
     return True
@@ -33,7 +35,7 @@ def word_points(word):
         return 15
     else:
         return 0
-
+#
 def word_game():
     # pelin aloitus
     total_points = 0
@@ -89,3 +91,8 @@ def word_game():
         print(f"Lopullinen pistemääräsi on {total_points}. Menetit lentolupasi etkä voi lentää.")
         print("Tarvitset lisäkoulutuksen. Kun olet valmis yrittämään uudelleen, palaa takaisin.")
         print(f"Lopullinen piste pistemääräsi on {total_points}. Lensit traagiset [kilometrit] kilometriä reitillä [aloituskenttä] – [kohdekenttä].")
+    return total_points
+
+
+if __name__ == "__main__":
+    word_game()
