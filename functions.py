@@ -162,9 +162,7 @@ def delete_user(id, name):
     kursori.execute(sql, (name,))
     yhteys.commit()
 
-    tulos = print("You lost your licence")
-
-    return tulos
+    return 
 
 # -----------------------------------------------------------------------------------------------------
 
