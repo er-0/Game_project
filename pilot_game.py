@@ -156,9 +156,7 @@ def update_user_score(score, game_id):
     kursori.execute(sql, (score, game_id))
     yhteys.commit()
 
-    tulos = print("Score has been changed")
-
-    return tulos
+    return
 
 # -----------------------------------------------------------------------------------------------------
 

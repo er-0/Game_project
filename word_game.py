@@ -93,5 +93,5 @@ def word_game():
 
     return total_points
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     word_game()

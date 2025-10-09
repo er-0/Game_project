@@ -21,9 +21,5 @@ while level_reached <= 2 and not quit_game:
     elif level_reached == 2:
         score = part_three(player_id, user_name, game_id, kilometers_for_table)
 
-    game_score += score
     level_reached += 1
-
-#with game_score we can check the score matches what's in the database
-print(game_score, "total")
 

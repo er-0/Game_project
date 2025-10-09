@@ -3,7 +3,6 @@ import time
 import random
 
 
-print("Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! Voit saada lisää polttoainetta ratkaisemalla tämän laskupelin. Jos epäonnistut, joudut tekemään hätälaskun.")
 
 def get_tasks(level, limit):
     db = yhteys
@@ -45,32 +44,6 @@ def count_game():
     score += play_level(2, 5, time_limit=10)
     score += play_level(3, 2, time_limit=15)
     return score
-
-
-'''
-# vähimmäispisteet laskupelistä = 55
-
-
-    if score_count_game >=55:
-        print(f"Ilmatankkaus onnistui! Voit jatkaa lentoasi. Tämän pelin pistemääräsi on {score_count_game}.")
-        choice = input("Haluatko jatkaa pelaamista?(Kyllä/Poistu)")
-        if choice == 'Kyllä':
-            print("Lento jatkuu!")
-        else:
-            print("Peli sulkeutuu.")
-
-
-    else:
-        print(f"Epäonnistuit ja jouduit tekemään hätälaskun. Sait {score_count_game} pistettä.")
-        choice = input("Haluatko yrittää uudelleen? (Kyllä/Poistu)")
-        if choice == 'Kyllä':
-            print("Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! Voit saada lisää polttoainetta ratkaisemalla tämän laskupelin. Jos epäonnistut, joudut tekemään hätälaskun.")
-            count_game()
-        else:
-            print("Peli sulkeutuu")
-
-    return score_count_game
-'''
 
 if __name__ == "__main__":
     count_game()

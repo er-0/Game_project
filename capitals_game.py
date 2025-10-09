@@ -27,7 +27,6 @@ def play_level(level, amount):
             answers = fetch_wrong_answers()
             answers.append(q[1])
             random.shuffle(answers)
-            print(q) #testaamista varten, tulostaa Q&A
             print("\nVaihtoehdot: ", ", ".join(answers))
         user_answer = input(q[0] + " ")
         if user_answer == "":
