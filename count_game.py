@@ -3,7 +3,6 @@ import time
 import random
 
 
-
 def get_tasks(level, limit):
     db = yhteys
     cursor = db.cursor()

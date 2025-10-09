@@ -1,6 +1,5 @@
 from functions import intro, part_one, part_two, part_three
 
-game_score = 0
 quit_game = False
 
 #intro introduces the game for the player and returns the username, game started/continued and last level reached.
@@ -22,4 +21,3 @@ while level_reached <= 2 and not quit_game:
         score = part_three(player_id, user_name, game_id, kilometers_for_table)
 
     level_reached += 1
-

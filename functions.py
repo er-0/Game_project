@@ -148,6 +148,19 @@ def update_last_game(name):
 
 # -----------------------------------------------------------------------------------------------------
 
+# Function to check final score -----------------------------------------------------------------------
+
+def check_score(game_id):
+
+    sql = f"SELECT score FROM games WHERE game_id = %s;"
+    kursori = yhteys.cursor()
+    kursori.execute(sql, (game_id,))
+    score = kursori.fetchone()[0]
+
+    return score
+
+# -----------------------------------------------------------------------------------------------------
+
 # Function to delete player from the database ---------------------------------------------------------
 
 def delete_user(id, name):
@@ -504,7 +517,10 @@ def part_three(player_id, user_name, game_id, kilometers_for_table):
 
             update_last_game(user_name)
 
+            final_score = check_score(game_id)
+
             print("Olet mahtava lentäjä! Kiitos pelaamisesta!")
+            print(f"Pistemääräsi on {final_score}")
 
         if score < 100:
 
@@ -514,5 +530,7 @@ def part_three(player_id, user_name, game_id, kilometers_for_table):
 
     elif answer == 2:
         sys.exit()
+
+    yhteys.close()
 
     return score
