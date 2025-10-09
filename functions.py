@@ -454,7 +454,7 @@ def part_two(user_name, game_id):
         while score < 55:
 
             print(f"\nEpäonnistuit ja jouduit tekemään hätälaskun. Sait {score} pistettä.")
-            choice = input("Haluatko yrittää uudelleen? \n1 - Kyllä \n2 - Poistu)")
+            choice = input("Haluatko yrittää uudelleen? \n1 - Kyllä \n2 - Poistu\n1 tai 2: ")
 
             if choice == '1':
                 score = count_game()
@@ -469,7 +469,7 @@ def part_two(user_name, game_id):
     print(f"Ilmatankkaus onnistui! Voit jatkaa lentoasi. Tämän pelin pistemääräsi on {score}.")
     update_user_score(score, game_id)
 
-    choice = input("Haluatko jatkaa pelaamista?\n1 - Kyllä\n2 - Poistu")
+    choice = input("Haluatko jatkaa pelaamista?\n1 - Kyllä\n2 - Poistu\n1 tai 2: ")
     if choice == '1':
         print("Lento jatkuu!")
     else:
