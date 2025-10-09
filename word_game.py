@@ -19,7 +19,6 @@ def is_finnish(word):
     return word in finnish_words
 
 def valid_letters(word, letters):
-    print(letters, word)
     for character in word:
         if character not in letters:
             return False
