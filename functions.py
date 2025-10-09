@@ -308,7 +308,6 @@ def intro():
             # Create new game and get game_id
 
             game_id = create_game(player_id, airport_country)
-            print(game_id)
 
             games_info = game_information(game_id)
 
@@ -399,8 +398,6 @@ def part_one(user_name, game_id):
 
             score = capitals_game(game_id)
 
-            print(score)
-
             # Try until player either wins the game or desides to quit
 
             while score < 55:
@@ -420,6 +417,8 @@ def part_one(user_name, game_id):
 
         elif answer == 2:
             sys.exit()
+
+        print(f"Loppupisteesi on: {score}")
 
         print("\nVoitit ensimmäisen pelin!")
 
@@ -450,8 +449,6 @@ def part_two(user_name, game_id):
 
         score = count_game()
 
-        print(score)
-
         # Once again we wait for player to win the game
 
         while score < 55:
@@ -472,7 +469,7 @@ def part_two(user_name, game_id):
     print(f"Ilmatankkaus onnistui! Voit jatkaa lentoasi. Tämän pelin pistemääräsi on {score}.")
     update_user_score(score, game_id)
 
-    choice = input("Haluatko jatkaa pelaamista?\n1 - Kyllä\n2 - Poistu)")
+    choice = input("Haluatko jatkaa pelaamista?\n1 - Kyllä\n2 - Poistu")
     if choice == '1':
         print("Lento jatkuu!")
     else:
@@ -496,8 +493,6 @@ def part_three(player_id, user_name, game_id, kilometers_for_table):
         # Game play for the third game
 
         score = word_game()
-
-        print(score)
 
         if score >= 100:
 
