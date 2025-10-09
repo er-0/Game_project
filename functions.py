@@ -21,10 +21,10 @@ def login():
 
     while count != 0:
          
-        print("\nThis name already exists in the darabase")
-        print("\nTry amother name")
+        print("\nTämä nimi on jo käytössä.")
+        print("\nnOle hyvä ja valitse toinen nimi.")
 
-        name = input('\nGive me your name: ')
+        name = input('\nAnna nimi: ')
 
         sql = f"SELECT COUNT(*) FROM players WHERE user_name = %s;"
         kursori = yhteys.cursor()
