@@ -30,12 +30,11 @@ def play_level(level, amount):
             print(q) #testaamista varten, tulostaa Q&A
             print("\nVaihtoehdot: ", ", ".join(answers))
         user_answer = input(q[0] + " ")
-        #käyttäjä voi kirjoittaa koko vastauksen (washington dc == Washington, D.C.)
         if user_answer == "":
             print(f"Oikea vastaus on {q[1]}.")
+        #käyttäjä voi kirjoittaa koko vastauksen (washington dc == Washington, D.C.)
         #poistetaan erikoismerkit ja isot kirjaimet vertailua varten
-        elif unidecode(''.join(filter(str.isalpha, user_answer)).casefold()) == unidecode(''.join(filter(str.isalpha,
-                                                                                                         q[1])).casefold()):
+        elif unidecode(''.join(filter(str.isalpha, user_answer)).casefold()) == unidecode(''.join(filter(str.isalpha, q[1])).casefold()):
             print("Oikein!")
             level_points += q[2]
         #käyttäjä voi vastata myös vaihtoehdon numerolla

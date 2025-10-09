@@ -11,8 +11,9 @@ finnish.close()
 
 # funktiot
 def random_letters():
-    letters = "acefhijklmnoprstuvyäö"
-    return random.sample(letters, 10)
+    letters = "ABCDEFGHIJKLMNOPRSTUVYÖÄ"
+    sample_letters = random.sample(letters, 10)
+    return " ".join(sample_letters)
 
 def is_finnish(word):
     return word in finnish_words
