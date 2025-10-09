@@ -186,19 +186,21 @@ def update_kilometers(kilometers_for_table, player_id):
 # This is the begging of the game. We say hello to the player, tell him about the game and ask him if is already
 # registered
 def intro():
-    print("Hello player!\n" \
-          "This is our pilot simulator game\n" \
-          "Have you played before:\n" \
-          "1 - Yes, I have played before\n" \
-          "2 - No, I am a new player\n")
+    print("Hei ja tervetuloa!\n" \
+      "Tämä on kevyt lentosimulaatio,\n" \
+      "jossa pelaat kolmea minipeliä\n" \
+      "suorittaaksesi onnistuneen lennon.\n" \
+      "Oletko pelannut aiemmin?\n" \
+      "1 - Kyllä\n" \
+      "2 - Ei, olen uusi pelaaja\n")
 
-    yes_no = int(input('Give your answer: '))
+    yes_no = int(input('1 tai 2: '))
 
     # If player is already registered
 
     if yes_no == 1:
 
-        user_name = input('Lets find your pilot licence. Give us you pilot name: ')
+        user_name = input('Etsitään lentolupasi. Anna lentäjänimesi: ')
 
         # Check if the name in the database
 
@@ -219,10 +221,10 @@ def intro():
             # Player will have limited tries to enter the name
 
             if tries < 3:
-                print("\nThere is no such name in the table")
-                print("\nMaybe you got it wrong. Try again")
+                print("\nNimeä ei löydy.")
+                print("\nYritä uudelleen.")
 
-                user_name = input('\nLets find your pilot licence. Give us you pilot name: ')
+                user_name = input('\nEtsitään lentolupasi. Anna lentäjänimesi: ')
 
                 sql = f"SELECT COUNT(*) FROM players WHERE user_name = %s;"
                 kursori = yhteys.cursor()
@@ -232,20 +234,20 @@ def intro():
             # After too many tries we inform the user that he has failed and ask him to create a new account
 
             if tries > 3:
-                print("\nYou have exceeded the amount of tries")
-                print("\nYou are not registered as a pilot in our database")
-                print("\nDo you want to register as a new pilot? or exit game.")
-                print("\n1 - register as a new pilot" \
-                      "\n2 - exit game")
+                print("\nOlet yrittänyt liian monta kertaa." \
+                "\nSinulla ei ole lentolupaa." \
+                "\nVoit rekisteröityä lentäjäksi, jos haluat." \
+                "\n1 - Rekisteröidy lentäjäksi" \
+                "\n2 - Lopeta peli")
 
-                decision = int(input('\nGive me your choice: '))
+                decision = int(input('\n1 tai 2: '))
 
                 # User creates a new pilot name
 
                 if decision == 1:
 
                     user_name = loggin()
-                    print("\nGlobal user name is " + user_name)
+                    print("\nNimesi on: " + user_name)
 
                     count = 1
 
@@ -262,20 +264,18 @@ def intro():
         for user_information in users_information:
             airport_ident, airport_name, latitude_deg, longitude_deg, airport_continent, airport_municipality, airport_country, player_id, games_played, last_game = user_information
 
-        print(airport_name)
-        print(airport_continent)
-        print(airport_municipality)
-        print(airport_country)
-        print(games_played)
+        # Variables for user information
 
-        print(user_information)
+        print("\nOlet lentäjä, jonka kotikenttä on " + airport_name + " (" + airport_ident + ")." \
+        "Lentokenttä sijaitsee maassa " + airport_country + ", " + airport_municipality + " kunnassa." \
+        "Pelaamiesi pelien määrä on: ",  games_played , "") 
 
     # This answer means that the user is a new player and we ask him to register
 
     elif yes_no == 2:
 
-        print("\nYou need to register as a new pilot")
-        print("\nSelect a unique name for yourself")
+        print("\nRekisteröidy lentäjänä.")
+        print("\nValitse itsellesi uniikki nimi: ")
 
         # Player creates a new pilot id
 
@@ -288,10 +288,9 @@ def intro():
         for user_information in users_information:
             airport_ident, airport_name, latitude_deg, longitude_deg, airport_continent, airport_municipality, airport_country, player_id, games_played, last_game = user_information
 
-        print(airport_name)
-        print(airport_continent)
-        print(airport_municipality)
-        print(airport_country)
+        print("\nOlet lentäjä, jonka kotikenttä on " + airport_name + " (" + airport_ident + ")." \
+        "Lentokenttä sijaitsee maassa " + airport_country + ", kunnassa " + airport_municipality + "." \
+        "Pelaamiesi pelien määrä on: ", games_played,"")
 
     # Check for an existence of the last game. If user has a lat game not equal to 0 we can load an old game
     # information or create new game, if last game is 0, we create new game
@@ -300,11 +299,11 @@ def intro():
 
     if last_game == 0:
 
-        print("\nYou need to start a new game")
-        print("\n1 - Create a new game" \
-              "\n2 - Exit game")
+        print("\nSinun täytyy aloittaa uusi peli.")
+        print("\n1 - Aloita uusi peli" \
+              "\n2 - Lopeta peli")
 
-        answer = int(input('\nGive me your answer: '))
+        answer = int(input('\n1 tai 2: '))
 
         if answer == 1:
 
@@ -320,9 +319,7 @@ def intro():
             for game_info in games_info:
                 goal_ident, goal_name, goal_latitude_deg, goal_longitude_deg, goal_continent, goal_municipality, goal_country_name, goal_airport, kilometers_traveled, score, level_reached = game_info
 
-            print("\nCurrent game info\n")
-
-            print(game_info)
+            print(f"Kohdemaaksesi on määrätty {goal_airport} ({goal_ident}). \nLentokenttä sijaitsee maassa {goal_country_name}, kunnassa {goal_municipality}.")
 
            # new_game = True
 
@@ -334,12 +331,12 @@ def intro():
 
     elif last_game != 0:
 
-        print("\nYou have an unfinished game. Do you want to load game ar start a new game?")
-        print("\n1 - New game" \
-              "\n2 - Old" \
-              "\n3 - Exit")
+        print("\nSinulla on keskeneräinen peli. Haluatko aloittaa uuden pelin, jatkaa peliä, vai lopettaa pelin?")
+        print("\n1 - Uusi peli" \
+              "\n2 - Jatka peliä" \
+              "\n3 - Lopeta peli")
 
-        answer = int(input("\nGive me your answer: "))
+        answer = int(input("\n1, 2 tai 3: "))
 
         # Create new game
 
@@ -353,9 +350,7 @@ def intro():
             for game_info in games_info:
                 goal_ident, goal_name, goal_latitude_deg, goal_longitude_deg, goal_continent, goal_municipality, goal_country_name, goal_airport, kilometers_traveled, score, level_reached = game_info
 
-            print("\nCurrent game info\n")
-
-            print(game_info)
+            print(f"Kohdemaaksesi on määrätty {goal_airport} ({goal_ident}). \nLentokenttä sijaitsee maassa {goal_country_name}, kunnassa {goal_municipality}.")
 
            # new_game = True
 
@@ -363,16 +358,13 @@ def intro():
 
         elif answer == 2:
 
-            print("\nLast game information\n")
-
             games_info = game_information(last_game)
 
             for game_info in games_info:
                 goal_ident, goal_name, goal_latitude_deg, goal_longitude_deg, goal_continent, goal_municipality, goal_country_name, goal_airport, kilometers_traveled, score, level_reached = game_info
 
-            print("\nCurrent game info\n")
-
-            print(game_info)
+            print(f"Kohdemaaksesi on määrätty {goal_airport} ({goal_ident}). \nLentokenttä sijaitsee maassa {goal_country_name}, kunnassa {goal_municipality}.")
+            print(f"Olet saavuttanut tason {level_reached}  ja pisteesi ovat {score}")
 
             # new_game = False
 
@@ -384,13 +376,11 @@ def intro():
 
     kilometers_for_table = distance_in_kilometers(latitude_deg, longitude_deg, goal_latitude_deg, goal_longitude_deg)
 
-    print(kilometers_for_table)
-
     if level_reached == 0:
 
         # Reming player where he is traveling and long the flight is
 
-        print("\n The distance between " + airport_name + " and airport " + goal_name + " is: \n")
+        print("\nEtäisyys kenttien " + airport_name + " ja " + goal_name + " välillä on: \n")
 
         print(distance_in_kilometers(latitude_deg, longitude_deg, goal_latitude_deg, goal_longitude_deg))
 
@@ -400,11 +390,11 @@ def intro():
 
 def part_one(user_name, game_id):
 
-        print("\nAre you ready to start the game?" \
-              "\n1 - Yes, I am ready!" \
-              "\n2 - No, I want to exit game!")
+        print("\nOletko valmis aloittamaan?" \
+              "\n1 - Kyllä, olen valmis" \
+              "\n2 - Ei, haluan poistua pelistä")
 
-        answer = int(input('Give me your answer: '))
+        answer = int(input('\n1 tai 2: '))
 
         if answer == 1:
 
@@ -417,11 +407,13 @@ def part_one(user_name, game_id):
             # Try until player either wins the game or desides to quit
 
             while score < 55:
-                print("\nYou lost. Not enough points")
-                print("\nDo you eant to try again or finish game?" \
-                      "\n1 - Try again" \
-                      "\n2 - Finish game")
-                answer = int(input('Give me your answer: '))
+
+                print("\nHävisit. Et saanut riittävästi pisteitä.")
+                print("\nHaluatko yrittää uudestaan vai lopettaa pelin?" \
+                  "\n1 - Yritän uudelleen" \
+                  "\n2 - Lopeta peli")
+
+                answer = int(input('1 tai 2: '))
 
                 if answer == 1:
                     score = capitals_game(game_id)
@@ -432,7 +424,7 @@ def part_one(user_name, game_id):
         elif answer == 2:
             sys.exit()
 
-        print("\n You won the first mini game!")
+        print("\n Voitit ensimmäisen pelin!")
 
         # We finish the first game and now we update user score information in the games table and game information in the players table
 
@@ -441,17 +433,17 @@ def part_one(user_name, game_id):
         cursor = yhteys.cursor()
         cursor.execute(sql, (game_id, user_name))
         yhteys.commit()
-        print("ok game 1!")
         return score
 
 
 
 def part_two(user_name, game_id):
-    print("\nAre you ready to start the second game?" \
-    "\n1 - Yes, I am ready!" \
-    "\n2 - No, I want to exit game!")
+    
+    print("\nOletko valmis aloittamaan toisen pelin?" \
+          "\n1 - Kyllä, olen valmis" \
+          "\n2 - Lopeta peli")
 
-    answer = int(input('\nGive me your answer: '))
+    answer = int(input('\n1 tai 2: '))
 
     if answer == 1:
 
@@ -495,11 +487,11 @@ def part_two(user_name, game_id):
 
 def part_three(player_id, user_name, game_id, kilometers_for_table):
     # Now we can start with the third mini game
-    print("\nAre you ready to start the third game?" \
-          "\n1 - Yes, I am ready!" \
-          "\n2 - No, I want to exit game!")
+    print("\nOletko valmis aloittamaan kolmannen pelin??" \
+          "\n1 - Kyllä, olen valmis" \
+          "\n2 - Lopeta peli")
 
-    answer = int(input('\nGive me your answer: '))
+    answer = int(input('\n1 tai 2: '))
 
     if answer == 1:
 
@@ -511,7 +503,7 @@ def part_three(player_id, user_name, game_id, kilometers_for_table):
 
         if score >= 100:
 
-            print("\nYou won third and final game!")
+            print("\nVoitit kolmannen ja viimeisen pelin!")
 
             update_kilometers(kilometers_for_table, player_id)
 
@@ -520,6 +512,8 @@ def part_three(player_id, user_name, game_id, kilometers_for_table):
             # Set last_game in players back to 0, because we will not load this game
 
             update_last_game(user_name)
+
+            print("Olet mahtava lentäjä! Kiitos pelaamisesta!")
 
         if score < 100:
 
