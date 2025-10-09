@@ -11,7 +11,7 @@ finnish.close()
 
 # funktiot
 def random_letters():
-    letters = "ABCDEFGHIJKLMNOPRSTUVYÖÄ"
+    letters = "abcdefghijklmnoprstuvyöä"
     sample_letters = random.sample(letters, 10)
     return " ".join(sample_letters)
 
@@ -45,7 +45,7 @@ def word_game():
     print("PELIN SÄÄNNÖT\n")
     print("Sanapelissä sinulle arvotaan 10 kirjainta, joista muodostat suomenkielisiä sanoja. \nSanan tule olla vähintään kaksi kirjainta pitkä. Saat käyttää samaa kirjainta monta kertaa. ")
     print("Jos et pysty muodostamaan sanaa arvotuista kirjaimista, paina enter ja sinulle arvotaan uudet kirjaimet. \nVoit lopettaa pelin kirjoittamalla vastauskenttään 'exit'.\n")
-    print(f"Arvotut kirjaimet: {letters}")
+    print(f"Arvotut kirjaimet: {letters.upper()}")
 
     # pääohjelma
 
@@ -59,7 +59,7 @@ def word_game():
         elif word == "":
             letters = random_letters()
             print("Valitsit uudet kirjaimet:")
-            print(letters)
+            print(letters.upper())
             continue
 
         letters_ok = valid_letters(word, letters)
@@ -70,7 +70,7 @@ def word_game():
             points = 0
 
         elif not finnish_ok:
-            print("Sana ei ole suomenkielinen.")
+            print("Sana ei ole sanakirjassa.")
             points = 0
 
         else:
@@ -79,7 +79,7 @@ def word_game():
             print(f"Sana '{word}' on oikein! Sait {points} pistettä.")
             letters = random_letters()
             print("Seuraavat 10 kirjainta:")
-            print(letters)
+            print(letters.upper())
 
     # lopputulos
     if total_points >= goal_points:
@@ -92,3 +92,6 @@ def word_game():
         print(f"Lopullinen piste pistemääräsi on {total_points}. Lensit traagiset [kilometrit] kilometriä reitillä [aloituskenttä] – [kohdekenttä].")
 
     return total_points
+
+if __name__ == "__main__":
+    word_game()
