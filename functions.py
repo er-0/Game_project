@@ -11,16 +11,14 @@ from word_game import word_game
 # Function to register users ---------------------------------------------------------------------------
 
 def login():
-
     name = input('\nAnna nimesi: ')
 
     sql = f"SELECT COUNT(*) FROM players WHERE user_name = %s;"
     kursori = yhteys.cursor()
     kursori.execute(sql, (name,))
-    count = kursori.fetchone()[0]  
+    count = kursori.fetchone()[0]
 
     while count != 0:
-         
         print("\nTämä nimi on jo käytössä.")
         print("\nnOle hyvä ja valitse toinen nimi.")
 
@@ -34,19 +32,18 @@ def login():
     sql = f"SELECT ident FROM game_airports ORDER BY RAND() LIMIT 1;"
     kursori = yhteys.cursor()
     kursori.execute(sql)
-    ident = kursori.fetchone()[0]  
+    ident = kursori.fetchone()[0]
 
     sql = f"SELECT COUNT(*) FROM players WHERE starting_airport = %s;"
     kursori = yhteys.cursor()
     kursori.execute(sql, (ident,))
-    count_airport = kursori.fetchone()[0] 
+    count_airport = kursori.fetchone()[0]
 
     while count_airport != 0:
-
         sql = f"SELECT ident FROM game_airports ORDER BY RAND() LIMIT 1;"
         kursori = yhteys.cursor()
         kursori.execute(sql)
-        ident = kursori.fetchone()[0]  
+        ident = kursori.fetchone()[0]
 
         sql = f"SELECT COUNT(*) FROM players WHERE starting_airport = %s;"
         kursori = yhteys.cursor()
@@ -60,25 +57,27 @@ def login():
 
     return name
 
+
 # -------------------------------------------------------------------------------------------------------
 
 # Function to fetch all information from the database on the user ----------------------------------------
 
 def player_information(name):
-
-    sql = f"SELECT a.ident, a.name, a.latitude_deg, a.longitude_deg, a.continent, a.municipality, a.country_name, p.id, p.games_played, p.last_game FROM game_airports AS a INNER JOIN players AS p ON p.starting_airport = a.ident where p.user_name = %s;"
+    sql = (f"SELECT a.ident, a.name, a.latitude_deg, a.longitude_deg, a.continent, a.municipality, a.country_name, "
+           f"p.id, p.games_played, p.last_game FROM game_airports AS a INNER JOIN players AS p ON p.starting_airport "
+           f"= a.ident where p.user_name = %s;")
     kursori = yhteys.cursor()
     kursori.execute(sql, (name,))
     users_information = kursori.fetchall()
-    
+
     return users_information
+
 
 # -----------------------------------------------------------------------------------------------------
 
 # Function to create a new game ------------------------------------------------------------------------
 
 def create_game(player_id, airport_country):
-
     sql = f"SELECT ident FROM game_airports WHERE country_name != %s ORDER BY RAND() LIMIT 1;"
     kursori = yhteys.cursor()
     kursori.execute(sql, (airport_country,))
@@ -92,13 +91,15 @@ def create_game(player_id, airport_country):
 
     return game_id
 
+
 # -----------------------------------------------------------------------------------------------------
 
 # Function to fetch all information about player games ------------------------------------------------
 
 def game_information(id):
-
-    sql = f"SELECT a.ident, a.name, a.latitude_deg, a.longitude_deg, a.continent, a.municipality, a.country_name, g.goal_airport, g.kilometers_traveled, g.score, g.level_reached from games as g LEFT JOIN game_airports AS a ON g.goal_airport = a.ident WHERE g.game_id = %s;"
+    sql = (f"SELECT a.ident, a.name, a.latitude_deg, a.longitude_deg, a.continent, a.municipality, a.country_name, "
+           f"g.goal_airport, g.kilometers_traveled, g.score, g.level_reached from games as g LEFT JOIN game_airports "
+           f"AS a ON g.goal_airport = a.ident WHERE g.game_id = %s;")
     kursori = yhteys.cursor()
     kursori.execute(sql, (id,))
     information = kursori.fetchall()
@@ -111,7 +112,6 @@ def game_information(id):
 # Function to calculate the distance between airports -------------------------------------------------
 
 def distance_in_kilometers(first_lat, first_long, second_lat, second_long):
-
     start_coordinates = (first_lat, first_long)
     finish_coordinates = (second_lat, second_long)
 
@@ -125,7 +125,6 @@ def distance_in_kilometers(first_lat, first_long, second_lat, second_long):
 # Function to update score and level of the player ----------------------------------------------------
 
 def update_user_score(score, game_id):
-
     sql = f"UPDATE games SET score = score + %s, level_reached = level_reached + 1 WHERE game_id = %s;"
     kursori = yhteys.cursor()
     kursori.execute(sql, (score, game_id))
@@ -133,12 +132,12 @@ def update_user_score(score, game_id):
 
     return
 
+
 # -----------------------------------------------------------------------------------------------------
 
 # Function to return last game to 0 after level 3 -----------------------------------------------------
 
 def update_last_game(name):
-
     sql = f"UPDATE players SET last_game = 0 WHERE user_name = %s;"
     kursori = yhteys.cursor()
     kursori.execute(sql, (name,))
@@ -146,12 +145,12 @@ def update_last_game(name):
 
     return
 
+
 # -----------------------------------------------------------------------------------------------------
 
 # Function to check final score -----------------------------------------------------------------------
 
 def check_score(game_id):
-
     sql = f"SELECT score FROM games WHERE game_id = %s;"
     kursori = yhteys.cursor()
     kursori.execute(sql, (game_id,))
@@ -159,12 +158,12 @@ def check_score(game_id):
 
     return score
 
+
 # -----------------------------------------------------------------------------------------------------
 
 # Function to delete player from the database ---------------------------------------------------------
 
 def delete_user(id, name):
-
     sql = f"DELETE FROM games WHERE player_id = %s;"
     kursori = yhteys.cursor()
     kursori.execute(sql, (id,))
@@ -175,14 +174,14 @@ def delete_user(id, name):
     kursori.execute(sql, (name,))
     yhteys.commit()
 
-    return 
+    return
+
 
 # -----------------------------------------------------------------------------------------------------
 
 # Function to update kilometers_traveled in the games -------------------------------------------------
 
 def update_kilometers(kilometers_for_table, player_id):
-
     sql = f"UPDATE games SET kilometers_traveled = %s WHERE player_id = %s;"
     kursori = yhteys.cursor()
     kursori.execute(sql, (kilometers_for_table, player_id))
@@ -190,18 +189,19 @@ def update_kilometers(kilometers_for_table, player_id):
 
     return
 
+
 # -----------------------------------------------------------------------------------------------------
 
 # This is the begging of the game. We say hello to the player, tell him about the game and ask him if is already
 # registered
 def intro():
     print("Hei ja tervetuloa!\n" \
-      "Tämä on kevyt lentosimulaatio,\n" \
-      "jossa pelaat kolmea minipeliä\n" \
-      "suorittaaksesi onnistuneen lennon.\n" \
-      "Oletko pelannut aiemmin?\n" \
-      "1 - Kyllä\n" \
-      "2 - Ei, olen uusi pelaaja\n")
+          "Tämä on kevyt lentosimulaatio,\n" \
+          "jossa pelaat kolmea minipeliä\n" \
+          "suorittaaksesi onnistuneen lennon.\n" \
+          "Oletko pelannut aiemmin?\n" \
+          "1 - Kyllä\n" \
+          "2 - Ei, olen uusi pelaaja\n")
 
     yes_no = int(input('1 tai 2: '))
 
@@ -244,10 +244,10 @@ def intro():
 
             if tries > 3:
                 print("\nOlet yrittänyt liian monta kertaa." \
-                "\nSinulla ei ole lentolupaa." \
-                "\nVoit rekisteröityä lentäjäksi, jos haluat." \
-                "\n1 - Rekisteröidy lentäjäksi" \
-                "\n2 - Lopeta peli")
+                      "\nSinulla ei ole lentolupaa." \
+                      "\nVoit rekisteröityä lentäjäksi, jos haluat." \
+                      "\n1 - Rekisteröidy lentäjäksi" \
+                      "\n2 - Lopeta peli")
 
                 decision = int(input('\n1 tai 2: '))
 
@@ -271,13 +271,14 @@ def intro():
         users_information = player_information(user_name)
 
         for user_information in users_information:
-            airport_ident, airport_name, latitude_deg, longitude_deg, airport_continent, airport_municipality, airport_country, player_id, games_played, last_game = user_information
+            (airport_ident, airport_name, latitude_deg, longitude_deg, airport_continent, airport_municipality,
+             airport_country, player_id, games_played, last_game) = user_information
 
         # Variables for user information
 
         print(f"\nOlet lentäjä, jonka kotikenttä on {airport_name} ({airport_ident})."
-        f"\nLentokenttä sijaitsee maassa {airport_country}, kunnassa {airport_municipality}."
-        f"\nPelaamiesi pelien määrä on: {games_played}")
+              f"\nLentokenttä sijaitsee maassa {airport_country}, kunnassa {airport_municipality}."
+              f"\nPelaamiesi pelien määrä on: {games_played}")
 
     # This answer means that the user is a new player and we ask him to register
 
@@ -295,7 +296,8 @@ def intro():
         users_information = player_information(user_name)
 
         for user_information in users_information:
-            airport_ident, airport_name, latitude_deg, longitude_deg, airport_continent, airport_municipality, airport_country, player_id, games_played, last_game = user_information
+            (airport_ident, airport_name, latitude_deg, longitude_deg, airport_continent, airport_municipality,
+             airport_country, player_id, games_played, last_game) = user_information
 
         print(f"\nOlet lentäjä, jonka kotikenttä on {airport_name} ({airport_ident})."
               f"\nLentokenttä sijaitsee maassa {airport_country}, kunnassa {airport_municipality}."
@@ -325,7 +327,8 @@ def intro():
             # Save new game information as global variables
 
             for game_info in games_info:
-                goal_ident, goal_name, goal_latitude_deg, goal_longitude_deg, goal_continent, goal_municipality, goal_country_name, goal_airport, kilometers_traveled, score, level_reached = game_info
+                (goal_ident, goal_name, goal_latitude_deg, goal_longitude_deg, goal_continent, goal_municipality,
+                 goal_country_name, goal_airport, kilometers_traveled, score, level_reached) = game_info
 
             print(f"Kohdemaaksesi on määrätty {goal_name} ({goal_ident}). \nLentokenttä sijaitsee maassa"
                   f" {goal_country_name}, kunnassa {goal_municipality}.")
@@ -356,7 +359,8 @@ def intro():
             games_info = game_information(game_id)
 
             for game_info in games_info:
-                goal_ident, goal_name, goal_latitude_deg, goal_longitude_deg, goal_continent, goal_municipality, goal_country_name, goal_airport, kilometers_traveled, score, level_reached = game_info
+                (goal_ident, goal_name, goal_latitude_deg, goal_longitude_deg, goal_continent, goal_municipality,
+                 goal_country_name, goal_airport, kilometers_traveled, score, level_reached) = game_info
 
             print(f"Kohdemaaksesi on määrätty {goal_name} ({goal_ident}). \nLentokenttä sijaitsee maassa"
                   f" {goal_country_name}, kunnassa {goal_municipality}.")
@@ -369,7 +373,8 @@ def intro():
             games_info = game_information(last_game)
 
             for game_info in games_info:
-                goal_ident, goal_name, goal_latitude_deg, goal_longitude_deg, goal_continent, goal_municipality, goal_country_name, goal_airport, kilometers_traveled, score, level_reached = game_info
+                (goal_ident, goal_name, goal_latitude_deg, goal_longitude_deg, goal_continent, goal_municipality,
+                 goal_country_name, goal_airport, kilometers_traveled, score, level_reached) = game_info
 
             print(f"Kohdemaaksesi on määrätty {goal_name} ({goal_ident}). \nLentokenttä sijaitsee maassa"
                   f" {goal_country_name}, kunnassa {goal_municipality}.")
@@ -384,7 +389,6 @@ def intro():
     kilometers_for_table = distance_in_kilometers(latitude_deg, longitude_deg, goal_latitude_deg, goal_longitude_deg)
 
     if level_reached == 0:
-
         # Reming player where he is traveling and long the flight is
 
         print("\nEtäisyys kenttien " + airport_name + " ja " + goal_name + " välillä on: \n")
@@ -393,59 +397,30 @@ def intro():
 
     return player_id, user_name, game_id, level_reached, kilometers_for_table
 
-        # Here the first game actually begins
+    # Here the first game actually begins
 
-def part_one(user_name, game_id):
 
-        print("\nOletko valmis aloittamaan?" \
-              "\n1 - Kyllä, olen valmis" \
-              "\n2 - Ei, haluan poistua pelistä")
+def part_one(user_name, game_id, answer=None):
+    if answer is None:
+        return {
+            "message": "Oletko valmis aloittamaan?",
+            "options": ["1 - Kyllä", "2 - Ei"]
+        }
 
-        answer = int(input('\n1 tai 2: '))
-
-        if answer == 1:
-
-            # Game play for the first game
-
-            score = capitals_game(game_id)
-
-            # Try until player either wins the game or desides to quit
-
-            while score < 55:
-
-                print("\nHävisit. Et saanut riittävästi pisteitä.")
-                print("\nHaluatko yrittää uudestaan vai lopettaa pelin?" \
-                  "\n1 - Yritän uudelleen" \
-                  "\n2 - Lopeta peli")
-
-                answer = int(input('1 tai 2: '))
-
-                if answer == 1:
-                    score = capitals_game(game_id)
-
-                elif answer == 2:
-                    sys.exit()
-
-        elif answer == 2:
-            sys.exit()
-
-        print(f"Loppupisteesi on: {score}")
-
-        print("\nVoitit ensimmäisen pelin!")
-
-        # We finish the first game and now we update user score information in the games table and game information in the players table
-
+    # If answer is 1, calculate score
+    if answer == 1:
+        score = capitals_game(game_id)
         update_user_score(score, game_id)
-        sql = "UPDATE players SET games_played = games_played + 1, last_game = %s WHERE user_name = %s;"
-        cursor = yhteys.cursor()
-        cursor.execute(sql, (game_id, user_name))
-        yhteys.commit()
-        return score
+        return {
+            "message": "Peli suoritettu",
+            "score": score
+        }
 
+    elif answer == 2:
+        return {"message": "Peli keskeytetty"}
 
 
 def part_two(user_name, game_id):
-    
     print("\nOletko valmis aloittamaan toisen pelin?" \
           "\n1 - Kyllä, olen valmis" \
           "\n2 - Lopeta peli")
@@ -456,7 +431,9 @@ def part_two(user_name, game_id):
 
         # Game play for the second game
 
-        print("Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! \nVoit saada lisää polttoainetta ratkaisemalla tämän laskupelin. Jos epäonnistut, joudut tekemään hätälaskun.")
+        print(
+            "Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! \nVoit saada lisää "
+            "polttoainetta ratkaisemalla tämän laskupelin. Jos epäonnistut, joudut tekemään hätälaskun.")
 
         score = count_game()
 
@@ -506,7 +483,6 @@ def part_three(player_id, user_name, game_id, kilometers_for_table):
         score = word_game()
 
         if score >= 100:
-
             print("\nVoitit kolmannen ja viimeisen pelin!")
 
             update_kilometers(kilometers_for_table, player_id)
@@ -523,7 +499,6 @@ def part_three(player_id, user_name, game_id, kilometers_for_table):
             print(f"Pistemääräsi on {final_score}")
 
         if score < 100:
-
             # If player lost in the final game, the information about him is deleted both from games and players tables
 
             delete_user(player_id, user_name)

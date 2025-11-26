@@ -2,58 +2,36 @@ from db import yhteys
 from unidecode import unidecode
 import random
 
+
 def fetch_questions(level, amount):
-    sql = f"SELECT question, answer, points FROM capital_game WHERE level = %s ORDER BY RAND() LIMIT %s"
-    cursor = yhteys.cursor()
+    sql = "SELECT question, answer, points FROM capital_game WHERE level = %s ORDER BY RAND() LIMIT %s"
+    cursor = yhteys.cursor(dictionary=True)
     cursor.execute(sql, (level, amount))
-    rows = cursor.fetchall()
-    return rows
+    return cursor.fetchall()
 
-def fetch_wrong_answers():
-    sql = f"SELECT answer FROM capital_game WHERE level != 1 ORDER BY RAND() LIMIT 3"
-    cursor = yhteys.cursor()
-    cursor.execute(sql)
-    rows = cursor.fetchall()
-    wrong_answers = [row[0] for row in rows]
-    return wrong_answers
 
-def play_level(level, amount):
-    questions = fetch_questions(level, amount)
-    level_points = 0
+def fetch_wrong_answers(correct_answer):
+    sql = "SELECT answer FROM capital_game WHERE answer != %s ORDER BY RAND() LIMIT 3"
+    cursor = yhteys.cursor(dictionary=True)
+    cursor.execute(sql, (correct_answer,))
+    rows = cursor.fetchall()
+    return [row['answer'] for row in rows]
+
+
+def generate_all_questions_for_level(level):
+    questions = fetch_questions(level, amount=5 if level < 3 else 2)
+    question_list = []
 
     for q in questions:
-        answers = ""
-        if level == 2 or level == 3:
-            answers = fetch_wrong_answers()
-            answers.append(q[1])
-            random.shuffle(answers)
-            print("\nVaihtoehdot: ", ", ".join(answers))
-        user_answer = input(q[0] + " ")
-        if user_answer == "":
-            print(f"Oikea vastaus on {q[1]}.")
-        #käyttäjä voi kirjoittaa koko vastauksen (washington dc == Washington, D.C.)
-        #poistetaan erikoismerkit ja isot kirjaimet vertailua varten
-        elif unidecode(''.join(filter(str.isalpha, user_answer)).casefold()) == unidecode(''.join(filter(str.isalpha, q[1])).casefold()):
-            print("Oikein!")
-            level_points += q[2]
-        #käyttäjä voi vastata myös vaihtoehdon numerolla
-        elif answers != "" and user_answer.isdigit() and int(user_answer) in range(1,5) and answers[int(
-                user_answer)-1] == q[1]:
-            print("Oikein!")
-            level_points += q[2]
-        else:
-            print(f"Väärin, oikea vastaus on {q[1]}.")
-    return level_points
-
-def capitals_game(game_id):
-    user_points = 0
-    user_points += play_level(1, 5)
-    user_points += play_level(2, 5)
-    user_points += play_level(3, 2)
-    return user_points
-
-'''
-Helppo: 5 kysymystä, 4 p. Vastaukset kirjoitetaan itse.
-Normaali: 5 kysymystä, 10 p. Pelaaja näkee 4 vastausvaihtoehtoa ja syöttää valintansa itse.
-Vaikea: 2 kysymystä, 15 p. Pelaaja näkee 4 vastausvaihtoehtoa ja syöttää valintansa itse.
-'''
+        options = []
+        if level in (2, 3):
+            options = fetch_wrong_answers(q['answer'])
+            options.append(q['answer'])
+            random.shuffle(options)
+        question_list.append({
+            "question": q['question'],
+            "correct_answer": q['answer'],
+            "options": options,
+            "points": q['points']
+        })
+    return question_list
