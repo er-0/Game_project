@@ -1,0 +1,91 @@
+body {
+    background-color: bisque;
+}
+
+header {
+    text-align: center;
+    background-color: aqua;
+}
+
+.firstSection {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    background-color: aquamarine;
+}
+
+.table {
+    background-color: azure;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.games {
+    width: 50%;
+    text-align: center;
+}
+
+.secondSection {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    background-color: aquamarine;
+}
+
+.map {
+    width: 50%;
+}
+
+.scores {
+    width: 50%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.personal {
+    background-color: yellow;
+    width: 100%;
+    height: 50%;
+}
+
+.players {
+    background-color: brown;
+    width: 100%;
+    height: 50%;
+}
+
+.thirdSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.thirdSection h2 {
+    width: 100%;
+    text-align: center;
+    background-color: chocolate;
+}
+
+.rewards {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.thirdSection .rewards div {
+    width: calc(100% / 5);
+    background-color: cadetblue;
+    box-sizing: border-box;
+    padding: 0.5rem;
+    margin: 0.1rem;
+    text-align: center;
+}
+
+footer {
+    background-color: burlywood;
+    text-align: center;
+}
