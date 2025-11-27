@@ -1,6 +1,7 @@
 
 // actions with login form
 const loginForm = document.getElementById('loginForm');
+const loginMessage = document.getElementById('loginMessage');
 
 loginForm.addEventListener('submit', async function (evt) {
     evt.preventDefault();
@@ -14,16 +15,22 @@ loginForm.addEventListener('submit', async function (evt) {
 
     const result = await response.json();
 
-    if (result.success) {
-        console.log(result)
+    if (result.success === true) {
+        loginMessage.innerText = `${result.message}
+        Your name: ${result.username},
+        Your airport: ${result.airport_name},
+        Airport ident: ${result.airport_ident}`;
+        console.log(result.username)
     }
     else {
-        console.log('No such user');
+        loginMessage.innerText = `${result.message}`;
+        console.log(result.message);
     }
 });
 
 // actions with registration form
 const registrationForm = document.getElementById('registerForm');
+const registerMessage = document.getElementById('registerMessage');
 
 registrationForm.addEventListener('submit', async function (evt) {
     evt.preventDefault();
@@ -38,8 +45,16 @@ registrationForm.addEventListener('submit', async function (evt) {
 
     const result = await response.json();
 
-    if (result) {
-        console.log(result)
+    if (result.success === true) {
+        registerMessage.innerText = `${result.message}
+        Your name: ${result.username},
+        Your airport: ${result.airport_name},
+        Airport ident: ${result.airport_ident}`;
+        console.log(result.username)
+    }
+    else {
+        registerMessage.innerText = `${result.message}`;
+        console.log(result.message);
     }
 });
 
