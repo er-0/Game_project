@@ -25,11 +25,15 @@ header {
 }
 
 .table {
-    background-color: azure;
+    background-color: white;
     width: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+table td, table th {
+    padding: 0.5rem 5rem;
 }
 
 .games {
@@ -42,7 +46,7 @@ header {
     margin: 0.5rem 0;
     font-size: 1.1rem;
     font-weight: bold;
-    background-color: #4f9b9d;
+    background-color: cadetblue;
     color: white;
     border: none;
     border-radius: 8px;
@@ -52,7 +56,7 @@ header {
 }
 
 .game-btn:hover {
-    background-color: #6fc3c6;
+    background-color: lightskyblue;
     transform: translateY(-3px);
 }
 
@@ -69,6 +73,7 @@ header {
 .map {
     width: 50%;
 }
+
 .scores {
     width: 50%;
     text-align: left;
@@ -90,7 +95,7 @@ header {
 
 .personal,
 .players {
-    color: #222;
+    color: black;
     padding: 1rem;
     margin-bottom: 1rem;
     border-radius: 10px;
@@ -120,7 +125,7 @@ header {
     padding: 0.6rem 1.5rem;
     font-size: 1rem;
     font-weight: bold;
-    background-color: #4f9b9d;
+    background-color: skyblue;
     color: white;
     border: none;
     border-radius: 6px;
@@ -130,7 +135,7 @@ header {
 }
 
 .reward-btn:hover {
-    background-color: #6fc3c6;
+    background-color: lightblue;
     transform: translateY(-3px);
 }
 
@@ -149,15 +154,15 @@ footer {
 }
 
 .first {
-    visibility: hidden;
+    display:none;
 }
 
 .second {
-    visibility: hidden;
+    display: none;
 }
 
 .third {
-    visibility: hidden;
+    display:none;
 }
 
 input {
@@ -167,6 +172,38 @@ input {
     font-size: 1rem;
     width: 80%;
     box-sizing: border-box;
+}
+
+.games-area {
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: cadetblue;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.game-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.game-block {
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.game-block input {
+  width: 80%;
+  max-width: 600px;
+  padding: 0.8rem;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
 }
 
 .table,
@@ -187,4 +224,19 @@ input {
 .secondSection,
 .thirdSection {
     padding: 0.3rem 2rem;
+}
+
+.scores {
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.table,
+.games {
+    margin-top: 2rem;
+}
+
+.map {
+    margin-top: 0.5rem;
+    padding-bottom: 2.4rem;
 }
