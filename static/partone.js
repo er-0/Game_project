@@ -1,20 +1,20 @@
-async function startGame() {
+'use strict';
+
+let q = [];
+let questionIndex = 0
+let points = 0
+
+/*async function startGame() {
   await fetch('/part_one/start', {method: 'POST'});
-  loadQuestion();
-}
+  questions = loadQuestions();
+}*/
 
-async function loadQuestion() {
-  const response = await fetch('/part_one/question');
-  const q = await response.json();
+async function loadQuestions() {
+  const response = await fetch('/part_one/questions');
+  q = await response.json();
+  console.log(q, 'loadQuestions');
 
-  if (q.finished) {
-    document.getElementById('question').innerText = 'Game finished! Score: ' +
-        q.score;
-    document.getElementById('options').innerHTML = '';
-    return;
-  }
-
-  document.getElementById('question').innerText = q.question;
+  document.getElementById('question').innerText = q[0].question;
   const optionsDiv = document.getElementById('options');
   optionsDiv.innerHTML = '';
 
@@ -31,16 +31,15 @@ form.addEventListener('submit', async function(evt) {
   evt.preventDefault();  // <--- this stops the page reload
 
   const answer = document.querySelector('input[name=capitalAnswer]').value;
+  console.log(q[questionIndex], 'questionIndex from form')
+  const isCorrect = (answer === q[questionIndex].answer)
+  if (isCorrect) {
+    points += q[questionIndex].points
+  }
+  document.getElementById('score').innerText = 'Score: ' + points;
 
-  const response = await fetch('/part_one/answer', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({answer}),
-  });
-
-  const result = await response.json();
-  document.getElementById('score').innerText = 'Score: ' + result.score;
-  loadQuestion();
+  questionIndex += 1;
+  document.getElementById('question').innerText = q[questionIndex].question
 });
 
-document.getElementById('start').addEventListener('click', startGame);
+document.getElementById('start').addEventListener('click', loadQuestions);

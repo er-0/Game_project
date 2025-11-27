@@ -20,7 +20,7 @@ def login():
 
     while count != 0:
         print("\nTämä nimi on jo käytössä.")
-        print("\nnOle hyvä ja valitse toinen nimi.")
+        print("\nOle hyvä ja valitse toinen nimi.")
 
         name = input('\nAnna nimi: ')
 
