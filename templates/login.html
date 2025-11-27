@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
     <script src="../static/login.js" defer></script>
 </head>
 
@@ -15,8 +15,8 @@
     </header>
     <div class="container">
         <section>
-            <p>Login</p>
             <h1>Welcome</h1>
+            <p>Login</p>
             <form id="loginForm">
                 <input type="text" id="loginUsername" placeholder="Enter your username">
                 <input type="submit" value="Login">
