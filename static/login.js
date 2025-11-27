@@ -13,7 +13,7 @@ loginForm.addEventListener('submit', async function (evt) {
     const result = await response.json();
 
     if (result.success) {
-        console.log("User exists")
+        console.log(result)
     }
 });
 
