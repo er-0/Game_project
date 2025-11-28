@@ -41,5 +41,13 @@ def generate_all_questions():
         generate_questions_for_level(i, questions)
     return questions
 
+def update_score(score, game_id):
+    sql = f"UPDATE games SET score = score + %s, level_reached = level_reached + 1 WHERE game_id = %s;"
+    kursori = yhteys.cursor()
+    kursori.execute(sql, (score, game_id))
+    yhteys.commit()
+
+    return kursori.rowcount > 0
+
 if __name__ == "__main__":
     generate_all_questions()
