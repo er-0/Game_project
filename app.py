@@ -13,8 +13,6 @@ def home():
 # Start the first level of capitals_game
 @app.route("/part_one/questions", methods=["GET"])
 def start_part_one():
-    generate_all_questions()
-
     return generate_all_questions()
 
 @app.route("/part_one/saveResult", methods=["POST"])
