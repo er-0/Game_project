@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, session, render_template
 
 from capitals_game import generate_all_questions, update_score
+from count_game import get_tasks
 
 app = Flask(__name__)
 app.secret_key = "your-secret-key"
@@ -8,20 +9,29 @@ app.secret_key = "your-secret-key"
 
 @app.route("/")
 def home():
-    return render_template("partonetest.html")
+    return render_template("parttwotest.html")
 
 # Start the first level of capitals_game
 @app.route("/part_one/questions", methods=["GET"])
 def start_part_one():
     return generate_all_questions()
 
-@app.route("/part_one/saveResult", methods=["POST"])
-def save_level_one():
+
+@app.route("/part_two/questions", methods=["GET"])
+def start_part_two():
+    questions = get_tasks(1, 5)
+    questions.extend(get_tasks(2, 5))
+    questions.extend(get_tasks(3,2))
+    print(questions)
+    return jsonify(questions)
+
+@app.route("/saveResult", methods=["POST"])
+def save_level():
     data = request.get_json()
     points = data.get("points")
 
     # before there is a real session game_id
-    session["game_id"] = 70
+    session["game_id"] = 57
 
     is_successful = update_score(points, session["game_id"])
 

@@ -8,7 +8,7 @@ const startBtn = document.getElementById('start');
 const questionDiv = document.getElementById('question');
 const optionsDiv = document.getElementById('options');
 const answerDiv = document.getElementById('answer');
-const form = document.querySelector('#capitalForm');
+const mathForm = document.querySelector('#mathForm');
 const scoreDiv = document.getElementById('score');
 
 function submitAnswer(answer) {
@@ -28,7 +28,7 @@ function submitAnswer(answer) {
 }
 
 async function loadQuestions() {
-  const response = await fetch('/part_one/questions');
+  const response = await fetch('/part_two/questions');
   q = await response.json();
   console.log(q, 'loadQuestions');
   showQuestion(q);
@@ -38,7 +38,7 @@ function showQuestion(q) {
   let currentQ = q[questionIndex];
   questionDiv.innerText = currentQ.question;
   optionsDiv.innerHTML = '';
-  console.log(currentQ.options, 'options');
+  /*console.log(currentQ.options, 'options');
   if (currentQ.options.length > 0) {
     form.innerHTML = '';
     for (let opt of currentQ.options) {
@@ -47,19 +47,19 @@ function showQuestion(q) {
       btn.onclick = () => submitAnswer(opt);
       optionsDiv.appendChild(btn);
     }
-  }
+  }*/
 }
 
-form.addEventListener('submit', async function(evt) {
+mathForm.addEventListener('submit', async function(evt) {
   evt.preventDefault();  // <--- this stops the page reload
 
-  const answer = document.querySelector('input[name=capitalAnswer]').value;
+  const answer = document.querySelector('input[name=mathAnswer]').value;
   console.log(q[questionIndex], 'questionIndex from form');
   submitAnswer(answer);
-  form.reset();
+  mathForm.reset();
 });
 
-function startCapitalsGame() {
+function startMathGame() {
   loadQuestions();
   questionIndex = 0;
   points = 0;
@@ -76,4 +76,4 @@ async function saveResult(points) {
   console.log(res, 'saveResult');
 }
 
-startBtn.addEventListener('click', startCapitalsGame);
+startBtn.addEventListener('click', startMathGame);
