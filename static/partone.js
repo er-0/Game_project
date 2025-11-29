@@ -11,22 +11,6 @@ const answerDiv = document.getElementById('answer');
 const form = document.querySelector('#capitalForm');
 const scoreDiv = document.getElementById('score');
 
-function submitAnswer(answer) {
-  const isCorrect = (answer === q[questionIndex].answer);
-  if (isCorrect) {
-    points += q[questionIndex].points;
-  }
-  scoreDiv.innerText = 'Pisteitä: ' + points;
-  questionIndex += 1;
-  showQuestion(q);
-  if (questionIndex + 1 === q.length) {
-    saveResult(points);
-    questionDiv.innerHTML = '';
-    answerDiv.innerHTML = '';
-    optionsDiv.innerHTML = '';
-  }
-}
-
 async function loadQuestions() {
   const response = await fetch('/part_one/questions');
   q = await response.json();
@@ -50,8 +34,34 @@ function showQuestion(q) {
   }
 }
 
+function normalize(str) {
+  return str.normalize('NFD')                  // split accent marks
+      .replace(/[\u0300-\u036f]/g, '')   // no accents
+      .replace(/[^a-zA-Z]/g, '')         // only letters
+      .toLowerCase();                    // all lowercase
+}
+
+function submitAnswer(answer) {
+  let isCorrect = (answer === q[questionIndex].answer);
+  if (!isCorrect) {
+    isCorrect = (normalize(answer) === normalize(q[questionIndex].answer));
+  }
+  if (isCorrect) {
+    points += q[questionIndex].points;
+  }
+  scoreDiv.innerText = 'Pisteitä: ' + points;
+  questionIndex += 1;
+  showQuestion(q);
+  if (questionIndex + 1 === q.length) {
+    saveResult(points);
+    questionDiv.innerHTML = '';
+    answerDiv.innerHTML = '';
+    optionsDiv.innerHTML = '';
+  }
+}
+
 form.addEventListener('submit', async function(evt) {
-  evt.preventDefault();  // <--- this stops the page reload
+  evt.preventDefault();
 
   const answer = document.querySelector('input[name=capitalAnswer]').value;
   console.log(q[questionIndex], 'questionIndex from form');
@@ -64,7 +74,7 @@ function startCapitalsGame() {
   questionIndex = 0;
   points = 0;
   scoreDiv.innerText = 'Pisteitä: 0';
-};
+}
 
 async function saveResult(points) {
   const response = await fetch('/saveResult', {

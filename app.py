@@ -9,7 +9,7 @@ app.secret_key = "your-secret-key"
 
 @app.route("/")
 def home():
-    return render_template("parttwotest.html")
+    return render_template("partonetest.html")
 
 # Start the first level of capitals_game
 @app.route("/part_one/questions", methods=["GET"])
