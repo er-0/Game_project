@@ -12,6 +12,12 @@ def get_tasks(level, limit):
     )
     return cursor.fetchall()
 
+def generate_math_questions():
+    questions = get_tasks(1, 5)
+    questions.extend(get_tasks(2, 5))
+    questions.extend(get_tasks(3, 2))
+    return questions
+
 def play_level(level, limit, time_limit):
     level_score = 0
     tasks = get_tasks(level, limit)

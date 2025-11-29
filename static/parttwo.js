@@ -64,7 +64,7 @@ function startMathGame() {
   questionIndex = 0;
   points = 0;
   scoreDiv.innerText = 'Pisteitä: 0';
-};
+}
 
 async function saveResult(points) {
   const response = await fetch('/saveResult', {
