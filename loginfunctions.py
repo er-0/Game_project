@@ -51,3 +51,15 @@ def player_information(name):
     users_information = kursori.fetchall()
 
     return users_information
+
+# get random 20 airports to start game
+
+def random_airports(country):
+
+    sql = f"SELECT ident, name, latitude_deg, longitude_deg FROM game_airports WHERE country_name != %s ORDER BY RAND() LIMIT 20;"
+    kursori = yhteys.cursor()
+    kursori.execute(sql, (country,))
+    random_airports = kursori.fetchall()
+
+    return random_airports
+
