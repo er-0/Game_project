@@ -63,3 +63,13 @@ def random_airports(country):
 
     return random_airports
 
+def start_new_game(player_id, goal_ident):
+
+    sql = f"INSERT INTO games (player_id, goal_airport) VALUES (%s, %s) RETURNING game_id;"
+    kursori = yhteys.cursor()
+    kursori.execute(sql, (player_id, goal_ident))
+    game_id = kursori.fetchone()[0]
+    yhteys.commit()
+
+    return game_id
+

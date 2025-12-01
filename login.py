@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request, session, render_template
 import secrets
 import os
 
-from loginfunctions import web_register_user, web_check_user_exists, player_information, random_airports
+from loginfunctions import web_register_user, web_check_user_exists, player_information, random_airports, start_new_game
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
@@ -135,6 +135,22 @@ def register():
     else:
         return jsonify({"success": False, "message": "Username already exists"})
 
+@app.route("/newgame", methods=["POST"])
+def newgame():
+
+    data = request.get_json()
+    airport = data.get("airport")
+
+    game_id = start_new_game(session['player_id'], airport)
+
+    if game_id:
+
+        session['game_id'] = game_id
+
+        return jsonify({"success": True,
+                        "game_id": game_id})
+    else:
+        return jsonify({"success": False, "message": "Failed to create new game"})
 
 if __name__ == "__main__":
     app.run(debug=True, host="127.0.0.1", port=3000)

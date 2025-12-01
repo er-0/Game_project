@@ -1,4 +1,4 @@
-const map = L.map('map').setView([60.223876, 24.758061], 13);
+const map = L.map('map').setView([60.223876, 24.758061], 10);
 
 
 // actions with login form
@@ -39,7 +39,13 @@ loginForm.addEventListener('submit', async function (evt) {
             const airportCoordinates = [airport.latitude_deg, airport.longitude_deg];
 
             L.marker(airportCoordinates).addTo(map)
-                .bindPopup(`Airport: ${airport.name} (${airport.ident})`)
+                .bindPopup(`Airport: ${airport.name} (${airport.ident})
+                    <div>
+                        <form class="start-game-form">
+                            <input type="hidden" value="${airport.ident}" name="startGameIdent">
+                            <input type="submit" value="Start a new game">
+                        </form>
+                    </div>`)
                 .openPopup();
         });
 
@@ -90,7 +96,13 @@ registrationForm.addEventListener('submit', async function (evt) {
             const airportCoordinates = [airport.latitude_deg, airport.longitude_deg];
 
             L.marker(airportCoordinates).addTo(map)
-                .bindPopup(`Airport: ${airport.name} (${airport.ident})`)
+                .bindPopup(`Airport: ${airport.name} (${airport.ident})
+                    <div>
+                        <form class="start-game-form">
+                            <input type="hidden" value="${airport.ident}" name="startGameIdent">
+                            <input type="submit" value="Start a new game">
+                        </form>
+                    </div>`)
                 .openPopup();
         });
     }
@@ -100,6 +112,31 @@ registrationForm.addEventListener('submit', async function (evt) {
     }
 });
 
+// To start a new game
+
+document.addEventListener('submit', async function (event) {
+
+    if (event.target.classList.contains('start-game-form')) {
+        event.preventDefault();
+
+        const airportIdent = document.querySelector('input[name=startGameIdent]').value;
+
+        const response = await fetch('/newgame', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ airport: airportIdent }),
+        });
+
+        const result = await response.json();
+
+        if (result.success === true) {
+            console.log(result.game_id);
+        } else {
+            console.log(result.message);
+        }
+    }
+});
+
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19
+    maxZoom: 10
 }).addTo(map);
