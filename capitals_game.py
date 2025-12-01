@@ -50,4 +50,4 @@ def update_score(score, game_id):
     return kursori.rowcount > 0
 
 if __name__ == "__main__":
-    generate_all_questions()
+    print(generate_capitals_questions())
