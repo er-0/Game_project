@@ -34,7 +34,7 @@ def generate_questions_for_level(level, question_list):
         })
     return
 
-def generate_all_questions():
+def generate_capitals_questions():
     questions = []
     #three levels
     for i in range (1,4):
@@ -50,4 +50,4 @@ def update_score(score, game_id):
     return kursori.rowcount > 0
 
 if __name__ == "__main__":
-    generate_all_questions()
+    print(generate_capitals_questions())

@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request, session, render_template
 import secrets
 import os
 
-from loginfunctions import web_register_user, web_check_user_exists, player_information
+from loginfunctions import web_register_user, web_check_user_exists, player_information, random_airports
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
@@ -11,6 +11,8 @@ app.secret_key = secrets.token_hex(16)
 @app.route("/")
 def login():
     return render_template("login.html")
+
+# Login form actions
 
 @app.route("/login", methods=["POST"])
 def login_page():
@@ -39,6 +41,22 @@ def login_page():
         session['games_played'] = games_played
         session['last_game'] = last_game
 
+        # Get 20 random airports
+
+        random_airports_list = random_airports(airport_country)
+
+        airports_data = []
+        for airport in random_airports_list:
+            ident, name, lat, lon = airport
+            airports_data.append({
+                'ident': ident,
+                'name': name,
+                'latitude_deg': lat,
+                'longitude_deg': lon
+            })
+
+        # Send response
+
         return jsonify({"success": True,
                         "message": "Login successful",
                         "username": username,
@@ -51,9 +69,13 @@ def login_page():
                         "airport_country": airport_country,
                         "player_id": player_id,
                         "games_played": games_played,
-                        "last_game": last_game})
+                        "last_game": last_game,
+                        "random_airports": airports_data})
     else:
         return jsonify({"success": False, "message": "User not found"})
+    
+
+# Registration form actions
     
 @app.route("/register", methods=["POST"])
 def register():
@@ -62,6 +84,8 @@ def register():
     
     if web_register_user(username):     
         session['user_name'] = username  
+
+        # Get information about the user
 
         users_information = player_information(username)
 
@@ -80,7 +104,19 @@ def register():
         session['games_played'] = games_played
         session['last_game'] = last_game
 
-        # Get information about the user
+        # Get 20 random airports
+
+        random_airports_list = random_airports(airport_country)
+
+        airports_data = []
+        for airport in random_airports_list:
+            ident, name, lat, lon = airport
+            airports_data.append({
+                'ident': ident,
+                'name': name,
+                'latitude_deg': lat,
+                'longitude_deg': lon
+            })
 
         return jsonify({"success": True,
                         "message": "Registration successful",
@@ -94,7 +130,8 @@ def register():
                         "airport_country": airport_country,
                         "player_id": player_id,
                         "games_played": games_played,
-                        "last_game": last_game})
+                        "last_game": last_game,
+                        "random_airports": airports_data})
     else:
         return jsonify({"success": False, "message": "Username already exists"})
 

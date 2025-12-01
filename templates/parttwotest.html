@@ -6,25 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../css/style.css">
-    <script defer src="../static/partone.js"></script>
+    <script defer src="../static/parttwo.js"></script>
 </head>
 
 <body>
 <div class="container">
     <section>
         <h1>Welcome</h1>
-        <button id="start">Start Part One</button>
+        <button id="start">Start Part Two</button>
         <div id="question"></div>
         <div id="options"></div>
         <div id="answer">
-            <form action="" id="capitalForm">
-                <input type="text" name="capitalAnswer">
+            <form action="" id="mathForm">
+                <input type="text" name="mathAnswer">
                 <input type="submit">
             </form>
         </div>
         <div id="score"></div>
         <div id="result"></div>
-        <a href="{{ url_for('two') }}">Go to Part Two</a>
+        <a href="{{ url_for('one') }}">Go to Part One</a>
     </section>
 </body>
 
