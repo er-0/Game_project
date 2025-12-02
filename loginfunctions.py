@@ -73,3 +73,12 @@ def start_new_game(player_id, goal_ident):
 
     return game_id
 
+def last_game_information(id):
+    sql = (f"SELECT a.ident, a.name, a.latitude_deg, a.longitude_deg, a.continent, a.municipality, a.country_name, "
+           f"g.goal_airport, g.kilometers_traveled, g.score, g.level_reached from games as g LEFT JOIN game_airports "
+           f"AS a ON g.goal_airport = a.ident WHERE g.game_id = %s;")
+    kursori = yhteys.cursor()
+    kursori.execute(sql, (id,))
+    information = kursori.fetchall()
+
+    return information
