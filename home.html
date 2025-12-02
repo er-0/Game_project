@@ -4,95 +4,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Home Page</title>
     <link rel="stylesheet" href="static/css/style.css">
+    <script src="../Game_project/static/popups.js" defer></script>
 </head>
 
 <body>
-    <header>
-        <h1>Flight Game</h1>
-    </header>
-    <div class="article">
-        <section class="firstSection">
-            <article class="table">
-                <h2>Departures</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Time</th>
-                            <th>Destination</th>
-                            <th>Remark</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>12:00</td>
-                            <td>Tokyo</td>
-                            <td>On time</td>
-                        </tr>
-                        <tr>
-                            <td>13:00</td>
-                            <td>London</td>
-                            <td>On time</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </article>
-            <article class="games">
-                <h2>Play</h2>
-                <button class="game-btn">Start</button>
-    <button class="game-btn">Continue</button>
-            </article>
-        </section>
-        <section class="secondSection">
-            <div class="map">
-                <iframe
+<header>
+    <h1>Flight Game</h1>
+</header>
+<div class="article">
+    <section class="firstSection">
+        <article class="table">
+            <h2>Departures</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Destination</th>
+                    <th>Remark</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>12:00</td>
+                    <td>Tokyo</td>
+                    <td>On time</td>
+                </tr>
+                <tr>
+                    <td>13:00</td>
+                    <td>London</td>
+                    <td>On time</td>
+                </tr>
+                </tbody>
+            </table>
+        </article>
+        <article class="games">
+            <h2>Aloita peli</h2>
+            <button id="startButton" class="game-btn">Aloita uusi peli</button>
+            <button class="game-btn">Jatka peliä</button>
+        </article>
+    </section>
+    <section class="secondSection">
+        <div class="map">
+            <iframe
                     src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d31683.38467856883!2d24.7161221!3d60.2434192!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sfi!4v1761675270339!5m2!1sen!2sfi"
                     width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <article class="scores">
+            <div class="personal">
+                <h3>Sinun pisteesi</h3>
+                <p>Tulokset...</p>
             </div>
-            <article class="scores">
-                <div class="personal">
-                    <h3>Your score</h3>
-                    <p>Results</p>
-                </div>
 
-                <div class="players">
-                    <h3>Other players - Top 5</h3>
-                    <p>1.</p>
-                    <p>2.</p>
-                    <p>3.</p>
-                    <p>4.</p>
-                    <p>5.</p>
-                </div>
-            </article>
-        </section>
-        <section class="thirdSection">
-            <h2>Rewards</h2>
-            <div class="rewards">
-                <div>
-                    <p>First Reward</p>
-                    <button class="reward-btn">Claim</button>
-                </div>
-                <div>
-                    <p>Second Reward</p>
-                    <button class="reward-btn">Claim</button>
-                </div>
-                <div>
-                    <p>Third Reward</p>
-                    <button class="reward-btn">Claim</button>
-                </div>
-                <div>
-                    <p>Fourth Reward</p>
-                    <button class="reward-btn">Claim</button>
-                </div>
-                <div>
-                    <p>Fifth Reward</p>
-                    <button class="reward-btn">Claim</button>
-                </div>
+            <div class="players">
+                <h3>Muut pelaajat - Top 5</h3>
+                <p>1.</p>
+                <p>2.</p>
+                <p>3.</p>
+                <p>4.</p>
+                <p>5.</p>
             </div>
-        </section>
-
+        </article>
+    </section>
+    <section class="thirdSection">
+        <h2>Saavutukset</h2>
+        <div class="rewards">
+            <div>
+                <p>First Reward</p>
+                <button class="reward-btn">Claim</button>
+            </div>
+            <div>
+                <p>Second Reward</p>
+                <button class="reward-btn">Claim</button>
+            </div>
+            <div>
+                <p>Third Reward</p>
+                <button class="reward-btn">Claim</button>
+            </div>
+            <div>
+                <p>Fourth Reward</p>
+                <button class="reward-btn">Claim</button>
+            </div>
+            <div>
+                <p>Fifth Reward</p>
+                <button class="reward-btn">Claim</button>
+            </div>
+        </div>
+    </section>
 
 
     <div class="article first game-block">
@@ -115,10 +115,50 @@
 
 </div>
 
+<footer>
+    <p>GROUP 5</p>
+</footer>
+
+<!-- game starrt/before capitals -->
+<div id="popup1" class="popup-overlay">
+    <div class="popup-content">
+        <h2>Tervetuloa arvaa pääkaupunki-peliin!</h2>
+        <p>Tässä minipelissä arvaat maiden pääkaupunkeja. Peli jatkuu, kunnes olet saanut tarpeeksi pisteitä.</p>
+        <button onclick="closePopup('popup1')">Aloita</button>
+        <button onclick="closePopup('popup1')">Lopeta peli</button>
     </div>
-    <footer>
-        <p>GROUP 5</p>
-    </footer>
+</div>
+
+<!-- count game -->
+<div id="popup2" class="popup-overlay">
+    <div class="popup-content">
+        <h2>Valmiina laskemaan?</h2>
+        <p>Tässä minipelissä ratkaisset yksinkertaisia päässälaskuja. Pelissä on aikaraja, pidä kiirrettä!</p>
+        <button onclick="closePopup('popup2')">Aloita</button>
+        <button onclick="closePopup('popup2')">Lopeta peli</button>
+    </div>
+</div>
+
+<!-- word game -->
+<div id="popup3" class="popup-overlay">
+    <div class="popup-content">
+        <h2>Sanapeli!</h2>
+        <p>Muodosta suomenkielisiä sanoja arvotuista kirjaimista. Sadalla pisteellä voittaa pelin!</p>
+        <button onclick="closePopup('popup3')">Aloita</button>
+        <button onclick="closePopup('popup3')">Lopeta peli</button>
+    </div>
+</div>
+
+<!-- end: wind/lose -->
+<div id="popupEnd" class="popup-overlay">
+    <div class="popup-content">
+        <h2>Peli ohi</h2>
+        <p id="endMessage"></p>
+        <p id="finalScore"></p>
+        <button onclick="closePopup('popupEnd')">Lopeta</button>
+    </div>
+</div>
+
 
 </body>
 

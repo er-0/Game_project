@@ -13,7 +13,6 @@ h1 {
     font-size: 1.5rem;
 }
 
-
 h2, h3 {
     font-family: 'Orbitron', sans-serif;
     text-transform: uppercase;
@@ -70,7 +69,7 @@ header p {
     background-color: cadetblue;
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 4px;
     cursor: pointer;
     transition: 0.2s ease;
     width: 60%;
@@ -121,7 +120,7 @@ header p {
     color: black;
     padding: 1rem;
     margin-bottom: 1rem;
-    border-radius: 10px;
+    border-radius: 6px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -155,7 +154,7 @@ header p {
     background-color: skyblue;
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 3px;
     cursor: pointer;
     transition: 0.2s ease;
     width: 80%;
@@ -188,7 +187,7 @@ header p {
 
 input {
     padding: 0.6rem 1rem;
-    border-radius: 6px;
+    border-radius: 4px;
     border: 1px solid #ccc;
     font-size: 1rem;
     width: 80%;
@@ -200,7 +199,7 @@ input {
     margin: 3rem auto;
     padding: 2rem;
     background: cadetblue;
-    border-radius: 12px;
+    border-radius: 6px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
@@ -223,7 +222,7 @@ input {
     max-width: 600px;
     padding: 0.8rem;
     font-size: 1.1rem;
-    border-radius: 8px;
+    border-radius: 6px;
     border: 1px solid #ccc;
 }
 
@@ -237,7 +236,7 @@ input {
     background-color: #fff;
     padding: 1rem;
     margin: 1rem 0;
-    border-radius: 10px;
+    border-radius: 6px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -270,5 +269,32 @@ footer {
     background-color: #4e7677;
     text-align: center;
     padding: 1rem;
+}
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(216, 224, 228);
+}
+
+.popup-content {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 6px;
+    border-style: solid;
+    border-width: 8px;
+    border-color: cadetblue;
+    text-align: center;
+}
+
+.popup-overlay.show {
+    display: flex;
+    opacity: 1;
 }
 
