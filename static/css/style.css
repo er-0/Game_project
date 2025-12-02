@@ -155,14 +155,17 @@ footer {
 
 .first {
     display:none;
+    background-color: cadetblue;
 }
 
 .second {
     display: none;
+    background-color: cadetblue;
 }
 
 .third {
     display:none;
+    background-color: cadetblue;
 }
 
 input {
