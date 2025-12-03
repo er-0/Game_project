@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request, session, render_template
 import secrets
 import os
 
-from loginfunctions import web_register_user, web_check_user_exists, player_information, random_airports, start_new_game
+from loginfunctions import web_register_user, web_check_user_exists, player_information, random_airports, start_new_game, last_game_information
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
@@ -23,12 +23,11 @@ def login_page():
         session['user_name'] = username
 
         # Get information about the user
-
         users_information = player_information(username)
 
         for user_information in users_information:
-            (airport_ident, airport_name, latitude_deg, longitude_deg, airport_continent, airport_municipality,
-             airport_country, player_id, games_played, last_game) = user_information
+            (airport_ident, airport_name, latitude_deg, longitude_deg, airport_continent, 
+             airport_municipality, airport_country, player_id, games_played, last_game) = user_information
             
         session['airport_ident'] = airport_ident
         session['airport_name'] = airport_name
@@ -41,8 +40,7 @@ def login_page():
         session['games_played'] = games_played
         session['last_game'] = last_game
 
-        # Get 20 random airports
-
+        # Get 20 random airports (вне зависимости от last_game)
         random_airports_list = random_airports(airport_country)
 
         airports_data = []
@@ -55,22 +53,52 @@ def login_page():
                 'longitude_deg': lon
             })
 
-        # Send response
+        # Base response dictionary
+        response_data = {
+            "success": True,
+            "message": "Login successful",
+            "username": username,
+            "airport_ident": airport_ident,
+            "airport_name": airport_name,
+            "latitude_deg": latitude_deg,
+            "longitude_deg": longitude_deg,
+            "airport_continent": airport_continent,
+            "airport_municipality": airport_municipality,
+            "airport_country": airport_country,
+            "player_id": player_id,
+            "games_played": games_played,
+            "last_game": last_game,
+            "random_airports": airports_data
+        }
 
-        return jsonify({"success": True,
-                        "message": "Login successful",
-                        "username": username,
-                        "airport_ident": airport_ident,
-                        "airport_name": airport_name,
-                        "latitude_deg": latitude_deg,
-                        "longitude_deg": longitude_deg,
-                        "airport_continent": airport_continent,
-                        "airport_municipality": airport_municipality,
-                        "airport_country": airport_country,
-                        "player_id": player_id,
-                        "games_played": games_played,
-                        "last_game": last_game,
-                        "random_airports": airports_data})
+        # Add last game info if available
+        if session['last_game'] != 0:
+            last_game_info = last_game_information(session['last_game'])
+            
+            if last_game_info:  # Проверяем, что информация есть
+                for last_game_data in last_game_info:
+                    (last_ident, last_name, last_latitude_deg, last_longitude_deg, 
+                     last_continent, last_municipality, last_country, last_goal_airport,
+                     last_kilometers_traveled, last_score, last_level_reached) = last_game_data
+                    
+                    # Добавляем информацию о последней игре в ответ
+                    response_data.update({
+                        "last_ident": last_ident,
+                        "last_name": last_name,
+                        "last_latitude_deg": last_latitude_deg,
+                        "last_longitude_deg": last_longitude_deg,
+                        "last_continent": last_continent,
+                        "last_municipality": last_municipality,
+                        "last_country": last_country,
+                        "last_goal_airport": last_goal_airport,
+                        "last_kilometers_traveled": last_kilometers_traveled,
+                        "last_score": last_score,
+                        "last_level_reached": last_level_reached
+                    })
+                    break  # Берем только первую запись, если их несколько
+
+        return jsonify(response_data)
+    
     else:
         return jsonify({"success": False, "message": "User not found"})
     
