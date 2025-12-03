@@ -75,13 +75,12 @@ def login_page():
         if session['last_game'] != 0:
             last_game_info = last_game_information(session['last_game'])
             
-            if last_game_info:  # Проверяем, что информация есть
+            if last_game_info:
                 for last_game_data in last_game_info:
                     (last_ident, last_name, last_latitude_deg, last_longitude_deg, 
                      last_continent, last_municipality, last_country, last_goal_airport,
                      last_kilometers_traveled, last_score, last_level_reached) = last_game_data
                     
-                    # Добавляем информацию о последней игре в ответ
                     response_data.update({
                         "last_ident": last_ident,
                         "last_name": last_name,
@@ -95,7 +94,7 @@ def login_page():
                         "last_score": last_score,
                         "last_level_reached": last_level_reached
                     })
-                    break  # Берем только первую запись, если их несколько
+                    break  
 
         return jsonify(response_data)
     
