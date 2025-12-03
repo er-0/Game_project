@@ -173,6 +173,8 @@ def newgame():
 # Start the first minigame: CAPITALS
 @app.route("/part_one/questions", methods=["GET"])
 def start_part_one():
+    if "game_id" not in session:
+        session["game_id"] = "100"
     print(session["game_id"])
     return generate_capitals_questions()
 
