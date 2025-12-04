@@ -34,5 +34,6 @@ main {
 footer {
     background-color: #4e7677;
     text-align: center;
-    padding: 1rem;
+    padding: 0.5rem;
+    font-size: large;
 }

@@ -23,6 +23,7 @@ header {
     text-align: center;
     background-color: cadetblue;
     padding: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 header p {
@@ -37,8 +38,9 @@ header p {
     max-width: 80%;
     width: 100%;
     margin: auto;
-    padding: 1rem;
     box-sizing: border-box;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px 0 rgba(5, 10, 47, 0.2), 0 6px 20px 0 rgba(7, 17, 57, 0.19);
 }
 
 .firstSection {
@@ -46,6 +48,7 @@ header p {
     justify-content: space-evenly;
     background-color: cadetblue;
     gap: 1.5rem;
+    border-radius: 8px 8px 0 0;
 }
 
 .table {
@@ -128,22 +131,27 @@ header p {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    padding-left: 0;
-    padding-right: 0;
+    max-width: 100%;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-bottom: 0.5rem;
+    background-color: #c1cedd;
+    border-radius: 0 0 8px 8px;
 }
 
 .thirdSection h2 {
     width: 100%;
     text-align: center;
-    background-color: #d8cab6;
     padding: 0.5rem 0;
+    background-color: #eef0f8;
+    border-radius: 8px;
 }
 
 .rewards {
     width: 100%;
     display: flex;
     justify-content: space-evenly;
+    gap: 6px;
 }
 
 .reward-btn {
@@ -262,13 +270,15 @@ table td, table th {
 
 .map {
     margin-top: 0.5rem;
-    padding-bottom: 2.4rem;
+    padding-bottom: 2rem;
 }
 
 footer {
     background-color: #4e7677;
     text-align: center;
-    padding: 1rem;
+    padding: 0.5rem;
+    font-size: large;
+    margin-top: 1.5rem;
 }
 
 .popup-overlay {
