@@ -314,6 +314,7 @@ footer {
     cursor: pointer;
     width: 40%;
     margin: 0.5rem;
+    text-decoration: none;
 }
 
 .popup-overlay.show {
