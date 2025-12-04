@@ -1,16 +1,35 @@
 'use strict';
 
-let q = [];
-let points = 0;
+let letters = '';
+let wordPoints = 0;
+let wordList = []
 
-const startBtn = document.getElementById('start');
-const questionDiv = document.getElementById('question');
-const optionsDiv = document.getElementById('options');
-const answerDiv = document.getElementById('answer');
+const wordStartBtn = document.getElementById('word-start');
+const wordQuestionDiv = document.getElementById('word-question');
+const wordOptionsDiv = document.getElementById('word-options');
+const wordResultDiv = document.getElementById('word-result');
 const wordForm = document.querySelector('#wordForm');
-const scoreDiv = document.getElementById('score');
+const wordScoreDiv = document.getElementById('word-score');
 
-async function check(word) {
+function randomLetters() {
+  return [...'abcdefghijklmnoprstuvyöä']
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 8)
+    .join('');
+}
+
+
+function checkLetters(word) {
+  console.log(word, letters);
+  for (let letter of word) {
+    if (!letters.includes(letter)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+async function checkWord(word) {
   const response = await fetch('/part_three/check_word', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -18,40 +37,70 @@ async function check(word) {
   });
   const res = await response.json();
   console.log(res, 'checkWord');
+  return res.valid;
+}
+
+async function verify(word) {
+  if (!checkLetters(word)) {
+    return {
+      valid: false,
+      message: 'Sana sisältää kirjaimia, joita ei ole annettu.',
+    };
+  }
+
+  const validInDictionary = await checkWord(word);
+
+  if (!validInDictionary) {
+    return {valid: false, message: 'Sana ei ole sanakirjassa.'};
+  } else {
+    return {valid: true, message: 'Oikein!'};
+  }
 }
 
 async function submitAnswer(answer) {
   if (answer.length === 0) {
-    showQuestion("reload")
+    showQuestion('reload');
   }
-  if (answer.length > 4) {
-    let isTrue = await check(answer)
-    console.log(isTrue, 'isTrue')
-    if (isTrue) {
-      points += 4
+  if (answer.length > 2 && !wordList.includes(answer)) {
+    let result = await verify(answer);
+    console.log(result, 'isTrue');
+    wordResultDiv.innerText = result.message;
+    if (result.valid) {
+      wordList.push(answer)
+      if (answer.length < 4) {
+        wordPoints += 4;
+      } else if (answer.length < 6) {
+        wordPoints += 10;
+      } else {
+        wordPoints += 15;
+      }
     }
   }
-  scoreDiv.innerText = 'Pisteitä: ' + points;
+  wordScoreDiv.innerText = 'Pisteitä: ' + wordPoints;
+  if (wordPoints >= 100) {
+    wordResultDiv.innerText = "Voitit!"
+    saveResult(wordPoints)
+  }
 }
 
-function showQuestion(q) {
-  let currentQ = {"question": `dummyletters + ${q}`}
-  questionDiv.innerText = currentQ.question;
-  optionsDiv.innerHTML = '';
+function showQuestion() {
+  letters = randomLetters();
+  wordOptionsDiv.innerText = letters;
 }
 
 wordForm.addEventListener('submit', async function(evt) {
   evt.preventDefault();  // <--- this stops the page reload
 
-  const answer = document.querySelector('input[name=wordAnswer]').value;
+  const answer = document.querySelector('input[name=word-input]').value;
   submitAnswer(answer);
   wordForm.reset();
 });
 
 function startWordGame() {
-  points = 0;
-  scoreDiv.innerText = 'Pisteitä: 0';
-  startBtn.style.display = 'none'
+  wordPoints = 0;
+  wordScoreDiv.innerText = 'Pisteitä: 0';
+  wordStartBtn.style.display = 'none';
+  showQuestion();
 }
 
 async function saveResult(points) {
@@ -64,4 +113,4 @@ async function saveResult(points) {
   console.log(res, 'saveResult');
 }
 
-startBtn.addEventListener('click', startWordGame);
+wordStartBtn.addEventListener('click', startWordGame);

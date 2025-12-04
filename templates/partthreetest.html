@@ -11,21 +11,18 @@
 
 <body>
 <div class="container">
-    <section>
-        <h1>Welcome</h1>
-        <button id="start">Start Part Three</button>
-        <div id="question"></div>
-        <div id="options"></div>
-        <div id="answer">
-            <form action="" id="wordForm">
-                <input type="text" name="wordAnswer">
-                <input type="submit">
-            </form>
-        </div>
-        <div id="score"></div>
-        <div id="result"></div>
-        <a href="{{ url_for('one') }}">Go to Part One</a>
-    </section>
+    <h1>Welcome</h1>
+    <button id="word-start">Start Part Three</button>
+    <div id="word-options"></div>
+    <div id="word-answer">
+        <form action="" id="wordForm">
+            <input type="text" name="word-input">
+            <input type="submit">
+        </form>
+    </div>
+    <div id="word-score"></div>
+    <div id="word-result"></div>
+    <a href="{{ url_for('one') }}">Go to Part One</a>
 </body>
 
 </html>
