@@ -1,38 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quick Count</title>
-  <link rel="stylesheet" href="../static/css/count-game.css" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Quick Count</title>
+    <link rel="stylesheet" href="../static/css/count-game.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="../static/progress-map.js" defer></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
 <header>
-  <h1>Flight Game</h1>
+    <h1>Flight Game</h1>
 </header>
 
 <main>
-  <div class="count-game-container">
-    <h2 class="title">Laskupeli</h2>
-    <p id="questionText">Laske päässä:</p>
-      <div id="mathDisplay" class="math-display">
-                <!-- laskut tulee täöhä -->
-      </div>
-      <div id="mathQuest" class="math-quest">
-      </div>
+    <section class="wrapper">
 
-    <form id="capitalForm">
-      <input type="text" id="answer" placeholder="Vastauksesi" autocomplete="off" />
-      <button type="submit">Arvaa</button>
-      <button type="goToPartTwo">Seuraava peli</button>
-      <button type="quit">Lopeta peli</button>
-    </form>
-    <div id="resultMessage"></div>
-  </div>
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+
+        <div class="count-game-container">
+            <h2 class="title">Laskupeli</h2>
+            <p id="questionText">Laske päässä:</p>
+            <div id="mathDisplay" class="math-display">
+                <!-- laskut tulee täöhä -->
+            </div>
+            <div id="mathQuest" class="math-quest">
+            </div>
+
+            <form id="capitalForm">
+                <input type="text" id="answer" placeholder="Vastauksesi" autocomplete="off"/>
+                <button type="submit">Arvaa</button>
+                <button type="goToPartTwo">Seuraava peli</button>
+                <button type="quit">Lopeta peli</button>
+            </form>
+            <div id="resultMessage"></div>
+        </div>
+    </section>
 </main>
 
 <footer>
-  <p>Ryhmä 5</p>
+    <p>Ryhmä 5</p>
 </footer>
 </body>
 </html>
