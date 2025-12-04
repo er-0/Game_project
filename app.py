@@ -28,6 +28,10 @@ def one():
 def two():
     return render_template("parttwotest.html")
 
+@app.route("/three")
+def three():
+    return render_template("partthreetest.html")
+
 
 # Login form actions
 
@@ -212,6 +216,17 @@ def start_part_two():
     questions = generate_math_questions()
     return jsonify(questions)
 
+
+# Check player submitted words against the finnish-words.txt file
+@app.route("/part_three/check_word", methods=["POST"])
+def check_word():
+    data = request.get_json()
+    user_word = data.get("word", "").strip().lower()
+
+    with open("static/finnish-words.txt", "r", encoding="utf-8") as f:
+        words = {w.strip().lower() for w in f.readlines()}
+
+    return jsonify({"valid": user_word in words})
 
 # Save the result of the -------------------------------------------FIRST AND SECOND minigame
 @app.route("/saveResult1", methods=["POST"])
