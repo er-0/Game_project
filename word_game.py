@@ -2,7 +2,7 @@ from db import yhteys
 import random
 
 # tiedostosta listaan
-finnish = open("finnish-words.txt", encoding="utf-8")
+finnish = open("static/finnish-words.txt", encoding="utf-8")
 finnish_words = []
 for line in finnish:
     word = line.strip()
