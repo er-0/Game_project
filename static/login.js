@@ -189,6 +189,9 @@ document.addEventListener('submit', async function (event) {
             const partone = document.getElementById('partone');
             partone.classList.remove('hidden');
 
+            const goToPartTwo = document.getElementById('goToPartTwo');
+            goToPartTwo.classList.add('hidden');
+
         } else {
             console.log(result.message);
         }

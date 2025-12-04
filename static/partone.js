@@ -36,9 +36,9 @@ function showQuestion(q) {
 
 function normalize(str) {
   return str.normalize('NFD')                  // split accent marks
-      .replace(/[\u0300-\u036f]/g, '')   // no accents
-      .replace(/[^a-zA-Z]/g, '')         // only letters
-      .toLowerCase();                    // all lowercase
+    .replace(/[\u0300-\u036f]/g, '')   // no accents
+    .replace(/[^a-zA-Z]/g, '')         // only letters
+    .toLowerCase();                    // all lowercase
 }
 
 function submitAnswer(answer) {
@@ -60,7 +60,7 @@ function submitAnswer(answer) {
   }
 }
 
-form.addEventListener('submit', async function(evt) {
+form.addEventListener('submit', async function (evt) {
   evt.preventDefault();
 
   const answer = document.querySelector('input[name=capitalAnswer]').value;
@@ -80,11 +80,24 @@ function startCapitalsGame() {
 async function saveResult(points) {
   const response = await fetch('/saveResult', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({points: points}),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ points: points }),
   });
   const res = await response.json();
   console.log(res, 'saveResult');
+
+  const goToPartTwo = document.getElementById('goToPartTwo');
+  goToPartTwo.classList.remove('hidden');
+
+  goToPartTwo.addEventListener('click', async function (evt) {
+
+    const partone = document.getElementById('partone');
+    partone.classList.add('hidden');
+
+    const parttwo = document.getElementById('parttwo');
+    parttwo.classList.remove('hidden');
+
+  });
 }
 
 startBtn.addEventListener('click', startCapitalsGame);
