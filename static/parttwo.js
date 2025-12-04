@@ -50,7 +50,7 @@ function showQuestion(q) {
   }*/
 }
 
-mathForm.addEventListener('submit', async function(evt) {
+mathForm.addEventListener('submit', async function (evt) {
   evt.preventDefault();  // <--- this stops the page reload
 
   const answer = document.querySelector('input[name=mathAnswer]').value;
@@ -70,8 +70,8 @@ function startMathGame() {
 async function saveResult(points) {
   const response = await fetch('/saveResult', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({points: points}),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ points: points }),
   });
   const res = await response.json();
   console.log(res, 'saveResult');

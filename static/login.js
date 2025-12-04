@@ -1,3 +1,19 @@
+'use strict';
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    // hide everything unnecessary
+
+    const mapsection = document.getElementById('mapsection');
+    mapsection.classList.add('hidden');
+
+    const partone = document.getElementById('partone');
+    partone.classList.add('hidden');
+
+    const parttwo = document.getElementById('parttwo');
+    parttwo.classList.add('hidden');
+});
+
 const map = L.map('map').setView([60.223876, 24.758061], 5);
 
 // actions with login form
@@ -19,6 +35,13 @@ loginForm.addEventListener('submit', async function (evt) {
     // Working with the results
 
     if (result.success === true) {
+
+        const loginFormSection = document.getElementById('loginFormSection');
+        loginFormSection.classList.add('hidden');
+
+        const mapsection = document.getElementById('mapsection');
+        mapsection.classList.remove('hidden');
+
         loginMessage.innerText = `${result.message}
         Your name: ${result.username},
         Your airport: ${result.airport_name},
@@ -157,7 +180,15 @@ document.addEventListener('submit', async function (event) {
         const result = await response.json();
 
         if (result.success === true) {
-            console.log(result.game_id);
+
+            // If new game is created, we are ready to start part one
+
+            const mapsection = document.getElementById('mapsection');
+            mapsection.classList.add('hidden');
+
+            const partone = document.getElementById('partone');
+            partone.classList.remove('hidden');
+
         } else {
             console.log(result.message);
         }
