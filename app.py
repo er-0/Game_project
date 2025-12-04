@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request, session, render_template
 import secrets
 import os
 
-from loginfunctions import web_register_user, web_check_user_exists, player_information, random_airports, start_new_game, last_game_information
+from loginfunctions import web_register_user, web_check_user_exists, player_information, random_airports, start_new_game, last_game_information, update_last_game
 from capitals_game import generate_capitals_questions, update_score
 from count_game import generate_math_questions
 
@@ -210,15 +210,16 @@ def start_part_two():
     return jsonify(questions)
 
 # Save the result of the -------------------------------------------FIRST AND SECOND minigame
-@app.route("/saveResult", methods=["POST"])
+@app.route("/saveResult1", methods=["POST"])
 def save_level():
     data = request.get_json()
     points = data.get("points")
 
     is_successful = update_score(points, session["game_id"])
 
-    return jsonify({"success": is_successful})
+    update_last_game(session["game_id"], session["player_id"])
 
+    return jsonify({"success": is_successful})
 
 if __name__ == "__main__":
     app.run(debug=True, host="127.0.0.1", port=3000)

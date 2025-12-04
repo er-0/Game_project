@@ -53,7 +53,7 @@ function submitAnswer(answer) {
   questionIndex += 1;
   showQuestion(q);
   if (questionIndex + 1 === q.length) {
-    saveResult(points);
+    saveResult1(points);
     questionDiv.innerHTML = '';
     answerDiv.innerHTML = '';
     optionsDiv.innerHTML = '';
@@ -77,14 +77,14 @@ function startCapitalsGame() {
   startBtn.style.display = 'none'
 }
 
-async function saveResult(points) {
-  const response = await fetch('/saveResult', {
+async function saveResult1(points) {
+  const response = await fetch('/saveResult1', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ points: points }),
   });
   const res = await response.json();
-  console.log(res, 'saveResult');
+  console.log(res, 'saveResult1');
 
   const goToPartTwo = document.getElementById('goToPartTwo');
   goToPartTwo.classList.remove('hidden');

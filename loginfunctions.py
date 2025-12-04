@@ -84,3 +84,12 @@ def last_game_information(id):
     information = kursori.fetchall()
 
     return information
+
+def update_last_game(game_id, player_id):
+
+    sql = f"UPDATE players SET last_game = %s WHERE id = %s;"
+    kursori = yhteys.cursor()
+    kursori.execute(sql, (game_id, player_id))
+    yhteys.commit()
+
+    return True
