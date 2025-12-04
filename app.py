@@ -54,7 +54,7 @@ def login_page():
         session['games_played'] = games_played
         session['last_game'] = last_game
 
-        # Get 20 random airports (вне зависимости от last_game)
+        # Get 20 random airports
         random_airports_list = random_airports(airport_country)
 
         airports_data = []

@@ -70,7 +70,12 @@ loginForm.addEventListener('submit', async function (evt) {
             const lastCoordinates = [result.last_latitude_deg, result.last_longitude_deg];
 
             L.marker(lastCoordinates, { icon: redMarker }).addTo(map)
-                .bindPopup(`<div class="home_airport_pop">Last airport</div>`)
+                .bindPopup(`<div class="home_airport_pop">Last airport
+                    <form class="load-game-form">
+                            <input type="hidden" value="${result.last_game}" name="startGameIdent">
+                            <input type="submit" value="Continue game">
+                        </form>
+                    </div>`)
                 .openPopup();
         }
 
