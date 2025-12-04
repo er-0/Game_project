@@ -23,8 +23,31 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh;
+    height: auto;
     padding: 2rem;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.map-container {
+    display: flex;
+    justify-content: center;
+    margin: 0.5rem 0 3rem 0;
+}
+
+#map {
+    width: 73rem; /* same as max-width for .game-container */
+    height: 100px; /* pretty skinny */
+    border-style: solid;
+    border-width: medium;
+    border-color: cadetblue;
+    border-radius: 4px;
+
 }
 
 .game-container {

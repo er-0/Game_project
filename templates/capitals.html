@@ -1,33 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Guess the Capital</title>
-  <link rel="stylesheet" href="../static/css/capitals.css" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Guess the Capital</title>
+    <link rel="stylesheet" href="../static/css/capitals.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="../static/progress-map.js" defer></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
 <header>
-  <h1>Flight Game</h1>
+    <h1>Flight Game</h1>
 </header>
 
 <main>
-  <div class="game-container">
-    <h2>Arvaa maan pääkaupunki</h2>
-    <p id="questionText">Maan ... pääkaupunki on?</p>
-    <form id="capitalForm">
-      <input type="text" id="capitalAnswer" placeholder="Vastauksesi" autocomplete="off" />
+    <section class="wrapper">
 
-      <button type="submit">Arvaa</button>
-      <button type="goToPartTwo">Seuraava peli</button>
-      <button type="quit">Lopeta peli</button>
-    </form>
-    <div id="resultMessage"></div>
-  </div>
+    <div class="map-container">
+        <div id="map"></div>
+    </div>
+
+    <div class="game-container">
+        <h2>Arvaa maan pääkaupunki</h2>
+        <p id="questionText">Maan ... pääkaupunki on?</p>
+        <form id="capitalForm">
+            <input type="text" id="capitalAnswer" placeholder="Vastauksesi" autocomplete="off"/>
+            <button type="submit">Arvaa</button>
+            <button type="goToPartTwo">Seuraava peli</button>
+            <button type="quit">Lopeta peli</button>
+        </form>
+        <div id="resultMessage"></div>
+    </div>
+
+   </section>
 </main>
 
 <footer>
-  <p>Ryhmä 5</p>
+    <p>Ryhmä 5</p>
 </footer>
 </body>
 </html>
