@@ -1,5 +1,20 @@
-const map = L.map('map').setView([60.223876, 24.758061], 13);
+'use strict';
 
+document.addEventListener('DOMContentLoaded', function () {
+
+    // hide everything unnecessary
+
+    const mapsection = document.getElementById('mapsection');
+    mapsection.classList.add('hidden');
+
+    const partone = document.getElementById('partone');
+    partone.classList.add('hidden');
+
+    const parttwo = document.getElementById('parttwo');
+    parttwo.classList.add('hidden');
+});
+
+const map = L.map('map').setView([60.223876, 24.758061], 5);
 
 // actions with login form
 const loginForm = document.getElementById('loginForm');
@@ -20,30 +35,68 @@ loginForm.addEventListener('submit', async function (evt) {
     // Working with the results
 
     if (result.success === true) {
+
+        const loginFormSection = document.getElementById('loginFormSection');
+        loginFormSection.classList.add('hidden');
+
+        const mapsection = document.getElementById('mapsection');
+        mapsection.classList.remove('hidden');
+
         loginMessage.innerText = `${result.message}
         Your name: ${result.username},
         Your airport: ${result.airport_name},
         Airport ident: ${result.airport_ident}`;
         console.log(result.random_airports)
+        console.log(result)
 
         // Actions with the map
 
-        const homeCoordinates = [result.latitude_deg, result.longitude_deg];
+        const greenMarker = L.ExtraMarkers.icon({
+            icon: 'fa-home',
+            markerColor: 'green',
+            shape: 'star',
+            prefix: 'fa'
+        });
 
-        L.marker(homeCoordinates).addTo(map)
-            .bindPopup('Home airport')
-            .openPopup();
+        if (result.last_ident) {
 
+            const redMarker = L.ExtraMarkers.icon({
+                icon: 'fa-home',
+                markerColor: 'red',
+                shape: 'star',
+                prefix: 'fa'
+            });
+
+            const lastCoordinates = [result.last_latitude_deg, result.last_longitude_deg];
+
+            L.marker(lastCoordinates, { icon: redMarker }).addTo(map)
+                .bindPopup(`<div class="home_airport_pop">Last airport</div>`)
+                .openPopup();
+        }
+
+        // Print 20 raandom airports
         result.random_airports.forEach((airport, index) => {
 
             const airportCoordinates = [airport.latitude_deg, airport.longitude_deg];
 
             L.marker(airportCoordinates).addTo(map)
-                .bindPopup(`Airport: ${airport.name} (${airport.ident})`)
+                .bindPopup(`Airport: ${airport.name} (${airport.ident})
+                    <div>
+                        <form class="start-game-form">
+                            <input type="hidden" value="${airport.ident}" name="startGameIdent">
+                            <input type="submit" value="Start a new game">
+                        </form>
+                    </div>`)
                 .openPopup();
         });
 
+        // Popup for the home airport
 
+        const homeCoordinates = [result.latitude_deg, result.longitude_deg];
+
+        L.marker(homeCoordinates, { icon: greenMarker }).addTo(map)
+            .bindPopup(`<div class="home_airport_pop">Home airport</div>`)
+            .openPopup();
     }
     else {
         loginMessage.innerText = `${result.message}`;
@@ -79,18 +132,27 @@ registrationForm.addEventListener('submit', async function (evt) {
 
         // Actions with the map
 
-        const homeCoordinates = [result.latitude_deg, result.longitude_deg]
-
-        L.marker(homeCoordinates).addTo(map)
-            .bindPopup('Home airport')
-            .openPopup();
-
         result.random_airports.forEach((airport, index) => {
 
             const airportCoordinates = [airport.latitude_deg, airport.longitude_deg];
 
+            // Print 20 raandom airports
             L.marker(airportCoordinates).addTo(map)
-                .bindPopup(`Airport: ${airport.name} (${airport.ident})`)
+                .bindPopup(`Airport: ${airport.name} (${airport.ident})
+                    <div>
+                        <form class="start-game-form">
+                            <input type="hidden" value="${airport.ident}" name="startGameIdent">
+                            <input type="submit" value="Start a new game">
+                        </form>
+                    </div>`)
+                .openPopup();
+
+            // Popup for the home airport
+
+            const homeCoordinates = [result.latitude_deg, result.longitude_deg]
+
+            L.marker(homeCoordinates).addTo(map)
+                .bindPopup('Home airport')
                 .openPopup();
         });
     }
@@ -100,6 +162,39 @@ registrationForm.addEventListener('submit', async function (evt) {
     }
 });
 
+// To start a new game
+
+document.addEventListener('submit', async function (event) {
+
+    if (event.target.classList.contains('start-game-form')) {
+        event.preventDefault();
+
+        const airportIdent = document.querySelector('input[name=startGameIdent]').value;
+
+        const response = await fetch('/newgame', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ airport: airportIdent }),
+        });
+
+        const result = await response.json();
+
+        if (result.success === true) {
+
+            // If new game is created, we are ready to start part one
+
+            const mapsection = document.getElementById('mapsection');
+            mapsection.classList.add('hidden');
+
+            const partone = document.getElementById('partone');
+            partone.classList.remove('hidden');
+
+        } else {
+            console.log(result.message);
+        }
+    }
+});
+
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19
+    maxZoom: 5
 }).addTo(map);
