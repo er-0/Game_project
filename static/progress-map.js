@@ -7,8 +7,4 @@ document.addEventListener('DOMContentLoaded', function() {
     attribution: '&copy; OpenStreetMap contributors'
   }).addTo(map);
 
-  // Call invalidateSize after a short delay to ensure layout is complete
-  setTimeout(function() {
-    map.invalidateSize();
-  }, 100);
 });
