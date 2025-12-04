@@ -1,80 +1,108 @@
 'use strict';
 
-let x = [];
-let MathQuestionIndex = 0;
-let MathPoints = 0;
+let q = [];
+let questionIndex = 0;
+let points = 0;
+let timeLeft = 60;
+let timerId = null;
+let level = 1;
 
-const mathStartBtn = document.getElementById('MathStart');
-const MathQuestionDiv = document.getElementById('MathQuestion');
-const MathOptionsDiv = document.getElementById('MathOptions');
-const MathAnswerDiv = document.getElementById('MathAnswer');
-const mathForm = document.querySelector('#mathForm');
-const MathScoreDiv = document.getElementById('MathScore');
+const timerDiv = document.getElementById('Mathtimer');
+const MathStartBtn = document.getElementById('Mathstart');
+const MathQuestionDiv = document.getElementById('Mathquestion');
+const MathAnswerDiv = document.getElementById('Mathanswer');
+const mathForm = document.getElementById('mathForm');
+const MathScoreDiv = document.getElementById('Mathscore');
 
-function submitAnswer(answer) {
-  const isCorrect = (answer === x[MathQuestionIndex].answer);
-  if (isCorrect) {
-    MathPoints += x[MathQuestionIndex].points;
-  }
-  MathScoreDiv.innerText = 'Pisteitä: ' + MathPoints;
-  MathQuestionIndex += 1;
-  showQuestion(x);
-  if (MathQuestionIndex + 1 === x.length) {
-    saveResult(MathPoints);
-    MathQuestionDiv.innerHTML = '';
-    MathAnswerDiv.innerHTML = '';
-    MathOptionsDiv.innerHTML = '';
-  }
+function getTimeForLevel(level) {
+    if (level === 1) return 15;
+    if (level === 2) return 10;
+    if (level === 3) return 5;
+    return 60;
 }
 
 async function loadQuestions() {
-  const response = await fetch('/part_two/questions');
-  x = await response.json();
-  console.log(x, 'loadQuestions');
-  showQuestion(x);
+    const response = await fetch('/part_two/questions');
+    q = await response.json();
 }
 
-function showQuestion(q) {
-  let currentQ = q[MathQuestionIndex];
-  MathQuestionDiv.innerText = currentQ.question;
-  MathOptionsDiv.innerHTML = '';
-  /*console.log(currentQ.options, 'options');
-  if (currentQ.options.length > 0) {
-    form.innerHTML = '';
-    for (let opt of currentQ.options) {
-      const btn = document.createElement('button');
-      btn.innerText = opt;
-      btn.onclick = () => submitAnswer(opt);
-      optionsDiv.appendChild(btn);
+function showQuestion() {
+    if (questionIndex >= q.length) {
+        endGame();
+        return;
     }
-  }*/
+
+    const currentQ = q[questionIndex];
+    MathQuestionDiv.innerText = currentQ.question;
+    MathAnswerDiv.innerText = '';
 }
 
-mathForm.addEventListener('submit', async function (evt) {
-  evt.preventDefault();  // <--- this stops the page reload
+mathForm.addEventListener('submit', function(evt) {
+    evt.preventDefault();
+    if (questionIndex >= q.length) return;
 
-  const answer = document.querySelector('input[name=answer]').value;
-  console.log(x[MathQuestionIndex], 'questionIndex from form');
-  submitAnswer(answer);
-  mathForm.reset();
+    const answer = document.querySelector('input[name=mathAnswer]').value.trim();
+    const currentQ = q[questionIndex];
+
+    if (answer === currentQ.answer.toString()) {
+        points += currentQ.points;
+        MathAnswerDiv.innerText = 'Oikein!';
+    } else {
+        MathAnswerDiv.innerText = `Väärin! Oikea vastaus: ${currentQ.answer}`;
+    }
+
+    MathScoreDiv.innerText = 'Pisteitä: ' + points;
+    questionIndex++;
+    mathForm.reset();
+    showQuestion();
 });
 
-function startMathGame() {
-  loadQuestions();
-  MathQuestionIndex = 0;
-  MathPoints = 0;
-  MathScoreDiv.innerText = 'Pisteitä: 0';
-  mathStartBtn.style.display = 'none'
+function startTimer(seconds) {
+    timeLeft = seconds;
+    timerDiv.innerText = `Aikaa: ${timeLeft}`;
+
+    if (timerId) clearInterval(timerId);
+
+    timerId = setInterval(() => {
+        timeLeft--;
+        timerDiv.innerText = `Aikaa: ${timeLeft}`;
+        if (timeLeft <= 0) {
+            clearInterval(timerId);
+            endGame();
+        }
+    }, 1000);
+}
+
+function endGame() {
+    clearInterval(timerId);
+    MathQuestionDiv.innerHTML = 'Peli loppui!';
+    MathAnswerDiv.innerHTML = '';
+    mathForm.style.display = 'none';
+    saveResult(points);
 }
 
 async function saveResult(points) {
-  const response = await fetch('/saveResult', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ points: points }),
-  });
-  const res = await response.json();
-  console.log(res, 'saveResult');
+    try {
+        const response = await fetch('/saveResult', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({points}),
+        });
+        const res = await response.json();
+        console.log(res, 'saveResult');
+    } catch (err) {
+        console.error('Tallennus epäonnistui', err);
+    }
 }
 
-mathStartBtn.addEventListener('click', startMathGame);
+async function startMathGame() {
+    await loadQuestions();
+    questionIndex = 0;
+    points = 0;
+    MathScoreDiv.innerText = 'Pisteitä: 0';
+    mathForm.style.display = 'block';
+    showQuestion();
+    startTimer(getTimeForLevel(level) * q.length);
+}
+
+MathStartBtn.addEventListener('click', startMathGame);
