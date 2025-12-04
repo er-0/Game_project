@@ -7,12 +7,12 @@ let timeLeft = 60;
 let timerId = null;
 let level = 1;
 
-const timerDiv = document.getElementById('Mathtimer');
-const MathStartBtn = document.getElementById('Mathstart');
-const MathQuestionDiv = document.getElementById('Mathquestion');
+const timerDiv = document.getElementById('MathTimer');
+const MathStartBtn = document.getElementById('MathStart');
+const MathQuestionDiv = document.getElementById('MathQuestion');
 const MathAnswerDiv = document.getElementById('Mathanswer');
 const mathForm = document.getElementById('mathForm');
-const MathScoreDiv = document.getElementById('Mathscore');
+const MathScoreDiv = document.getElementById('MathScore');
 
 function getTimeForLevel(level) {
     if (level === 1) return 15;
