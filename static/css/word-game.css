@@ -30,14 +30,17 @@ main {
 .word-game-container {
     background-color: #d7e9ea;
     padding: 2rem;
-    max-width: 600px;
-    width: 100%;
+    max-width: 100%;
+    width: 50%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
     font-family: 'Poppins', Arial, sans-serif;
     color: #222;
+    border-radius: 8px;
+    gap: 1rem;
+    box-shadow: 0 4px 8px 0 rgba(5, 10, 47, 0.2), 0 6px 20px 0 rgba(7, 17, 57, 0.19);
 }
 
 .title {
@@ -74,20 +77,23 @@ main {
     box-sizing: border-box;
 }
 
-button {
-    padding: 0.5rem 1rem;
+button[type="submit"],
+button[type="newLetters"],
+button[type="goToPartTwo"],
+button[type="quit"] {
+    padding: 0.8rem;
     font-size: 1rem;
     background-color: cadetblue;
     color: #fff;
     border: none;
     border-radius: 4px;
-    cursor: pointer;
-    margin-bottom: 1rem;
-    width: 100%;
-    max-width: 50%;
+    width: 50%;
 }
 
-button:hover {
+button[type="submit"]:hover,
+button[type="newLetters"]:hover,
+button[type="goToPartTwo"]:hover,
+button[type="quit"]:hover {
     background-color: lightskyblue;
 }
 
