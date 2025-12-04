@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Word game</title>
     <link rel="stylesheet" href="../static/css/word-game.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <script src="../static/progress-map.js" defer></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
 <header>
@@ -12,24 +15,31 @@
 </header>
 
 <main>
-    <div class="word-game-container">
-        <h2 class="title">Muodota sana- peli</h2>
+    <section class="wrapper">
 
-        <div id="letterDisplay" class="letters-display">
-            <!-- sanat tulee täöhä -->
+        <div class="map-container">
+            <div id="map"></div>
         </div>
 
-        <div id="wordList" class="word-list">
+        <div class="word-game-container">
+            <h2 class="title">Muodota sana- peli</h2>
+
+            <div id="letterDisplay" class="letters-display">
+                <!-- sanat tulee täöhä -->
+            </div>
+
+            <div id="wordList" class="word-list">
+            </div>
+
+            <input type="text" id="wordInput" placeholder="Keksi sana" autocomplete="off"/>
+
+            <button type="submit">Submit</button>
+            <button type="newLetters">New Letters</button>
+            <button type="goToPartTwo">Seuraava peli</button>
+            <button type="quit">Lopeta peli</button>
+
         </div>
-
-        <input type="text" id="wordInput" placeholder="Keksi sana" autocomplete="off"/>
-
-        <button type="submit">Submit</button>
-        <button type="newLetters">New Letters</button>
-        <button type="goToPartTwo">Seuraava peli</button>
-        <button type="quit">Lopeta peli</button>
-
-    </div>
+    </section>
 </main>
 
 <footer>
