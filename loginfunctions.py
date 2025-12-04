@@ -63,6 +63,7 @@ def random_airports(country):
 
     return random_airports
 
+# start new game
 def start_new_game(player_id, goal_ident):
 
     sql = f"INSERT INTO games (player_id, goal_airport) VALUES (%s, %s) RETURNING game_id;"
@@ -73,6 +74,7 @@ def start_new_game(player_id, goal_ident):
 
     return game_id
 
+# get information about the old game
 def last_game_information(id):
     sql = (f"SELECT a.ident, a.name, a.latitude_deg, a.longitude_deg, a.continent, a.municipality, a.country_name, "
            f"g.goal_airport, g.kilometers_traveled, g.score, g.level_reached from games as g LEFT JOIN game_airports "

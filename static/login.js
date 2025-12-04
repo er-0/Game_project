@@ -1,4 +1,4 @@
-const map = L.map('map').setView([60.223876, 24.758061], 10);
+const map = L.map('map').setView([60.223876, 24.758061], 5);
 
 // actions with login form
 const loginForm = document.getElementById('loginForm');
@@ -165,5 +165,5 @@ document.addEventListener('submit', async function (event) {
 });
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 10
+    maxZoom: 5
 }).addTo(map);
