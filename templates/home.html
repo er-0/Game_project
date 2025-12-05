@@ -7,6 +7,7 @@
     <title>Home Page</title>
     <link rel="stylesheet" href="static/css/style.css">
     <script src="/static/popups.js" defer></script>
+    <script src="../static/partone.js" defer></script>
 </head>
 
 <body>
@@ -124,8 +125,26 @@
     <div class="popup-content">
         <h2>Tervetuloa arvaa pääkaupunki-peliin!</h2>
         <p>Tässä minipelissä arvaat maiden pääkaupunkeja. Peli jatkuu, kunnes olet saanut tarpeeksi pisteitä.</p>
-        <button onclick="closePopup('popup1')">Aloita</button>
+        <button id="capital-start">Aloita</button>
         <button onclick="closePopup('popup1')">Lopeta peli</button>
+        <section class="wrapper" id="partone">
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
+            <div class="game-container">
+                <h2>Arvaa maan pääkaupunki</h2>
+                <div id="capital-question"></div>
+                <div id="capital-options"></div>
+                <div id="capital-answer">
+                    <form id="capital-form">
+                        <input type="text" id="capital-input" placeholder="Vastauksesi" autocomplete="off"/>
+                        <button type="submit">Arvaa</button>
+                    </form>
+                </div>
+                <div id="capital-result"></div>
+                <div id="capital-score"></div>
+            </div>
+        </section>
     </div>
 </div>
 

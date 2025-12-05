@@ -12,12 +12,15 @@ app.secret_key = secrets.token_hex(16)
 
 
 # HTML pages
-
+@app.route("/")
+def home():
+    return render_template("home.html")
+'''
 @app.route("/")
 def login():
     return render_template("login.html")
 
-'''
+
 @app.route("/one")
 def one():
     print(session['user_name'], 'sessionusername')

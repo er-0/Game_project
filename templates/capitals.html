@@ -1,48 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Guess the Capital</title>
-  <link rel="stylesheet" href="../static/css/capitals.css" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Guess the Capital</title>
+    <link rel="stylesheet" href="../static/css/capitals.css"/>
+    <script src="../static/partone.js" defer></script>
 </head>
 <body>
 <header>
-  <h1>Flight Game</h1>
+    <h1>Flight Game</h1>
 </header>
 
 <main>
-    <section class="wrapper">
-    <div class="map-container">
-        <div id="map"></div>
-    </div>
-  <div class="game-container">
-    <h2>Arvaa maan pääkaupunki</h2>
-    <p id="questionText">Maan ... pääkaupunki on?</p>
-    <form id="capitalForm">
-      <input type="text" id="capitalAnswer" placeholder="Vastauksesi" autocomplete="off" />
-      <button type="submit">Arvaa</button>
-    </form>
-    <div id="resultMessage"></div>
-  </div>
-    </section><section id="partone">
-        <button id="capital-start">Start Part One</button>
-        <div id="capital-question"></div>
-        <div id="capital-options"></div>
-        <div id="capital-answer">
-            <form action="" id="capital-form">
-                <input type="text" name="capital-input">
-                <input type="submit">
-            </form>
+    <section class="wrapper" id="partone">
+        <div class="map-container">
+            <div id="map"></div>
         </div>
-        <div id="capital-score"></div>
-        <div id="capital-result"></div>
-        <button id="goToPartTwo">Go to part two</button>
+        <div class="game-container">
+            <h2>Arvaa maan pääkaupunki</h2>
+            <button id="capital-start">Start Part One</button>
+            <div id="capital-question"></div>
+            <div id="capital-options"></div>
+            <div id="capital-answer">
+                <form id="capital-form">
+                    <input type="text" id="capital-input" placeholder="Vastauksesi" autocomplete="off"/>
+                    <button type="submit">Arvaa</button>
+                </form>
+            </div>
+            <div id="capital-result"></div>
+            <div id="capital-score"></div>
+        </div>
     </section>
 </main>
 
 <footer>
-  <p>GROUP 5</p>
+    <p>GROUP 5</p>
 </footer>
 </body>
 </html>

@@ -8,7 +8,7 @@ const capitalStartBtn = document.getElementById('capital-start');
 const capitalQuestionDiv = document.getElementById('capital-question');
 const capitalOptionsDiv = document.getElementById('capital-options');
 const capitalAnswerDiv = document.getElementById('capital-answer');
-const capitalForm = document.querySelector('#capital-form');
+const capitalForm = document.getElementById('capital-form');
 const capitalScoreDiv = document.getElementById('capital-score');
 
 async function loadQuestions() {
@@ -63,7 +63,7 @@ function submitAnswer(answer) {
 capitalForm.addEventListener('submit', async function (evt) {
   evt.preventDefault();
 
-  const answer = document.querySelector('input[name=capitalAnswer]').value;
+  const answer = document.querySelector('input[id=capital-input]').value;
   console.log(q[questionIndex], 'questionIndex from form');
   submitAnswer(answer);
   capitalForm.reset();
