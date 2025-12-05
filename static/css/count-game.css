@@ -9,6 +9,7 @@ header {
     text-align: center;
     background-color: cadetblue;
     padding: 1rem;
+    text-transform: uppercase;
 }
 
 header h1 {
@@ -34,6 +35,13 @@ main {
     width: 100%;
 }
 
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
 .map-container {
     display: flex;
     justify-content: center;
@@ -50,19 +58,20 @@ main {
 
 }
 
-.word-game-container {
+.count-game-container {
     background-color: #d7e9ea;
-    padding: 2rem;
-    width: 63%;
+    padding: 2rem 0 5rem 0;
+    max-width: 63%;
+    width: 100%;
+    text-align: center;
+    font-family: 'Poppins', Arial, sans-serif;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px 0 rgba(5, 10, 47, 0.2), 0 6px 20px 0 rgba(7, 17, 57, 0.19);
+    margin: auto;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family: 'Poppins', Arial, sans-serif;
-    color: #222;
-    border-radius: 8px;
-    gap: 1rem;
-    box-shadow: 0 4px 8px 0 rgba(5, 10, 47, 0.2), 0 6px 20px 0 rgba(7, 17, 57, 0.19);
 }
 
 .title {
@@ -73,8 +82,8 @@ main {
     margin-bottom: 1.5rem;
 }
 
-.word-list {
-    width: 60%;
+.math-quest {
+    width: 40%;
     min-height: 50px;
     margin-bottom: 1.5rem;
     padding: 10px;
@@ -89,8 +98,8 @@ main {
     text-align: center;
 }
 
-#wordInput {
-    width: 25%;
+#answer {
+    width: 100%;
     padding: 1rem;
     font-size: 1rem;
     border-radius: 6px;
@@ -100,7 +109,6 @@ main {
 }
 
 button[type="submit"],
-button[type="newLetters"],
 button[type="goToPartTwo"],
 button[type="quit"] {
     padding: 0.8rem;
@@ -109,27 +117,27 @@ button[type="quit"] {
     color: #fff;
     border: none;
     border-radius: 4px;
-    width: 25%;
+    width: 60%;
 }
 
 button[type="submit"]:hover,
-button[type="newLetters"]:hover,
 button[type="goToPartTwo"]:hover,
 button[type="quit"]:hover {
     background-color: lightskyblue;
 }
 
-#newLetters {
-    background-color: #4e7677;
-}
+#capitalForm {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 
-#newLetters:hover {
-    background-color: #7ab49b;
 }
 
 footer {
     background-color: #4e7677;
     text-align: center;
-    padding: 1rem;
-    margin-top: 2rem;
+    padding: 0.5rem;
+    font-size: large;
 }
