@@ -5,77 +5,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="../static/css/style.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
           integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="../static/login.js" defer></script>
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-extra-markers/1.2.0/css/leaflet.extra-markers.min.css">
+          href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-extra-markers/1.2.0/css/leaflet.extra-markers.min.css">
     <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-extra-markers/1.2.0/js/leaflet.extra-markers.min.js"></script>
+            src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-extra-markers/1.2.0/js/leaflet.extra-markers.min.js"></script>
     <script defer src="../static/partone.js"></script>
     <script defer src="../static/parttwo.js"></script>
+    <script defer src="../static/partthree.js"></script>
 </head>
 
 <body>
-    <header>
-        <p>Lentopeli</p>
-    </header>
-    <div class="container">
-        <section id="loginFormSection">
-            <h1>Tervetuloa</h1>
-            <p>Kirjaudu sisään</p>
-            <form id="loginForm">
-                <input type="text" id="loginUsername" placeholder="Syötä käyttäjänimesi">
-                <input type="submit" value="Kirjaudu">
+<header>
+    <p>Lentopeli</p>
+</header>
+<div class="container">
+    <section id="loginFormSection">
+        <h1>Tervetuloa</h1>
+        <p>Kirjaudu sisään</p>
+        <form id="loginForm">
+            <input type="text" id="loginUsername" placeholder="Syötä käyttäjänimesi">
+            <input type="submit" value="Kirjaudu">
+        </form>
+        <p>Rekisteröidy</p>
+        <form id="registerForm">
+            <input type="text" id="registerUsername" placeholder="Keksi käyttäjänimi">
+            <input type="submit" value="Rekisteröidy">
+        </form>
+    </section>
+    <section id="mapsection">
+        <p id="loginMessage"></p>
+        <p id="registerMessage"></p>
+        <div id="map"></div>
+    </section>
+    <section id="partone">
+        <button id="capital-start">Start Part One</button>
+        <div id="capital-question"></div>
+        <div id="capital-options"></div>
+        <div id="capital-answer">
+            <form action="" id="capital-form">
+                <input type="text" name="capital-input">
+                <input type="submit">
             </form>
-            <p>Rekisteröidy</p>
-            <form id="registerForm">
-                <input type="text" id="registerUsername" placeholder="Keksi käyttäjänimi">
-                <input type="submit" value="Rekisteröidy">
+        </div>
+        <div id="capital-score"></div>
+        <div id="capital-result"></div>
+        <button id="goToPartTwo">Go to part two</button>
+    </section>
+    <section id="parttwo">
+        <button id="math-start">Start Part Two</button>
+        <div id="math-question"></div>
+        <div id="math-options"></div>
+        <div id="math-answer">
+            <form action="" id="math-form">
+                <input type="text" name="math-input">
+                <input type="submit">
             </form>
-        </section>
-        <section id="mapsection">
-            <p id="loginMessage"></p>
-            <p id="registerMessage"></p>
-            <div id="map"></div>
-        </section>
-        <section id="partone">
-            <h1>Welcome</h1>
-            <button id="capitalStart">Start Part One</button>
-            <div id="capitalQuestion"></div>
-            <div id="capitalOptions"></div>
-            <div id="capitalAnswer">
-                <form action="" id="capitalForm">
-                    <input type="text" name="capitalAnswer">
-                    <input type="submit">
-                </form>
-            </div>
-            <div id="capitalScore"></div>
-            <div id="capitalResult"></div>
-            <button id="goToPartTwo">Go to part two</button>
-        </section>
-        <section id="parttwo">
-            <h1>Welcome</h1>
-            <button id="mathStart">Start Part Two</button>
-            <div id="mathQuestion"></div>
-            <div id="mathOptions"></div>
-            <div id="mathAnswer">
-                <form action="" id="mathForm">
-                    <input type="text" name="mathAnswer">
-                    <input type="submit">
-                </form>
-            </div>
-            <div id="score"></div>
-            <div id="result"></div>
-            <a href="{{ url_for('one') }}">Go to Part One</a>
-        </section>
-    </div>
-    <footer>
-        <p>Ryhmä 5</p>
-    </footer>
+        </div>
+        <div id="math-score"></div>
+        <div id="math-result"></div>
+    </section>
+    <section id="partthree">
+        <button id="word-start">Start Part Three</button>
+        <div id="word-options"></div>
+        <div id="word-answer">
+            <form action="" id="word-form">
+                <input type="text" name="word-input">
+                <input type="submit">
+            </form>
+        </div>
+        <div id="word-score"></div>
+        <div id="word-result"></div>
+    </section>
+</div>
+</div>
+<footer>
+    <p>Ryhmä 5</p>
+</footer>
 
 </body>
 

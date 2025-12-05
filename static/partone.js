@@ -2,14 +2,14 @@
 
 let q = [];
 let questionIndex = 0;
-let points = 0;
+let capitalPoints = 0;
 
-const startBtn = document.getElementById('start');
-const questionDiv = document.getElementById('question');
-const optionsDiv = document.getElementById('options');
-const answerDiv = document.getElementById('answer');
-const form = document.querySelector('#capitalForm');
-const scoreDiv = document.getElementById('score');
+const capitalStartBtn = document.getElementById('capital-start');
+const capitalQuestionDiv = document.getElementById('capital-question');
+const capitalOptionsDiv = document.getElementById('capital-options');
+const capitalAnswerDiv = document.getElementById('capital-answer');
+const capitalForm = document.querySelector('#capital-form');
+const capitalScoreDiv = document.getElementById('capital-score');
 
 async function loadQuestions() {
   const response = await fetch('/part_one/questions');
@@ -20,16 +20,16 @@ async function loadQuestions() {
 
 function showQuestion(q) {
   let currentQ = q[questionIndex];
-  questionDiv.innerText = currentQ.question;
-  optionsDiv.innerHTML = '';
+  capitalQuestionDiv.innerText = currentQ.question;
+  capitalOptionsDiv.innerHTML = '';
   console.log(currentQ.options, 'options');
   if (currentQ.options.length > 0) {
-    form.innerHTML = '';
+    capitalForm.innerHTML = '';
     for (let opt of currentQ.options) {
       const btn = document.createElement('button');
       btn.innerText = opt;
       btn.onclick = () => submitAnswer(opt);
-      optionsDiv.appendChild(btn);
+      capitalOptionsDiv.appendChild(btn);
     }
   }
 }
@@ -47,37 +47,37 @@ function submitAnswer(answer) {
     isCorrect = (normalize(answer) === normalize(q[questionIndex].answer));
   }
   if (isCorrect) {
-    points += q[questionIndex].points;
+    capitalPoints += q[questionIndex].points;
   }
-  scoreDiv.innerText = 'Pisteitä: ' + points;
+  capitalScoreDiv.innerText = 'Pisteitä: ' + capitalPoints;
   questionIndex += 1;
   showQuestion(q);
   if (questionIndex + 1 === q.length) {
-    saveResult1(points);
-    questionDiv.innerHTML = '';
-    answerDiv.innerHTML = '';
-    optionsDiv.innerHTML = '';
+    saveResult(capitalPoints);
+    capitalQuestionDiv.innerHTML = '';
+    capitalAnswerDiv.innerHTML = '';
+    capitalOptionsDiv.innerHTML = '';
   }
 }
 
-form.addEventListener('submit', async function (evt) {
+capitalForm.addEventListener('submit', async function (evt) {
   evt.preventDefault();
 
   const answer = document.querySelector('input[name=capitalAnswer]').value;
   console.log(q[questionIndex], 'questionIndex from form');
   submitAnswer(answer);
-  form.reset();
+  capitalForm.reset();
 });
 
 function startCapitalsGame() {
   loadQuestions();
   questionIndex = 0;
-  points = 0;
-  scoreDiv.innerText = 'Pisteitä: 0';
-  startBtn.style.display = 'none'
+  capitalPoints = 0;
+  capitalScoreDiv.innerText = 'Pisteitä: 0';
+  capitalStartBtn.style.display = 'none'
 }
 
-async function saveResult1(points) {
+async function saveResult(points) {
   const response = await fetch('/saveResult1', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -100,4 +100,4 @@ async function saveResult1(points) {
   });
 }
 
-startBtn.addEventListener('click', startCapitalsGame);
+capitalStartBtn.addEventListener('click', startCapitalsGame);

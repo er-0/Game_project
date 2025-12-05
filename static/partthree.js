@@ -8,7 +8,7 @@ const wordStartBtn = document.getElementById('word-start');
 const wordQuestionDiv = document.getElementById('word-question');
 const wordOptionsDiv = document.getElementById('word-options');
 const wordResultDiv = document.getElementById('word-result');
-const wordForm = document.querySelector('#wordForm');
+const wordForm = document.querySelector('#word-form');
 const wordScoreDiv = document.getElementById('word-score');
 
 function randomLetters() {

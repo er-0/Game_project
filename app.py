@@ -17,7 +17,7 @@ app.secret_key = secrets.token_hex(16)
 def login():
     return render_template("login.html")
 
-
+'''
 @app.route("/one")
 def one():
     print(session['user_name'], 'sessionusername')
@@ -31,7 +31,7 @@ def two():
 @app.route("/three")
 def three():
     return render_template("partthreetest.html")
-
+'''
 
 # Login form actions
 
