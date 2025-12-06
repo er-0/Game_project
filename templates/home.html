@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
     <link rel="stylesheet" href="static/css/style.css">
-    <script src="/static/popups.js" defer></script>
-    <script src="../static/partone.js" defer></script>
+    <script type="module" src="/static/popups.js"></script>
+  <!--  <script src="../static/partone.js" defer></script>
+    <script src="../static/parttwo.js" defer></script> -->
+    <!-- <script src="../static/partthree.js" defer></script> -->
 </head>
 
 <body>
@@ -43,7 +45,8 @@
         <article class="games">
             <h2>Aloita peli</h2>
             <button id="startButton" class="game-btn">Aloita uusi peli</button>
-            <button class="game-btn">Jatka peliä</button>
+            <button id="mathButton" class="game-btn">Matikka</button>
+            <button id="wordgameButton" class="game-btn">Sanapeli</button>
         </article>
     </section>
     <section class="secondSection">
@@ -125,13 +128,13 @@
     <div class="popup-content">
         <h2>Tervetuloa arvaa pääkaupunki-peliin!</h2>
         <p>Tässä minipelissä arvaat maiden pääkaupunkeja. Peli jatkuu, kunnes olet saanut tarpeeksi pisteitä.</p>
-        <button id="capital-start">Aloita</button>
+        <button onclick="openMinigame('one')">Aloita</button>
         <button onclick="closePopup('popup1')">Lopeta peli</button>
-        <section class="wrapper" id="partone">
+        <section class="wrapper" id="part-one">
             <div class="map-container">
                 <div id="map"></div>
             </div>
-            <div class="game-container">
+            <div class="game-container" id="game-one">
                 <h2>Arvaa maan pääkaupunki</h2>
                 <div id="capital-question"></div>
                 <div id="capital-options"></div>
@@ -145,6 +148,7 @@
                 <div id="capital-score"></div>
             </div>
         </section>
+        <button id="next-game">Seuraava peli</button>
     </div>
 </div>
 
@@ -153,8 +157,22 @@
     <div class="popup-content">
         <h2>Valmiina laskemaan?</h2>
         <p>Tässä minipelissä ratkaisset yksinkertaisia päässälaskuja. Pelissä on aikaraja, pidä kiirrettä!</p>
-        <button onclick="closePopup('popup2')">Aloita</button>
+        <button id="math-start">Aloita</button>
         <button onclick="closePopup('popup2')">Lopeta peli</button>
+        <section class="wrapper" id="part-two">
+            <div class="game-container">
+                <div id="math-question"></div>
+                <div id="math-options"></div>
+                <div id="math-answer">
+                    <form action="" id="math-form">
+                        <input type="text" id="math-input" placeholder="Vastauksesi" autocomplete="off"/>
+                        <input type="submit">
+                    </form>
+                </div>
+                <div id="math-score"></div>
+                <div id="math-result"></div>
+            </div>
+        </section>
     </div>
 </div>
 
@@ -163,8 +181,21 @@
     <div class="popup-content">
         <h2>Sanapeli!</h2>
         <p>Muodosta suomenkielisiä sanoja arvotuista kirjaimista. Sadalla pisteellä voittaa pelin!</p>
-        <button onclick="closePopup('popup3')">Aloita</button>
+        <button id="word-start">Aloita</button>
         <button onclick="closePopup('popup3')">Lopeta peli</button>
+        <section class="wrapper" id="part-three">
+            <div class="game-container">
+                <div id="word-options"></div>
+                <div id="word-answer">
+                    <form action="" id="word-form">
+                        <input type="text" id="word-input" placeholder="Vastauksesi" autocomplete="off"/>
+                        <input type="submit">
+                    </form>
+                </div>
+                <div id="word-score"></div>
+                <div id="word-result"></div>
+            </div>
+        </section>
     </div>
 </div>
 

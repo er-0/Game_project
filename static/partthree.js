@@ -91,7 +91,7 @@ function showQuestion() {
 wordForm.addEventListener('submit', async function(evt) {
   evt.preventDefault();  // <--- this stops the page reload
 
-  const answer = document.querySelector('input[name=word-input]').value;
+  const answer = document.querySelector('input[id=word-input]').value;
   submitAnswer(answer);
   wordForm.reset();
 });

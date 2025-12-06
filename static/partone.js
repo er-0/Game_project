@@ -4,12 +4,21 @@ let q = [];
 let questionIndex = 0;
 let capitalPoints = 0;
 
-const capitalStartBtn = document.getElementById('capital-start');
+const gameDiv = document.getElementById('game-one');
 const capitalQuestionDiv = document.getElementById('capital-question');
 const capitalOptionsDiv = document.getElementById('capital-options');
 const capitalAnswerDiv = document.getElementById('capital-answer');
 const capitalForm = document.getElementById('capital-form');
 const capitalScoreDiv = document.getElementById('capital-score');
+const nextGame = document.getElementById('next-game');
+
+export async function start() {
+  gameDiv.classList.add('show');
+  questionIndex = 0;
+  capitalPoints = 0;
+  capitalScoreDiv.innerText = 'Pisteitä: 0';
+  await loadQuestions();
+}
 
 async function loadQuestions() {
   const response = await fetch('/part_one/questions');
@@ -36,9 +45,9 @@ function showQuestion(q) {
 
 function normalize(str) {
   return str.normalize('NFD')                  // split accent marks
-    .replace(/[\u0300-\u036f]/g, '')   // no accents
-    .replace(/[^a-zA-Z]/g, '')         // only letters
-    .toLowerCase();                    // all lowercase
+      .replace(/[\u0300-\u036f]/g, '')   // no accents
+      .replace(/[^a-zA-Z]/g, '')         // only letters
+      .toLowerCase();                    // all lowercase
 }
 
 function submitAnswer(answer) {
@@ -51,16 +60,14 @@ function submitAnswer(answer) {
   }
   capitalScoreDiv.innerText = 'Pisteitä: ' + capitalPoints;
   questionIndex += 1;
-  showQuestion(q);
-  if (questionIndex + 1 === q.length) {
-    saveResult(capitalPoints);
-    capitalQuestionDiv.innerHTML = '';
-    capitalAnswerDiv.innerHTML = '';
-    capitalOptionsDiv.innerHTML = '';
+  if (questionIndex >= q.length) {
+    endGame();
+  } else {
+    showQuestion(q);
   }
 }
 
-capitalForm.addEventListener('submit', async function (evt) {
+capitalForm.addEventListener('submit', async function(evt) {
   evt.preventDefault();
 
   const answer = document.querySelector('input[id=capital-input]').value;
@@ -69,35 +76,24 @@ capitalForm.addEventListener('submit', async function (evt) {
   capitalForm.reset();
 });
 
-function startCapitalsGame() {
-  loadQuestions();
-  questionIndex = 0;
-  capitalPoints = 0;
-  capitalScoreDiv.innerText = 'Pisteitä: 0';
-  capitalStartBtn.style.display = 'none'
-}
-
 async function saveResult(points) {
-  const response = await fetch('/saveResult1', {
+  const response = await fetch('/saveResult', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ points: points }),
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({points: points}),
   });
   const res = await response.json();
-  console.log(res, 'saveResult1');
-
-  const goToPartTwo = document.getElementById('goToPartTwo');
-  goToPartTwo.classList.remove('hidden');
-
-  goToPartTwo.addEventListener('click', async function (evt) {
-
-    const partone = document.getElementById('partone');
-    partone.classList.add('hidden');
-
-    const parttwo = document.getElementById('parttwo');
-    parttwo.classList.remove('hidden');
-
-  });
+  console.log(res, 'saveResult');
 }
 
-capitalStartBtn.addEventListener('click', startCapitalsGame);
+async function endGame() {
+  await saveResult(capitalPoints);
+  capitalQuestionDiv.innerHTML = '';
+  capitalAnswerDiv.innerHTML = '';
+  capitalOptionsDiv.innerHTML = '';
+}
+
+nextGame.addEventListener('click', (evt) => {
+  closePopup('popup1');
+  showPopup('popup2');
+})

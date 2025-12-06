@@ -322,3 +322,10 @@ footer {
     opacity: 1;
 }
 
+.game-container {
+    display: none;
+}
+
+.game-container.show {
+    display: block;
+}

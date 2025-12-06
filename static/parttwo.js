@@ -1,6 +1,6 @@
 'use strict';
 
-let r = [];
+let q = [];
 let mathQuestionIndex = 0;
 let mathPoints = 0;
 
@@ -12,9 +12,9 @@ const mathForm = document.querySelector('#math-form');
 const mathScoreDiv = document.getElementById('math-score');
 
 function submitAnswer(answer) {
-  const isCorrect = (answer === r[mathQuestionIndex].answer);
+  const isCorrect = (answer === q[mathQuestionIndex].answer);
   if (isCorrect) {
-    mathPoints += r[mathQuestionIndex].points;
+    mathPoints += q[mathQuestionIndex].points;
   }
   mathScoreDiv.innerText = 'Pisteitä: ' + mathPoints;
   mathQuestionIndex += 1;
@@ -29,32 +29,21 @@ function submitAnswer(answer) {
 
 async function loadQuestions() {
   const response = await fetch('/part_two/questions');
-  r = await response.json();
-  console.log(r, 'loadQuestions');
-  showQuestion(r);
+  q = await response.json();
+  console.log(q, 'loadQuestions');
+  showQuestion(q);
 }
 
 function showQuestion(q) {
   let currentQ = q[mathQuestionIndex];
   mathQuestionDiv.innerText = currentQ.question;
   mathOptionsDiv.innerHTML = '';
-  /*console.log(currentQ.options, 'options');
-  if (currentQ.options.length > 0) {
-    form.innerHTML = '';
-    for (let opt of currentQ.options) {
-      const btn = document.createElement('button');
-      btn.innerText = opt;
-      btn.onclick = () => submitAnswer(opt);
-      optionsDiv.appendChild(btn);
-    }
-  }*/
 }
 
 mathForm.addEventListener('submit', async function (evt) {
   evt.preventDefault();  // <--- this stops the page reload
-
-  const answer = document.querySelector('input[name=mathAnswer]').value;
-  console.log(r[mathQuestionIndex], 'questionIndex from form');
+  const answer = document.querySelector('input[id=math-input]').value;
+  console.log(q[mathQuestionIndex], 'questionIndex from form');
   submitAnswer(answer);
   mathForm.reset();
 });

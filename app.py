@@ -15,26 +15,7 @@ app.secret_key = secrets.token_hex(16)
 @app.route("/")
 def home():
     return render_template("home.html")
-'''
-@app.route("/")
-def login():
-    return render_template("login.html")
 
-
-@app.route("/one")
-def one():
-    print(session['user_name'], 'sessionusername')
-    return render_template("partonetest.html")
-
-
-@app.route("/two")
-def two():
-    return render_template("parttwotest.html")
-
-@app.route("/three")
-def three():
-    return render_template("partthreetest.html")
-'''
 
 # Login form actions
 
@@ -208,7 +189,7 @@ def newgame():
 @app.route("/part_one/questions", methods=["GET"])
 def start_part_one():
     if "game_id" not in session:
-        session["game_id"] = "100"
+        session["game_id"] = "69"
     print(session["game_id"])
     return generate_capitals_questions()
 
@@ -231,15 +212,19 @@ def check_word():
 
     return jsonify({"valid": user_word in words})
 
+
 # Save the result of the -------------------------------------------FIRST AND SECOND minigame
-@app.route("/saveResult1", methods=["POST"])
+@app.route("/saveResult", methods=["POST"])
 def save_level():
     data = request.get_json()
     points = data.get("points")
+    if "player_id" not in session:
+        session["player_id"] = "41"
 
+    print(points, session["game_id"], "from approute")
     is_successful = update_score(points, session["game_id"])
 
-    update_last_game(session["game_id"], session["player_id"])
+    #update_last_game(session["game_id"], session["player_id"])
 
     return jsonify({"success": is_successful})
 
