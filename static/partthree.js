@@ -1,15 +1,24 @@
 'use strict';
 
 let letters = '';
-let wordPoints = 0;
+let points = 0;
 let wordList = []
 
-const wordStartBtn = document.getElementById('word-start');
+const gameDiv = document.getElementById('game-three')
 const wordQuestionDiv = document.getElementById('word-question');
 const wordOptionsDiv = document.getElementById('word-options');
 const wordResultDiv = document.getElementById('word-result');
-const wordForm = document.querySelector('#word-form');
+const wordForm = document.getElementById('word-form');
+const input = document.getElementById('word-input')
 const wordScoreDiv = document.getElementById('word-score');
+
+
+export async function start() {
+  gameDiv.classList.add('show');
+  points = 0;
+  wordScoreDiv.innerText = 'Pisteitä: 0';
+}
+
 
 function randomLetters() {
   return [...'abcdefghijklmnoprstuvyöä']
@@ -68,18 +77,18 @@ async function submitAnswer(answer) {
     if (result.valid) {
       wordList.push(answer)
       if (answer.length < 4) {
-        wordPoints += 4;
+        points += 4;
       } else if (answer.length < 6) {
-        wordPoints += 10;
+        points += 10;
       } else {
-        wordPoints += 15;
+        points += 15;
       }
     }
   }
-  wordScoreDiv.innerText = 'Pisteitä: ' + wordPoints;
-  if (wordPoints >= 100) {
+  wordScoreDiv.innerText = 'Pisteitä: ' + points;
+  if (points >= 100) {
     wordResultDiv.innerText = "Voitit!"
-    saveResult(wordPoints)
+    saveResult(points)
   }
 }
 
@@ -96,13 +105,6 @@ wordForm.addEventListener('submit', async function(evt) {
   wordForm.reset();
 });
 
-function startWordGame() {
-  wordPoints = 0;
-  wordScoreDiv.innerText = 'Pisteitä: 0';
-  wordStartBtn.style.display = 'none';
-  showQuestion();
-}
-
 async function saveResult(points) {
   const response = await fetch('/saveResult', {
     method: 'POST',
@@ -112,5 +114,3 @@ async function saveResult(points) {
   const res = await response.json();
   console.log(res, 'saveResult');
 }
-
-wordStartBtn.addEventListener('click', startWordGame);

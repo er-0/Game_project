@@ -148,7 +148,7 @@
                 <div id="capital-score"></div>
             </div>
         </section>
-        <button id="next-game">Seuraava peli</button>
+        <button id="goto-two">Seuraava peli</button>
     </div>
 </div>
 
@@ -157,10 +157,10 @@
     <div class="popup-content">
         <h2>Valmiina laskemaan?</h2>
         <p>Tässä minipelissä ratkaisset yksinkertaisia päässälaskuja. Pelissä on aikaraja, pidä kiirrettä!</p>
-        <button id="math-start">Aloita</button>
+        <button onclick="openMinigame('two')">Aloita</button>
         <button onclick="closePopup('popup2')">Lopeta peli</button>
         <section class="wrapper" id="part-two">
-            <div class="game-container">
+            <div class="game-container" id="game-two">
                 <div id="math-question"></div>
                 <div id="math-options"></div>
                 <div id="math-answer">
@@ -173,6 +173,7 @@
                 <div id="math-result"></div>
             </div>
         </section>
+        <button id="goto-three">Seuraava peli</button>
     </div>
 </div>
 
@@ -181,10 +182,10 @@
     <div class="popup-content">
         <h2>Sanapeli!</h2>
         <p>Muodosta suomenkielisiä sanoja arvotuista kirjaimista. Sadalla pisteellä voittaa pelin!</p>
-        <button id="word-start">Aloita</button>
+        <button onclick="openMinigame('three')">Aloita</button>
         <button onclick="closePopup('popup3')">Lopeta peli</button>
         <section class="wrapper" id="part-three">
-            <div class="game-container">
+            <div class="game-container" id="game-three">
                 <div id="word-options"></div>
                 <div id="word-answer">
                     <form action="" id="word-form">
@@ -196,6 +197,7 @@
                 <div id="word-result"></div>
             </div>
         </section>
+        <button onclick=closePopup('popup3')>Seuraava peli</button>
     </div>
 </div>
 

@@ -1,26 +1,37 @@
 'use strict';
 
 let q = [];
-let mathQuestionIndex = 0;
-let mathPoints = 0;
+let questionIndex = 0;
+let points = 0;
 
-const mathStartBtn = document.getElementById('math-start');
+const gameDiv = document.getElementById('game-two');
 const mathQuestionDiv = document.getElementById('math-question');
 const mathOptionsDiv = document.getElementById('math-options');
 const mathAnswerDiv = document.getElementById('math-answer');
-const mathForm = document.querySelector('#math-form');
+const mathForm = document.getElementById('math-form');
+const input = document.getElementById('math-input')
 const mathScoreDiv = document.getElementById('math-score');
+const nextGame = document.getElementById('goto-three');
+
+export async function start() {
+  gameDiv.classList.add('show');
+  questionIndex = 0;
+  points = 0;
+  mathScoreDiv.innerText = 'Pisteitä: 0';
+  await loadQuestions();
+}
+
 
 function submitAnswer(answer) {
-  const isCorrect = (answer === q[mathQuestionIndex].answer);
+  const isCorrect = (answer === q[questionIndex].answer);
   if (isCorrect) {
-    mathPoints += q[mathQuestionIndex].points;
+    points += q[questionIndex].points;
   }
-  mathScoreDiv.innerText = 'Pisteitä: ' + mathPoints;
-  mathQuestionIndex += 1;
-  showQuestion(r);
-  if (mathQuestionIndex + 1 === r.length) {
-    saveResult(mathPoints);
+  mathScoreDiv.innerText = 'Pisteitä: ' + points;
+  questionIndex += 1;
+  showQuestion(q);
+  if (questionIndex + 1 === q.length) {
+    saveResult(points);
     mathQuestionDiv.innerHTML = '';
     mathAnswerDiv.innerHTML = '';
     mathOptionsDiv.innerHTML = '';
@@ -35,26 +46,19 @@ async function loadQuestions() {
 }
 
 function showQuestion(q) {
-  let currentQ = q[mathQuestionIndex];
+  let currentQ = q[questionIndex];
   mathQuestionDiv.innerText = currentQ.question;
   mathOptionsDiv.innerHTML = '';
+  input.focus()
 }
 
 mathForm.addEventListener('submit', async function (evt) {
   evt.preventDefault();  // <--- this stops the page reload
   const answer = document.querySelector('input[id=math-input]').value;
-  console.log(q[mathQuestionIndex], 'questionIndex from form');
+  console.log(q[questionIndex], 'questionIndex from form');
   submitAnswer(answer);
   mathForm.reset();
 });
-
-function startMathGame() {
-  loadQuestions();
-  mathQuestionIndex = 0;
-  mathPoints = 0;
-  mathScoreDiv.innerText = 'Pisteitä: 0';
-  mathStartBtn.style.display = 'none'
-}
 
 async function saveResult(points) {
   const response = await fetch('/saveResult', {
@@ -66,4 +70,7 @@ async function saveResult(points) {
   console.log(res, 'saveResult');
 }
 
-mathStartBtn.addEventListener('click', startMathGame);
+nextGame.addEventListener('click', (evt) => {
+  closePopup('popup2');
+  showPopup('popup3');
+})

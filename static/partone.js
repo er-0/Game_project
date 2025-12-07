@@ -9,8 +9,9 @@ const capitalQuestionDiv = document.getElementById('capital-question');
 const capitalOptionsDiv = document.getElementById('capital-options');
 const capitalAnswerDiv = document.getElementById('capital-answer');
 const capitalForm = document.getElementById('capital-form');
+const input = document.getElementById('capital-input');
 const capitalScoreDiv = document.getElementById('capital-score');
-const nextGame = document.getElementById('next-game');
+const nextGame = document.getElementById('goto-two');
 
 export async function start() {
   gameDiv.classList.add('show');
@@ -41,6 +42,7 @@ function showQuestion(q) {
       capitalOptionsDiv.appendChild(btn);
     }
   }
+  input.focus()
 }
 
 function normalize(str) {
