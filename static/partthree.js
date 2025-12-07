@@ -5,18 +5,20 @@ let points = 0;
 let wordList = []
 
 const gameDiv = document.getElementById('game-three')
-const wordQuestionDiv = document.getElementById('word-question');
-const wordOptionsDiv = document.getElementById('word-options');
-const wordResultDiv = document.getElementById('word-result');
-const wordForm = document.getElementById('word-form');
+const questionDiv = document.getElementById('word-question');
+const optionsDiv = document.getElementById('word-options');
+const resultDiv = document.getElementById('word-result');
+const form = document.getElementById('word-form');
 const input = document.getElementById('word-input')
-const wordScoreDiv = document.getElementById('word-score');
+const scoreDiv = document.getElementById('word-score');
+const finishBtn = document.getElementById('finish-game')
 
 
 export async function start() {
+  showQuestion()
   gameDiv.classList.add('show');
   points = 0;
-  wordScoreDiv.innerText = 'Pisteitä: 0';
+  scoreDiv.innerText = 'Pisteitä: 0';
 }
 
 
@@ -70,10 +72,13 @@ async function submitAnswer(answer) {
   if (answer.length === 0) {
     showQuestion('reload');
   }
+  if (wordList.includes(answer)) {
+    scoreDiv.innerText += `Arvasit jo sanan ${answer}.`
+  }
   if (answer.length > 2 && !wordList.includes(answer)) {
     let result = await verify(answer);
     console.log(result, 'isTrue');
-    wordResultDiv.innerText = result.message;
+    resultDiv.innerText = result.message;
     if (result.valid) {
       wordList.push(answer)
       if (answer.length < 4) {
@@ -85,24 +90,23 @@ async function submitAnswer(answer) {
       }
     }
   }
-  wordScoreDiv.innerText = 'Pisteitä: ' + points;
+  scoreDiv.innerText = 'Pisteitä: ' + points;
   if (points >= 100) {
-    wordResultDiv.innerText = "Voitit!"
-    saveResult(points)
+    resultDiv.innerText = "Voitit!"
   }
 }
 
 function showQuestion() {
   letters = randomLetters();
-  wordOptionsDiv.innerText = letters;
+  optionsDiv.innerText = letters;
 }
 
-wordForm.addEventListener('submit', async function(evt) {
+form.addEventListener('submit', async function(evt) {
   evt.preventDefault();  // <--- this stops the page reload
 
   const answer = document.querySelector('input[id=word-input]').value;
   submitAnswer(answer);
-  wordForm.reset();
+  form.reset();
 });
 
 async function saveResult(points) {
@@ -114,3 +118,8 @@ async function saveResult(points) {
   const res = await response.json();
   console.log(res, 'saveResult');
 }
+
+finishBtn.addEventListener('click', () => {
+  saveResult(points)
+  closePopup('popup3')
+})
