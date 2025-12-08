@@ -189,14 +189,11 @@ document.addEventListener('submit', async function (event) {
 
             // If new game is created, we are ready to start part one
 
-            const mapsection = document.getElementById('mapsection');
-            mapsection.classList.add('hidden');
+            const popup1 = document.getElementById('popup1');
+            popup1.classList.add('show');
 
-            const partone = document.getElementById('partone');
-            partone.classList.remove('hidden');
-
-            const goToPartTwo = document.getElementById('goToPartTwo');
-            goToPartTwo.classList.add('hidden');
+            const homePage = document.getElementById('homePage');
+            homePage.classList.add('hidden');
 
         } else {
             console.log(result.message);
