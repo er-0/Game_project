@@ -23,24 +23,28 @@ window.closePopup = closePopup;
 window.showPopup = showPopup;
 
 document.addEventListener('DOMContentLoaded', () => {
-      const startBtn = document.getElementById('startButton');
-      const mathBtn = document.getElementById('mathButton');
-      const wordgameBtn = document.getElementById('wordgameButton');
-      if (startBtn) {
-        startBtn.addEventListener('click', () => {
-          showPopup('popup1');
-        });
-      }
-      if (mathBtn) {
-        mathBtn.addEventListener('click', () => {
-          showPopup('popup2');
-        });
-      }
-      if (wordgameBtn) {
-        wordgameBtn.addEventListener('click', () => {
-          showPopup('popup3');
-        });
-      }
-    },
+  const startBtn = document.getElementById('startButton');
+  const mathBtn = document.getElementById('mathButton');
+  const wordgameBtn = document.getElementById('wordgameButton');
+  const homePage = document.getElementById('homePage');
+  if (startBtn) {
+    startBtn.addEventListener('click', () => {
+      showPopup('popup1');
+      homePage.classList.add('hidden');
+    });
+  }
+  if (mathBtn) {
+    mathBtn.addEventListener('click', () => {
+      showPopup('popup2');
+      homePage.classList.add('hidden');
+    });
+  }
+  if (wordgameBtn) {
+    wordgameBtn.addEventListener('click', () => {
+      showPopup('popup3');
+      homePage.classList.add('hidden');
+    });
+  }
+},
 )
-;
+  ;
