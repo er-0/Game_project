@@ -15,9 +15,9 @@ const mathForm = document.getElementById('mathForm');
 const MathScoreDiv = document.getElementById('MathScore');
 
 function getTimeForLevel(level) {
-    if (level === 1) return 15;
+    if (level === 1) return 5;
     if (level === 2) return 10;
-    if (level === 3) return 5;
+    if (level === 3) return 15;
     return 60;
 }
 
@@ -32,9 +32,17 @@ function showQuestion() {
         return;
     }
 
+    if (questionIndex < 5) level = 1;
+    else if (questionIndex < 10) level = 2;
+    else level = 3;
+
+
     const currentQ = q[questionIndex];
     MathQuestionDiv.innerText = currentQ.question;
     MathAnswerDiv.innerText = '';
+
+    clearInterval(timerId);
+        startTimer(getTimeForLevel(level));
 }
 
 mathForm.addEventListener('submit', function(evt) {
@@ -102,7 +110,7 @@ async function startMathGame() {
     MathScoreDiv.innerText = 'Pisteitä: 0';
     mathForm.style.display = 'block';
     showQuestion();
-    startTimer(getTimeForLevel(level) * q.length);
+    startTimer(getTimeForLevel(level));
 }
 
 MathStartBtn.addEventListener('click', startMathGame);
