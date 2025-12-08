@@ -5,7 +5,7 @@ let questionIndex = 0;
 let points = 0;
 let timeLeft = 60;
 let timerId = null;
-let level = 1;
+let level;
 
 const timerDiv = document.getElementById('MathTimer');
 const MathStartBtn = document.getElementById('MathStart');
@@ -42,7 +42,7 @@ function showQuestion() {
 
 
     const currentQ = q[questionIndex];
-    MathQuestionDiv.innerText = currentQ.question;
+    MathQuestionDiv.innerText = `Level ${level}: ${currentQ.question}`;
     MathAnswerDiv.innerText = '';
 
     clearInterval(timerId);
@@ -77,17 +77,24 @@ function getLevel(questionIndex) {
 }
 
 function startTimer(seconds) {
-    timeLeft = seconds;
+    let timeLeft = seconds;
     timerDiv.innerText = `Aikaa: ${timeLeft}`;
 
-    if (timerId) clearInterval(timerId);
-
+   clearInterval(timerId); // varmistetaan, ettei vanha timer jää päälle
     timerId = setInterval(() => {
         timeLeft--;
         timerDiv.innerText = `Aikaa: ${timeLeft}`;
+
         if (timeLeft <= 0) {
             clearInterval(timerId);
-            endGame();
+
+            MathAnswerDiv.innerText = `Aika loppui! Oikea vastaus: ${q[questionIndex].answer}`;
+
+            setTimeout(() => {
+                questionIndex++;
+                mathForm.reset();
+                showQuestion();
+            }, 1000);
         }
     }, 1000);
 }
@@ -121,7 +128,6 @@ async function startMathGame() {
     MathScoreDiv.innerText = 'Pisteitä: 0';
     mathForm.style.display = 'block';
     showQuestion();
-    startTimer(getTimeForLevel(level));
 }
 
 MathStartBtn.addEventListener('click', startMathGame);
