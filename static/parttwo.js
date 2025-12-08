@@ -34,6 +34,7 @@ function showQuestion() {
         return;
     }
 
+    level = getLevel(questionIndex);
     if (!level) {
         endGame();
         return;
