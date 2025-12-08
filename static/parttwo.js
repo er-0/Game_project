@@ -11,7 +11,9 @@ const mathAnswerDiv = document.getElementById('math-answer');
 const mathForm = document.getElementById('math-form');
 const input = document.getElementById('math-input')
 const mathScoreDiv = document.getElementById('math-score');
-const nextGame = document.getElementById('goto-three');
+const resultDiv = document.getElementById('math-result')
+const nextGameBtn = document.getElementById('goto-three');
+const restartBtn = document.getElementById('restart-two')
 
 export async function start() {
   gameDiv.classList.add('show');
@@ -31,11 +33,21 @@ function submitAnswer(answer) {
   questionIndex += 1;
   showQuestion(q);
   if (questionIndex + 1 === q.length) {
-    saveResult(points);
+    endGame()
+  }
+}
+
+async function endGame() {
+  if (points >= 55) {
+    await saveResult(points);
     mathQuestionDiv.innerHTML = '';
     mathAnswerDiv.innerHTML = '';
     mathOptionsDiv.innerHTML = '';
-    nextGame.classList.remove('hidden')
+    nextGameBtn.classList.remove('hidden')
+  }
+  else {
+    resultDiv.innerText = "Pisteesi eivät riittäneet. Haluatko yrittää uudelleen?"
+    restartBtn.classList.remove('hidden')
   }
 }
 
@@ -71,7 +83,14 @@ async function saveResult(points) {
   console.log(res, 'saveResult');
 }
 
-nextGame.addEventListener('click', (evt) => {
+restartBtn.addEventListener('click', (evt) => {
+  start()
+  resultDiv.innerText = ""
+  mathForm.classList.remove('hidden')
+  restartBtn.classList.add('hidden')
+})
+
+nextGameBtn.addEventListener('click', (evt) => {
   closePopup('popup2');
   showPopup('popup3');
 })
