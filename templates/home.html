@@ -23,215 +23,194 @@
 </head>
 
 <body>
-    <header>
-        <h1>Flight Game</h1>
-    </header>
+<header>
+    <h1>Flight Game</h1>
+</header>
+<div class="article">
+    <section class="firstSection">
+        <article class="table">
+            <h2>Departures</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Destination</th>
+                    <th>Remark</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>12:00</td>
+                    <td>Tokyo</td>
+                    <td>On time</td>
+                </tr>
+                <tr>
+                    <td>13:00</td>
+                    <td>London</td>
+                    <td>On time</td>
+                </tr>
+                </tbody>
+            </table>
+        </article>
+        <article class="games">
+            <h2>Aloita peli</h2>
+            <button id="startButton" class="game-btn">Aloita uusi peli</button>
+            <button id="mathButton" class="game-btn">Matikka</button>
+            <button id="wordgameButton" class="game-btn">Sanapeli</button>
+        </article>
+    </section>
+    <section class="secondSection">
+        <div class="map">
+            <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d31683.38467856883!2d24.7161221!3d60.2434192!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sfi!4v1761675270339!5m2!1sen!2sfi"
+                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <article class="scores">
+            <div class="personal">
+                <h3>Sinun pisteesi</h3>
+                <p>Tulokset...</p>
+            </div>
 
-    <section id="loginFormSection">
-        <h1>Welcome</h1>
-        <p>Login</p>
-        <form id="loginForm">
-            <input type="text" id="loginUsername" placeholder="Enter your username">
-            <input type="submit" value="Login">
-        </form>
-        <p>Register as a new player</p>
-        <form id="registerForm">
-            <input type="text" id="registerUsername" placeholder="Choose a username">
-            <input type="submit" value="Register">
-        </form>
+            <div class="players">
+                <h3>Muut pelaajat - Top 5</h3>
+                <p>1.</p>
+                <p>2.</p>
+                <p>3.</p>
+                <p>4.</p>
+                <p>5.</p>
+            </div>
+        </article>
+    </section>
+    <section class="thirdSection">
+        <h2>Saavutukset</h2>
+        <div class="rewards">
+            <div>
+                <p>First Reward</p>
+                <button class="reward-btn">Claim</button>
+            </div>
+            <div>
+                <p>Second Reward</p>
+                <button class="reward-btn">Claim</button>
+            </div>
+            <div>
+                <p>Third Reward</p>
+                <button class="reward-btn">Claim</button>
+            </div>
+            <div>
+                <p>Fourth Reward</p>
+                <button class="reward-btn">Claim</button>
+            </div>
+            <div>
+                <p>Fifth Reward</p>
+                <button class="reward-btn">Claim</button>
+            </div>
+        </div>
     </section>
 
-    <div id="homePage" class="article">
-        <section class="firstSection">
-            <article class="table">
-                <h2>Departures</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Time</th>
-                            <th>Destination</th>
-                            <th>Remark</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>12:00</td>
-                            <td>Tokyo</td>
-                            <td>On time</td>
-                        </tr>
-                        <tr>
-                            <td>13:00</td>
-                            <td>London</td>
-                            <td>On time</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </article>
-            <article class="games">
-                <h2>Aloita peli</h2>
-                <button id="startButton" class="game-btn">Aloita uusi peli</button>
-                <button id="mathButton" class="game-btn">Matikka</button>
-                <button id="wordgameButton" class="game-btn">Sanapeli</button>
-            </article>
-        </section>
-        <section class="secondSection">
-            <div class="map">
+</div>
+
+<footer>
+    <p>GROUP 5</p>
+</footer>
+
+<!-- game starrt/before capitals -->
+<div id="popup1" class="popup-overlay">
+    <div class="popup-content">
+        <div class="intro-container" id="intro-one">
+            <p>Hei ja tervetuloa!</p>
+            <p>Tämä on kevyt lentosimulaatiopeli, jossa pelaat kolmea minipeliä suorittaaksesi onnistuneen lennon.</p>
+            <p>Tässä minipelissä arvaat maiden pääkaupunkeja.</p>
+            <button onclick="openMinigame('one')">Aloita</button>
+        </div>
+        <section class="wrapper" id="part-one">
+            <div class="map-container">
                 <div id="map"></div>
             </div>
-            <article class="scores">
-                <div class="personal">
-                    <h3>Sinun pisteesi</h3>
-                    <p>Tulokset...</p>
+            <div class="game-container" id="game-one">
+                <h2>Arvaa maan pääkaupunki</h2>
+                <div id="capital-question"></div>
+                <div id="capital-options"></div>
+                <div id="capital-answer">
+                    <form id="capital-form">
+                        <input type="text" id="capital-input" placeholder="Vastauksesi" autocomplete="off"/>
+                        <button type="submit">Arvaa</button>
+                    </form>
                 </div>
-
-                <div class="players">
-                    <h3>Muut pelaajat - Top 5</h3>
-                    <p>1.</p>
-                    <p>2.</p>
-                    <p>3.</p>
-                    <p>4.</p>
-                    <p>5.</p>
-                </div>
-            </article>
-        </section>
-        <section class="thirdSection">
-            <h2>Saavutukset</h2>
-            <div class="rewards">
-                <div>
-                    <p>First Reward</p>
-                    <button class="reward-btn">Claim</button>
-                </div>
-                <div>
-                    <p>Second Reward</p>
-                    <button class="reward-btn">Claim</button>
-                </div>
-                <div>
-                    <p>Third Reward</p>
-                    <button class="reward-btn">Claim</button>
-                </div>
-                <div>
-                    <p>Fourth Reward</p>
-                    <button class="reward-btn">Claim</button>
-                </div>
-                <div>
-                    <p>Fifth Reward</p>
-                    <button class="reward-btn">Claim</button>
-                </div>
+                <div id="capital-score"></div>
+                <div id="capital-result"></div>
             </div>
         </section>
-
-
-        <div class="article first game-block">
-            <h2 class="game-title">Guess the capital</h2>
-            <p>Question</p>
-            <input type="text" placeholder="Write answer here...">
-        </div>
-
-        <div class="article second game-block">
-            <h2 class="game-title">Count Game</h2>
-            <p>Question</p>
-            <input type="text" placeholder="Write answer here...">
-        </div>
-
-        <div class="article third game-block">
-            <h2 class="game-title">Word Game</h2>
-            <p>Word options:</p>
-            <input type="text" placeholder="Write answer here...">
-        </div>
-
+        <button onclick="closePopup('popup1')">Lopeta peli</button>
+        <button id="restart-one" class="hidden">Yritä uudelleen</button>
+        <button id="goto-two" class="hidden">Seuraava peli</button>
     </div>
+</div>
 
-    <footer>
-        <p>GROUP 5</p>
-    </footer>
-
-    <!-- game starrt/before capitals -->
-    <div id="popup1" class="popup-overlay">
-        <div class="popup-content">
-            <h2>Tervetuloa arvaa pääkaupunki-peliin!</h2>
-            <p>Tässä minipelissä arvaat maiden pääkaupunkeja. Peli jatkuu, kunnes olet saanut tarpeeksi pisteitä.</p>
-            <button onclick="openMinigame('one')">Aloita</button>
-            <button onclick="closePopup('popup1')">Lopeta peli</button>
-            <section class="wrapper" id="part-one">
-                <div class="map-container">
-                    <div id="map"></div>
-                </div>
-                <div class="game-container" id="game-one">
-                    <h2>Arvaa maan pääkaupunki</h2>
-                    <div id="capital-question"></div>
-                    <div id="capital-options"></div>
-                    <div id="capital-answer">
-                        <form id="capital-form">
-                            <input type="text" id="capital-input" placeholder="Vastauksesi" autocomplete="off" />
-                            <button type="submit">Arvaa</button>
-                        </form>
-                    </div>
-                    <div id="capital-result"></div>
-                    <div id="capital-score"></div>
-                </div>
-            </section>
-            <button id="goto-two">Seuraava peli</button>
-        </div>
-    </div>
-
-    <!-- count game -->
-    <div id="popup2" class="popup-overlay">
-        <div class="popup-content">
-            <h2>Valmiina laskemaan?</h2>
-            <p>Tässä minipelissä ratkaisset yksinkertaisia päässälaskuja. Pelissä on aikaraja, pidä kiirrettä!</p>
+<!-- count game -->
+<div id="popup2" class="popup-overlay">
+    <div class="popup-content">
+        <div class="intro-container" id="intro-two">
+            <p>Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! Voit saada lisää polttoainetta ratkaisemalla tämän laskupelin.</p>
+            <p>Tässä minipelissä ratkaiset yksinkertaisia päässälaskuja. Pelissä on aikaraja, pidä kiirettä!</p>
             <button onclick="openMinigame('two')">Aloita</button>
-            <button onclick="closePopup('popup2')">Lopeta peli</button>
-            <section class="wrapper" id="part-two">
-                <div class="game-container" id="game-two">
-                    <div id="math-question"></div>
-                    <div id="math-options"></div>
-                    <div id="math-answer">
-                        <form action="" id="math-form">
-                            <input type="text" id="math-input" placeholder="Vastauksesi" autocomplete="off" />
-                            <input type="submit">
-                        </form>
-                    </div>
-                    <div id="math-score"></div>
-                    <div id="math-result"></div>
-                </div>
-            </section>
-            <button id="goto-three">Seuraava peli</button>
         </div>
+        <section class="wrapper" id="part-two">
+            <div class="game-container" id="game-two">
+                <div id="math-question"></div>
+                <div id="math-options"></div>
+                <div id="math-answer">
+                    <form action="" id="math-form">
+                        <input type="text" id="math-input" placeholder="Vastauksesi" autocomplete="off"/>
+                        <input type="submit">
+                    </form>
+                </div>
+                <div id="math-score"></div>
+                <div id="math-result"></div>
+            </div>
+        </section>
+        <button onclick="closePopup('popup2')">Lopeta peli</button>
+        <button id="restart-two" class="hidden">Yritä uudelleen</button>
+        <button id="goto-three" class="hidden">Seuraava peli</button>
     </div>
+</div>
 
-    <!-- word game -->
-    <div id="popup3" class="popup-overlay">
-        <div class="popup-content">
-            <h2>Sanapeli!</h2>
+<!-- word game -->
+<div id="popup3" class="popup-overlay">
+    <div class="popup-content">
+        <div class="intro-container" id="intro-three">
+            <p>Olet melkein perillä. Jäljellä on vielä onnistunut lasku. Laskeutuaksesi turvallisesti pelaa tämä peli läpi.</p>
             <p>Muodosta suomenkielisiä sanoja arvotuista kirjaimista. Sadalla pisteellä voittaa pelin!</p>
+            <p>Sanan tule olla vähintään kaksi kirjainta pitkä. Saat käyttää samaa kirjainta monta kertaa. <br>Tarvittaessa paina enter ja sinulle arvotaan uudet kirjaimet.</p>
             <button onclick="openMinigame('three')">Aloita</button>
-            <button onclick="closePopup('popup3')">Lopeta peli</button>
-            <section class="wrapper" id="part-three">
-                <div class="game-container" id="game-three">
-                    <div id="word-options"></div>
-                    <div id="word-answer">
-                        <form action="" id="word-form">
-                            <input type="text" id="word-input" placeholder="Vastauksesi" autocomplete="off" />
-                            <input type="submit">
-                        </form>
-                    </div>
-                    <div id="word-score"></div>
-                    <div id="word-result"></div>
+        </div>
+        <section class="wrapper" id="part-three">
+            <div class="game-container" id="game-three">
+                <div id="word-options"></div>
+                <div id="word-answer">
+                    <form action="" id="word-form">
+                        <input type="text" id="word-input" placeholder="Vastauksesi" autocomplete="off"/>
+                        <input type="submit">
+                    </form>
                 </div>
-            </section>
-            <button id="finish-game">Tallenna ja lopeta</button>
-        </div>
+                <div id="word-score"></div>
+                <div id="word-result"></div>
+            </div>
+        </section>
+        <button id="finish-game" class="hidden">Tallenna ja lopeta</button>
+        <button id="close-popup3" onclick="closePopup('popup3')">Lopeta peli</button>
     </div>
+</div>
 
-    <!-- end: wind/lose -->
-    <div id="popupEnd" class="popup-overlay">
-        <div class="popup-content">
-            <h2>Peli ohi</h2>
-            <p id="endMessage"></p>
-            <p id="finalScore"></p>
-            <button onclick="closePopup('popupEnd')">Lopeta</button>
-        </div>
+<!-- end: wind/lose -->
+<div id="popupEnd" class="popup-overlay">
+    <div class="popup-content">
+        <h2>Peli ohi</h2>
+        <p id="endMessage"></p>
+        <p id="finalScore"></p>
+        <button onclick="closePopup('popupEnd')">Lopeta</button>
     </div>
+</div>
 
 
 </body>
