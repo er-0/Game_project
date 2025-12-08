@@ -80,7 +80,7 @@ function startTimer(seconds) {
     let timeLeft = seconds;
     timerDiv.innerText = `Aikaa: ${timeLeft}`;
 
-   clearInterval(timerId); // varmistetaan, ettei vanha timer jää päälle
+   clearInterval(timerId);
     timerId = setInterval(() => {
         timeLeft--;
         timerDiv.innerText = `Aikaa: ${timeLeft}`;
