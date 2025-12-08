@@ -11,7 +11,9 @@ const capitalAnswerDiv = document.getElementById('capital-answer');
 const capitalForm = document.getElementById('capital-form');
 const input = document.getElementById('capital-input');
 const capitalScoreDiv = document.getElementById('capital-score');
-const nextGame = document.getElementById('goto-two');
+const resultDiv = document.getElementById('capital-result')
+const nextGameBtn = document.getElementById('goto-two');
+const restartBtn = document.getElementById('restart-one')
 
 export async function start() {
   gameDiv.classList.add('show');
@@ -34,7 +36,7 @@ function showQuestion(q) {
   capitalOptionsDiv.innerHTML = '';
   console.log(currentQ.options, 'options');
   if (currentQ.options.length > 0) {
-    capitalForm.innerHTML = '';
+    capitalForm.classList.add('hidden')
     for (let opt of currentQ.options) {
       const btn = document.createElement('button');
       btn.innerText = opt;
@@ -89,14 +91,27 @@ async function saveResult(points) {
 }
 
 async function endGame() {
-  await saveResult(capitalPoints);
-  capitalQuestionDiv.innerHTML = '';
-  capitalAnswerDiv.innerHTML = '';
-  capitalOptionsDiv.innerHTML = '';
-  nextGame.classList.remove('hidden')
+  if (capitalPoints >= 55) {
+    await saveResult(capitalPoints);
+    capitalQuestionDiv.innerHTML = '';
+    capitalAnswerDiv.innerHTML = '';
+    capitalOptionsDiv.innerHTML = '';
+    nextGameBtn.classList.remove('hidden')
+  }
+  else {
+    resultDiv.innerText = "Pisteesi eivät riittäneet. Haluatko yrittää uudelleen?"
+    restartBtn.classList.remove('hidden')
+  }
 }
 
-nextGame.addEventListener('click', (evt) => {
+restartBtn.addEventListener('click', (evt) => {
+  start()
+  resultDiv.innerText = ""
+  capitalForm.classList.remove('hidden')
+  restartBtn.classList.add('hidden')
+})
+
+nextGameBtn.addEventListener('click', (evt) => {
   closePopup('popup1');
   showPopup('popup2');
 })

@@ -432,8 +432,7 @@ def part_two(user_name, game_id):
         # Game play for the second game
 
         print(
-            "Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! \nVoit saada lisää "
-            "polttoainetta ratkaisemalla tämän laskupelin. Jos epäonnistut, joudut tekemään hätälaskun.")
+            " Jos epäonnistut, joudut tekemään hätälaskun.")
 
         score = count_game()
 

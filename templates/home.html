@@ -107,7 +107,7 @@
         <div class="intro-container" id="intro-one">
             <p>Hei ja tervetuloa!</p>
             <p>Tämä on kevyt lentosimulaatiopeli, jossa pelaat kolmea minipeliä suorittaaksesi onnistuneen lennon.</p>
-            <p>Tässä minipelissä arvaat maiden pääkaupunkeja. Peli jatkuu, kunnes olet saanut tarpeeksi pisteitä.</p>
+            <p>Tässä minipelissä arvaat maiden pääkaupunkeja.</p>
             <button onclick="openMinigame('one')">Aloita</button>
         </div>
         <section class="wrapper" id="part-one">
@@ -124,11 +124,12 @@
                         <button type="submit">Arvaa</button>
                     </form>
                 </div>
-                <div id="capital-result"></div>
                 <div id="capital-score"></div>
+                <div id="capital-result"></div>
             </div>
         </section>
         <button onclick="closePopup('popup1')">Lopeta peli</button>
+        <button id="restart-one" class="hidden">Yritä uudelleen</button>
         <button id="goto-two" class="hidden">Seuraava peli</button>
     </div>
 </div>
@@ -137,7 +138,8 @@
 <div id="popup2" class="popup-overlay">
     <div class="popup-content">
         <div class="intro-container" id="intro-two">
-            <p>Tässä minipelissä ratkaisset yksinkertaisia päässälaskuja. Pelissä on aikaraja, pidä kiirrettä!</p>
+            <p>Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! Voit saada lisää polttoainetta ratkaisemalla tämän laskupelin.</p>
+            <p>Tässä minipelissä ratkaiset yksinkertaisia päässälaskuja. Pelissä on aikaraja, pidä kiirettä!</p>
             <button onclick="openMinigame('two')">Aloita</button>
         </div>
         <section class="wrapper" id="part-two">
@@ -163,8 +165,9 @@
 <div id="popup3" class="popup-overlay">
     <div class="popup-content">
         <div class="intro-container" id="intro-three">
-            <h2>Sanapeli!</h2>
+            <p>Olet melkein perillä. Jäljellä on vielä onnistunut lasku. Laskeutuaksesi turvallisesti pelaa tämä peli läpi.</p>
             <p>Muodosta suomenkielisiä sanoja arvotuista kirjaimista. Sadalla pisteellä voittaa pelin!</p>
+            <p>Sanan tule olla vähintään kaksi kirjainta pitkä. Saat käyttää samaa kirjainta monta kertaa. <br>Tarvittaessa paina enter ja sinulle arvotaan uudet kirjaimet.</p>
             <button onclick="openMinigame('three')">Aloita</button>
         </div>
         <section class="wrapper" id="part-three">
