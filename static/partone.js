@@ -93,6 +93,7 @@ async function endGame() {
   capitalQuestionDiv.innerHTML = '';
   capitalAnswerDiv.innerHTML = '';
   capitalOptionsDiv.innerHTML = '';
+  nextGame.classList.remove('hidden')
 }
 
 nextGame.addEventListener('click', (evt) => {

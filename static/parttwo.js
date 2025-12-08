@@ -35,6 +35,7 @@ function submitAnswer(answer) {
     mathQuestionDiv.innerHTML = '';
     mathAnswerDiv.innerHTML = '';
     mathOptionsDiv.innerHTML = '';
+    nextGame.classList.remove('hidden')
   }
 }
 

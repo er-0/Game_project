@@ -7,9 +7,6 @@
     <title>Home Page</title>
     <link rel="stylesheet" href="static/css/style.css">
     <script type="module" src="/static/popups.js"></script>
-  <!--  <script src="../static/partone.js" defer></script>
-    <script src="../static/parttwo.js" defer></script> -->
-    <!-- <script src="../static/partthree.js" defer></script> -->
 </head>
 
 <body>
@@ -98,25 +95,6 @@
         </div>
     </section>
 
-
-    <div class="article first game-block">
-        <h2 class="game-title">Guess the capital</h2>
-        <p>Question</p>
-        <input type="text" placeholder="Write answer here...">
-    </div>
-
-    <div class="article second game-block">
-        <h2 class="game-title">Count Game</h2>
-        <p>Question</p>
-        <input type="text" placeholder="Write answer here...">
-    </div>
-
-    <div class="article third game-block">
-        <h2 class="game-title">Word Game</h2>
-        <p>Word options:</p>
-        <input type="text" placeholder="Write answer here...">
-    </div>
-
 </div>
 
 <footer>
@@ -126,10 +104,12 @@
 <!-- game starrt/before capitals -->
 <div id="popup1" class="popup-overlay">
     <div class="popup-content">
-        <h2>Tervetuloa arvaa pääkaupunki-peliin!</h2>
-        <p>Tässä minipelissä arvaat maiden pääkaupunkeja. Peli jatkuu, kunnes olet saanut tarpeeksi pisteitä.</p>
-        <button onclick="openMinigame('one')">Aloita</button>
-        <button onclick="closePopup('popup1')">Lopeta peli</button>
+        <div class="intro-container" id="intro-one">
+            <p>Hei ja tervetuloa!</p>
+            <p>Tämä on kevyt lentosimulaatiopeli, jossa pelaat kolmea minipeliä suorittaaksesi onnistuneen lennon.</p>
+            <p>Tässä minipelissä arvaat maiden pääkaupunkeja. Peli jatkuu, kunnes olet saanut tarpeeksi pisteitä.</p>
+            <button onclick="openMinigame('one')">Aloita</button>
+        </div>
         <section class="wrapper" id="part-one">
             <div class="map-container">
                 <div id="map"></div>
@@ -148,17 +128,18 @@
                 <div id="capital-score"></div>
             </div>
         </section>
-        <button id="goto-two">Seuraava peli</button>
+        <button onclick="closePopup('popup1')">Lopeta peli</button>
+        <button id="goto-two" class="hidden">Seuraava peli</button>
     </div>
 </div>
 
 <!-- count game -->
 <div id="popup2" class="popup-overlay">
     <div class="popup-content">
-        <h2>Valmiina laskemaan?</h2>
-        <p>Tässä minipelissä ratkaisset yksinkertaisia päässälaskuja. Pelissä on aikaraja, pidä kiirrettä!</p>
-        <button onclick="openMinigame('two')">Aloita</button>
-        <button onclick="closePopup('popup2')">Lopeta peli</button>
+        <div class="intro-container" id="intro-two">
+            <p>Tässä minipelissä ratkaisset yksinkertaisia päässälaskuja. Pelissä on aikaraja, pidä kiirrettä!</p>
+            <button onclick="openMinigame('two')">Aloita</button>
+        </div>
         <section class="wrapper" id="part-two">
             <div class="game-container" id="game-two">
                 <div id="math-question"></div>
@@ -173,17 +154,19 @@
                 <div id="math-result"></div>
             </div>
         </section>
-        <button id="goto-three">Seuraava peli</button>
+        <button onclick="closePopup('popup2')">Lopeta peli</button>
+        <button id="goto-three" class="hidden">Seuraava peli</button>
     </div>
 </div>
 
 <!-- word game -->
 <div id="popup3" class="popup-overlay">
     <div class="popup-content">
-        <h2>Sanapeli!</h2>
-        <p>Muodosta suomenkielisiä sanoja arvotuista kirjaimista. Sadalla pisteellä voittaa pelin!</p>
-        <button onclick="openMinigame('three')">Aloita</button>
-        <button onclick="closePopup('popup3')">Lopeta peli</button>
+        <div class="intro-container" id="intro-three">
+            <h2>Sanapeli!</h2>
+            <p>Muodosta suomenkielisiä sanoja arvotuista kirjaimista. Sadalla pisteellä voittaa pelin!</p>
+            <button onclick="openMinigame('three')">Aloita</button>
+        </div>
         <section class="wrapper" id="part-three">
             <div class="game-container" id="game-three">
                 <div id="word-options"></div>
@@ -197,7 +180,8 @@
                 <div id="word-result"></div>
             </div>
         </section>
-        <button id="finish-game">Tallenna ja lopeta</button>
+        <button id="finish-game" class="hidden">Tallenna ja lopeta</button>
+        <button id="close-popup3" onclick="closePopup('popup3')">Lopeta peli</button>
     </div>
 </div>
 

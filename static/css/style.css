@@ -329,3 +329,11 @@ footer {
 .game-container.show {
     display: block;
 }
+
+.intro-container {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
