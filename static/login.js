@@ -4,14 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // hide everything unnecessary
 
-    const mapsection = document.getElementById('mapsection');
-    mapsection.classList.add('hidden');
-
-    const partone = document.getElementById('partone');
-    partone.classList.add('hidden');
-
-    const parttwo = document.getElementById('parttwo');
-    parttwo.classList.add('hidden');
+    // const homePage = document.getElementById('homePage');
+    // homePage.classList.add('hidden');
 });
 
 const map = L.map('map').setView([60.223876, 24.758061], 5);
@@ -39,13 +33,10 @@ loginForm.addEventListener('submit', async function (evt) {
         const loginFormSection = document.getElementById('loginFormSection');
         loginFormSection.classList.add('hidden');
 
-        const mapsection = document.getElementById('mapsection');
-        mapsection.classList.remove('hidden');
-
-        loginMessage.innerText = `${result.message}
-        Your name: ${result.username},
-        Your airport: ${result.airport_name},
-        Airport ident: ${result.airport_ident}`;
+        // loginMessage.innerText = `${result.message}
+        // Your name: ${result.username},
+        // Your airport: ${result.airport_name},
+        // Airport ident: ${result.airport_ident}`;
         console.log(result.random_airports)
         console.log(result)
 
@@ -104,7 +95,6 @@ loginForm.addEventListener('submit', async function (evt) {
             .openPopup();
     }
     else {
-        loginMessage.innerText = `${result.message}`;
         console.log(result.message);
     }
 });
@@ -129,19 +119,30 @@ registrationForm.addEventListener('submit', async function (evt) {
     // Working with the results
 
     if (result.success === true) {
-        registerMessage.innerText = `${result.message}
-        Your name: ${result.username},
-        Your airport: ${result.airport_name},
-        Airport ident: ${result.airport_ident}`;
+        // registerMessage.innerText = `${result.message}
+        // Your name: ${result.username},
+        // Your airport: ${result.airport_name},
+        // Airport ident: ${result.airport_ident}`;
+
+        const loginFormSection = document.getElementById('loginFormSection');
+        loginFormSection.classList.add('hidden');
+
         console.log(result.random_airports)
 
         // Actions with the map
 
+        const greenMarker = L.ExtraMarkers.icon({
+            icon: 'fa-home',
+            markerColor: 'green',
+            shape: 'star',
+            prefix: 'fa'
+        });
+
+        // Print 20 raandom airports
         result.random_airports.forEach((airport, index) => {
 
             const airportCoordinates = [airport.latitude_deg, airport.longitude_deg];
 
-            // Print 20 raandom airports
             L.marker(airportCoordinates).addTo(map)
                 .bindPopup(`Airport: ${airport.name} (${airport.ident})
                     <div>
@@ -151,18 +152,18 @@ registrationForm.addEventListener('submit', async function (evt) {
                         </form>
                     </div>`)
                 .openPopup();
-
-            // Popup for the home airport
-
-            const homeCoordinates = [result.latitude_deg, result.longitude_deg]
-
-            L.marker(homeCoordinates).addTo(map)
-                .bindPopup('Home airport')
-                .openPopup();
         });
+
+        // Popup for the home airport
+
+        const homeCoordinates = [result.latitude_deg, result.longitude_deg];
+
+        L.marker(homeCoordinates, { icon: greenMarker }).addTo(map)
+            .bindPopup(`<div class="home_airport_pop">Home airport</div>`)
+            .openPopup();
     }
     else {
-        registerMessage.innerText = `${result.message}`;
+        // registerMessage.innerText = `${result.message}`;
         console.log(result.message);
     }
 });

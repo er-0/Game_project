@@ -1,3 +1,8 @@
+.hidden {
+    opacity: 0;
+    display: none !important;
+}
+
 body {
     font-family: 'Poppins', Arial, sans-serif;
     color: #222;
@@ -14,7 +19,8 @@ h1 {
     color: #e6f1e4;
 }
 
-h2, h3 {
+h2,
+h3 {
     font-family: 'Orbitron', sans-serif;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -93,11 +99,17 @@ header p {
     gap: 1.5rem;
 }
 
+#map {
+    height: 500px;
+    width: 700px;
+}
+
 .map {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 50%;
+    height: 80%;
 }
 
 .scores {
@@ -262,7 +274,8 @@ input {
     margin-top: 2rem;
 }
 
-table td, table th {
+table td,
+table th {
     padding: 0.3rem 5rem;
     overflow-wrap: break-word;
 }
