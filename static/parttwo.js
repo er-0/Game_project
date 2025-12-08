@@ -13,6 +13,8 @@ const MathQuestionDiv = document.getElementById('MathQuestion');
 const MathAnswerDiv = document.getElementById('MathAnswer');
 const mathForm = document.getElementById('mathForm');
 const MathScoreDiv = document.getElementById('MathScore');
+const levelBoundaries = [10, 15, 17];
+
 
 function getTimeForLevel(level) {
     if (level === 1) return 5;
@@ -32,9 +34,10 @@ function showQuestion() {
         return;
     }
 
-    if (questionIndex < 5) level = 1;
-    else if (questionIndex < 10) level = 2;
-    else level = 3;
+    if (!level) {
+        endGame();
+        return;
+    }
 
 
     const currentQ = q[questionIndex];
@@ -64,6 +67,13 @@ mathForm.addEventListener('submit', function(evt) {
     mathForm.reset();
     showQuestion();
 });
+
+function getLevel(questionIndex) {
+    if (questionIndex < levelBoundaries[0]) return 1;
+    else if (questionIndex < levelBoundaries[1]) return 2;
+    else if (questionIndex < levelBoundaries[2]) return 3;
+    else return null;
+}
 
 function startTimer(seconds) {
     timeLeft = seconds;
