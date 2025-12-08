@@ -10,7 +10,7 @@ let level = 1;
 const timerDiv = document.getElementById('MathTimer');
 const MathStartBtn = document.getElementById('MathStart');
 const MathQuestionDiv = document.getElementById('MathQuestion');
-const MathAnswerDiv = document.getElementById('Mathanswer');
+const MathAnswerDiv = document.getElementById('MathAnswer');
 const mathForm = document.getElementById('mathForm');
 const MathScoreDiv = document.getElementById('MathScore');
 
