@@ -12,6 +12,7 @@ const form = document.getElementById('word-form');
 const input = document.getElementById('word-input')
 const scoreDiv = document.getElementById('word-score');
 const finishBtn = document.getElementById('finish-game')
+const closeBtn = document.getElementById('close-popup3')
 
 
 export async function start() {
@@ -73,7 +74,8 @@ async function submitAnswer(answer) {
     showQuestion('reload');
   }
   if (wordList.includes(answer)) {
-    scoreDiv.innerText += `Arvasit jo sanan ${answer}.`
+    console.log('arvattu jo')
+    resultDiv.innerText = `Arvasit jo sanan ${answer}.`
   }
   if (answer.length > 2 && !wordList.includes(answer)) {
     let result = await verify(answer);
@@ -93,6 +95,8 @@ async function submitAnswer(answer) {
   scoreDiv.innerText = 'Pisteitä: ' + points;
   if (points >= 100) {
     resultDiv.innerText = "Voitit!"
+    finishBtn.classList.remove('hidden')
+    closeBtn.classList.add('hidden')
   }
 }
 

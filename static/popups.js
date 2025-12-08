@@ -11,6 +11,7 @@ export async function openMinigame(number) {
   try {
     const module = await import(`/static/part${number}.js`);
     module.start();
+    document.getElementById(`intro-${number}`).classList.add('hidden')
   } catch (err) {
     console.error(`Failed to load minigame: ${number}`, err);
   }
