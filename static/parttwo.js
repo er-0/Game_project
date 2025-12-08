@@ -35,6 +35,7 @@ function showQuestion() {
     }
 
     level = getLevel(questionIndex);
+     console.log('questionIndex:', questionIndex, 'level:', level);
     if (!level) {
         endGame();
         return;
@@ -70,9 +71,9 @@ mathForm.addEventListener('submit', function(evt) {
 });
 
 function getLevel(questionIndex) {
-    if (questionIndex < levelBoundaries[0]) return 1;
-    else if (questionIndex < levelBoundaries[1]) return 2;
-    else if (questionIndex < levelBoundaries[2]) return 3;
+    if (questionIndex < Math.min(levelBoundaries[0])) return 1;
+    else if (questionIndex < Math.min(levelBoundaries[1])) return 2;
+    else if (questionIndex < Math.min(levelBoundaries[2])) return 3;
     else return null;
 }
 
@@ -104,6 +105,7 @@ function endGame() {
     MathQuestionDiv.innerHTML = 'Peli loppui!';
     MathAnswerDiv.innerHTML = '';
     mathForm.style.display = 'none';
+    MathResultDiv.innerText = `Sait ${points} pistettä!`;
     saveResult(points);
 }
 
