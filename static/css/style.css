@@ -304,6 +304,7 @@ footer {
     justify-content: center;
     align-items: center;
     background-color: rgb(216, 224, 228);
+    z-index: 9999 !important;   /* ABOVE Leaflet */
 }
 
 .popup-content {

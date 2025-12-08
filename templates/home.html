@@ -14,7 +14,7 @@
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script src="../static/login.js" defer></script>
+    <script src="/static/login.js" defer></script>
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-extra-markers/1.2.0/css/leaflet.extra-markers.min.css">
     <script
@@ -60,11 +60,7 @@
         </article>
     </section>
     <section class="secondSection">
-        <div class="map">
-            <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d31683.38467856883!2d24.7161221!3d60.2434192!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sfi!4v1761675270339!5m2!1sen!2sfi"
-                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div id="map">
         </div>
         <article class="scores">
             <div class="personal">
@@ -115,6 +111,23 @@
 </footer>
 
 <!-- game starrt/before capitals -->
+<div id="popup-login" class="popup-overlay show">
+    <section id="loginFormSection">
+        <h1>Welcome</h1>
+        <p>Login</p>
+        <form id="loginForm">
+            <input type="text" id="loginUsername" placeholder="Enter your username">
+            <input type="submit" value="Login">
+        </form>
+        <p>Register as a new player</p>
+        <form id="registerForm">
+            <input type="text" id="registerUsername" placeholder="Choose a username">
+            <input type="submit" value="Register">
+        </form>
+    </section>
+</div>
+
+
 <div id="popup1" class="popup-overlay">
     <div class="popup-content">
         <div class="intro-container" id="intro-one">
@@ -124,9 +137,6 @@
             <button onclick="openMinigame('one')">Aloita</button>
         </div>
         <section class="wrapper" id="part-one">
-            <div class="map-container">
-                <div id="map"></div>
-            </div>
             <div class="game-container" id="game-one">
                 <h2>Arvaa maan pääkaupunki</h2>
                 <div id="capital-question"></div>

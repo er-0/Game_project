@@ -93,6 +93,8 @@ loginForm.addEventListener('submit', async function (evt) {
         L.marker(homeCoordinates, { icon: greenMarker }).addTo(map)
             .bindPopup(`<div class="home_airport_pop">Home airport</div>`)
             .openPopup();
+
+        closePopup('popup-login')
     }
     else {
         console.log(result.message);
@@ -161,6 +163,8 @@ registrationForm.addEventListener('submit', async function (evt) {
         L.marker(homeCoordinates, { icon: greenMarker }).addTo(map)
             .bindPopup(`<div class="home_airport_pop">Home airport</div>`)
             .openPopup();
+
+        closePopup('popup-login')
     }
     else {
         // registerMessage.innerText = `${result.message}`;
