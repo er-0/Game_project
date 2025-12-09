@@ -3,7 +3,6 @@
 let q = [];
 let questionIndex = 0;
 let capitalPoints = 0;
-let gamerouteEnabled = true
 
 const gameDiv = document.getElementById('game-one');
 const practiseAlertDiv = document.getElementById('capital-practise')
@@ -17,9 +16,8 @@ const resultDiv = document.getElementById('capital-result')
 const nextGameBtn = document.getElementById('goto-two');
 const restartBtn = document.getElementById('restart-one')
 
-export async function start(gameroute = true) {
-  gamerouteEnabled = gameroute
-  if (!gamerouteEnabled) {
+export async function start() {
+  if (!window.gameroute) {
     practiseAlertDiv.innerText = "Harjoittele peliä. Pisteitäsi ei tallenneta."
   }
   gameDiv.classList.add('show');
@@ -103,7 +101,7 @@ async function saveResult(points) {
 
 async function endGame() {
   if (capitalPoints >= 55) {
-    if (gamerouteEnabled) {
+    if (window.gameroute) {
       await saveResult(capitalPoints);
       console.log("Points saved to database.")
     }
@@ -119,7 +117,7 @@ async function endGame() {
 }
 
 restartBtn.addEventListener('click', (evt) => {
-  start(gamerouteEnabled)
+  start()
   resultDiv.innerText = ""
   capitalForm.classList.remove('hidden')
   restartBtn.classList.add('hidden')

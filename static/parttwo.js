@@ -5,7 +5,6 @@ let questionIndex = 0;
 let points = 0;
 let timerId = null;
 let canAnswer = true;
-let gamerouteEnabled = true;
 
 const practiseAlertDiv = document.getElementById('math-practise');
 const timerDiv = document.getElementById('MathTimer');
@@ -20,9 +19,8 @@ const resultDiv = document.getElementById('math-result');
 const nextGameBtn = document.getElementById('goto-three');
 const restartBtn = document.getElementById('restart-two');
 
-export async function start(gameroute = true) {
-  gamerouteEnabled = gameroute;
-  if (!gamerouteEnabled) {
+export async function start() {
+  if (!window.gameroute) {
     practiseAlertDiv.innerText = 'Harjoittele peliä. Pisteitäsi ei tallenneta.';
   }
   gameDiv.classList.add('show');
@@ -37,7 +35,7 @@ export async function start(gameroute = true) {
 
 function submitAnswer(answer) {
   if (answer === 'simsalabim') {
-    questionIndex = q.length - 2;
+    questionIndex = q.length - 3;
     points = 95;
   }
   const isCorrect = (answer === q[questionIndex].answer);
@@ -55,7 +53,7 @@ function submitAnswer(answer) {
 
 async function endGame() {
   if (points >= 55) {
-    if (gamerouteEnabled) {
+    if (window.gameroute) {
       await saveResult(points);
       console.log('Game saved.');
     }
@@ -138,7 +136,7 @@ async function saveResult(points) {
 }
 
 restartBtn.addEventListener('click', (evt) => {
-  start(gamerouteEnabled);
+  start();
   resultDiv.innerText = '';
   mathForm.classList.remove('hidden');
   restartBtn.classList.add('hidden');

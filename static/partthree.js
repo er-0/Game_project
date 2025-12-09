@@ -3,7 +3,6 @@
 let letters = '';
 let points = 0;
 let wordList = [];
-let gamerouteEnabled = true;
 
 const practiseAlertDiv = document.getElementById('word-practise');
 const gameDiv = document.getElementById('game-three');
@@ -17,9 +16,8 @@ const finishBtn = document.getElementById('finish-game');
 const closeBtn = document.getElementById('close-popup3');
 const practiseBtns = document.getElementById('practise-buttons');
 
-export async function start(gameroute = true) {
-  gamerouteEnabled = gameroute;
-  if (!gamerouteEnabled) {
+export async function start(){
+  if (!window.gameroute) {
     practiseAlertDiv.innerText = 'Harjoittele peliä. Pisteitäsi ei tallenneta.';
   }
   showQuestion();
@@ -131,7 +129,7 @@ async function saveResult(points) {
 }
 
 finishBtn.addEventListener('click', () => {
-  if (gamerouteEnabled) {
+  if (window.gameroute) {
     saveResult(points);
     console.log('Game saved.');
     practiseBtns.classList.remove('hidden');
