@@ -38,5 +38,10 @@ def save_level():
 
     return jsonify({"success": is_successful})
 
+@app.route("/update_score", methods=["POST"])
+def update_player_score():
+    data = request.get_json()
+    points = data.get("points")
+
 if __name__ == "__main__":
     app.run(debug=True, host="127.0.0.1", port=3000)
