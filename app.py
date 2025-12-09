@@ -3,7 +3,7 @@ import secrets
 import os
 
 from loginfunctions import web_register_user, web_check_user_exists, player_information, random_airports, \
-    start_new_game, last_game_information, update_last_game
+    start_new_game, last_game_information, update_last_game, delete_last_game
 from capitals_game import generate_capitals_questions, update_score
 from count_game import generate_math_questions
 
@@ -198,6 +198,17 @@ def loadgame():
     else:
         return jsonify({"success": False, "message": "Failed to load game"})
     
+# To delte last game id from the players table after user completes the game
+@app.route("/delete_last_game_id", methods=["POST"])
+def delete_last_game_id():
+    if 'player_id' in session:
+        delete_last_game(session['player_id'])
+        return jsonify({"success": True, "message": "Last game id deleted"})
+    else:
+        return jsonify({"success": False, "message": "No player in session"}), 400
+
+
+    
 # Start the first minigame: CAPITALS
 @app.route("/part_one/questions", methods=["GET"])
 def start_part_one():
@@ -244,3 +255,5 @@ def save_level():
 
 if __name__ == "__main__":
     app.run(debug=True, host="127.0.0.1", port=3000)
+
+

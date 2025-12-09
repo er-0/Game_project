@@ -93,3 +93,11 @@ def update_last_game(game_id, player_id):
     yhteys.commit()
 
     return True
+
+def delete_last_game(id):
+    sql = "UPDATE players SET last_game = 0 WHERE id = %s;"
+    kursori = yhteys.cursor()
+    kursori.execute(sql, (id,))
+    yhteys.commit()
+    
+    return True
