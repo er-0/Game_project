@@ -4,40 +4,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <link rel="stylesheet" href="login.css">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="../static/login.js" defer></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-extra-markers/1.2.0/css/leaflet.extra-markers.min.css">
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-extra-markers/1.2.0/js/leaflet.extra-markers.min.js"></script>
+    <script defer src="../static/partone.js"></script>
+    <script defer src="../static/parttwo.js"></script>
 </head>
 
 <body>
-<header>
-    <p>Lentopeli</p>
-</header>
-<div class="container">
-    <section>
-        <h1>Tervetuloa</h1>
-        <p>Kirjaudu sisään</p>
-        <form id="loginForm">
-            <input type="text" id="loginUsername" placeholder="Syötä käyttäjänimesi">
-            <input type="submit" value="Kirjaudu">
-        </form>
-        <p id="loginMessage"></p>
-        <p>Rekisteröidy</p>
-        <form id="registerForm">
-            <input type="text" id="registerUsername" placeholder="Keksi käyttäjänimi">
-            <input type="submit" value="Rekisteröidy">
-        </form>
-        <p id="registerMessage"></p>
-    </section>
-    <div id="map"></div>
-</div>
-<footer>
-    <p>Ryhmä 5 </p>
-</footer>
+    <header>
+        <p>Flight Game</p>
+    </header>
+    <div class="container">
+        <section id="loginFormSection">
+            <h1>Welcome</h1>
+            <p>Login</p>
+            <form id="loginForm">
+                <input type="text" id="loginUsername" placeholder="Enter your username">
+                <input type="submit" value="Login">
+            </form>
+            <p>Register as a new player</p>
+            <form id="registerForm">
+                <input type="text" id="registerUsername" placeholder="Choose a username">
+                <input type="submit" value="Register">
+            </form>
+        </section>
+        <section id="mapsection">
+            <p id="loginMessage"></p>
+            <p id="registerMessage"></p>
+            <div id="map"></div>
+        </section>
+        <section id="partone">
+            <h1>Welcome</h1>
+            <button id="start">Start Part One</button>
+            <div id="question"></div>
+            <div id="options"></div>
+            <div id="answer">
+                <form action="" id="capitalForm">
+                    <input type="text" name="capitalAnswer">
+                    <input type="submit">
+                </form>
+            </div>
+            <div id="score"></div>
+            <div id="result"></div>
+            <button id="goToPartTwo"></button>
+        </section>
+        <section id="parttwo">
+            <h1>Welcome</h1>
+            <button id="start">Start Part Two</button>
+            <div id="question"></div>
+            <div id="options"></div>
+            <div id="answer">
+                <form action="" id="mathForm">
+                    <input type="text" name="mathAnswer">
+                    <input type="submit">
+                </form>
+            </div>
+            <div id="score"></div>
+            <div id="result"></div>
+            <a href="{{ url_for('one') }}">Go to Part One</a>
+        </section>
+    </div>
+    <footer>
+        <p>Group 5</p>
+    </footer>
 
 </body>
 

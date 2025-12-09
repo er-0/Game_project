@@ -74,6 +74,7 @@ function startCapitalsGame() {
   questionIndex = 0;
   points = 0;
   scoreDiv.innerText = 'Pisteitä: 0';
+  startBtn.style.display = 'none'
 }
 
 async function saveResult(points) {

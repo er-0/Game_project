@@ -43,6 +43,8 @@ def play_level(level, limit, time_limit):
     return level_score
 
 def count_game():
+    input("Paina Enter aloittaaksesi laskupelin...")
+
     score = 0
 
     score += play_level(1, 5, time_limit=5)

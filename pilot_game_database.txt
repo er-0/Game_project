@@ -31,12 +31,14 @@ DROP TABLE goal_reached;
 DROP TABLE goal;
  
 DROP TABLE game;
- 
-DROP TABLE country;
- 
+
 DROP TABLE airport;
 
- INSERT INTO count_game (question, answer, points, level) VALUES
+DROP TABLE country;
+ 
+
+
+INSERT INTO count_game (question, answer, points, level) VALUES
 ('2 + 2', '4', 4, 1),
 ('6 - 1', '5', 4, 1),
 ('4 + 4', '8', 4, 1),

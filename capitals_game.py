@@ -1,5 +1,4 @@
 from db import yhteys
-from unidecode import unidecode
 import random
 
 
@@ -42,6 +41,7 @@ def generate_capitals_questions():
     return questions
 
 def update_score(score, game_id):
+    print(score, game_id, 'from update_score')
     sql = f"UPDATE games SET score = score + %s, level_reached = level_reached + 1 WHERE game_id = %s;"
     kursori = yhteys.cursor()
     kursori.execute(sql, (score, game_id))

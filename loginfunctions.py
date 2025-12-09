@@ -63,3 +63,24 @@ def random_airports(country):
 
     return random_airports
 
+# start new game
+def start_new_game(player_id, goal_ident):
+
+    sql = f"INSERT INTO games (player_id, goal_airport) VALUES (%s, %s) RETURNING game_id;"
+    kursori = yhteys.cursor()
+    kursori.execute(sql, (player_id, goal_ident))
+    game_id = kursori.fetchone()[0]
+    yhteys.commit()
+
+    return game_id
+
+# get information about the old game
+def last_game_information(id):
+    sql = (f"SELECT a.ident, a.name, a.latitude_deg, a.longitude_deg, a.continent, a.municipality, a.country_name, "
+           f"g.goal_airport, g.kilometers_traveled, g.score, g.level_reached from games as g LEFT JOIN game_airports "
+           f"AS a ON g.goal_airport = a.ident WHERE g.game_id = %s;")
+    kursori = yhteys.cursor()
+    kursori.execute(sql, (id,))
+    information = kursori.fetchall()
+
+    return information
