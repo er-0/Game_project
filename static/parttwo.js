@@ -3,26 +3,31 @@
 let q = [];
 let questionIndex = 0;
 let points = 0;
+let timerId = null;
+let canAnswer = true;
 
+const timerDiv = document.getElementById('MathTimer');
 const gameDiv = document.getElementById('game-two');
 const mathQuestionDiv = document.getElementById('math-question');
 const mathOptionsDiv = document.getElementById('math-options');
 const mathAnswerDiv = document.getElementById('math-answer');
 const mathForm = document.getElementById('math-form');
-const input = document.getElementById('math-input')
+const input = document.getElementById('math-input');
 const mathScoreDiv = document.getElementById('math-score');
-const resultDiv = document.getElementById('math-result')
+const resultDiv = document.getElementById('math-result');
 const nextGameBtn = document.getElementById('goto-three');
-const restartBtn = document.getElementById('restart-two')
+const restartBtn = document.getElementById('restart-two');
 
 export async function start() {
   gameDiv.classList.add('show');
+  mathForm.style.display = 'block';
   questionIndex = 0;
   points = 0;
   mathScoreDiv.innerText = 'Pisteitä: 0';
   await loadQuestions();
+  console.log(q, 'start q');
+  showQuestion();
 }
-
 
 function submitAnswer(answer) {
   const isCorrect = (answer === q[questionIndex].answer);
@@ -30,10 +35,11 @@ function submitAnswer(answer) {
     points += q[questionIndex].points;
   }
   mathScoreDiv.innerText = 'Pisteitä: ' + points;
+  clearInterval(timerId);
   questionIndex += 1;
-  showQuestion(q);
+  showQuestion();
   if (questionIndex + 1 === q.length) {
-    endGame()
+    endGame();
   }
 }
 
@@ -43,11 +49,10 @@ async function endGame() {
     mathQuestionDiv.innerHTML = '';
     mathAnswerDiv.innerHTML = '';
     mathOptionsDiv.innerHTML = '';
-    nextGameBtn.classList.remove('hidden')
-  }
-  else {
-    resultDiv.innerText = "Pisteesi eivät riittäneet. Haluatko yrittää uudelleen?"
-    restartBtn.classList.remove('hidden')
+    nextGameBtn.classList.remove('hidden');
+  } else {
+    resultDiv.innerText = 'Pisteesi eivät riittäneet. Haluatko yrittää uudelleen?';
+    restartBtn.classList.remove('hidden');
   }
 }
 
@@ -55,18 +60,50 @@ async function loadQuestions() {
   const response = await fetch('/part_two/questions');
   q = await response.json();
   console.log(q, 'loadQuestions');
-  showQuestion(q);
+  showQuestion();
 }
 
-function showQuestion(q) {
+function startTimer(seconds) {
+  canAnswer = true;
+  let timeLeft = seconds;
+  timerDiv.innerText = `Aikaa: ${timeLeft}`;
+
+  clearInterval(timerId);
+  timerId = setInterval(() => {
+    timeLeft--;
+    timerDiv.innerText = `Aikaa: ${timeLeft}`;
+
+    if (timeLeft <= 0) {
+      clearInterval(timerId);
+      canAnswer = false;
+      timerDiv.innerText = `Aika loppui! Oikea vastaus: ${q[questionIndex].answer}`;
+
+      setTimeout(() => {
+        questionIndex++;
+        if (questionIndex >= q.length) {
+          endGame();
+          return;
+        }
+        mathForm.reset();
+        showQuestion();
+      }, 1000);
+    }
+  }, 1000);
+}
+
+function showQuestion() {
   let currentQ = q[questionIndex];
-  mathQuestionDiv.innerText = currentQ.question;
-  mathOptionsDiv.innerHTML = '';
-  input.focus()
+  mathQuestionDiv.innerText = `${currentQ.question}`;
+  input.focus();
+  startTimer(Math.max(currentQ.points, 6));
 }
 
-mathForm.addEventListener('submit', async function (evt) {
-  evt.preventDefault();  // <--- this stops the page reload
+mathForm.addEventListener('submit', async function(evt) {
+  evt.preventDefault();
+  if (!canAnswer) {
+    console.log('Too late — timer expired.');
+    return;
+  }
   const answer = document.querySelector('input[id=math-input]').value;
   console.log(q[questionIndex], 'questionIndex from form');
   submitAnswer(answer);
@@ -74,23 +111,27 @@ mathForm.addEventListener('submit', async function (evt) {
 });
 
 async function saveResult(points) {
-  const response = await fetch('/saveResult', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ points: points }),
-  });
-  const res = await response.json();
-  console.log(res, 'saveResult');
+  try {
+    const response = await fetch('/saveResult', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({points: points}),
+    });
+    const res = await response.json();
+    console.log(res, 'saveResult');
+  } catch (err) {
+    console.error('Tallennus epäonnistui', err);
+  }
 }
 
 restartBtn.addEventListener('click', (evt) => {
-  start()
-  resultDiv.innerText = ""
-  mathForm.classList.remove('hidden')
-  restartBtn.classList.add('hidden')
-})
+  start();
+  resultDiv.innerText = '';
+  mathForm.classList.remove('hidden');
+  restartBtn.classList.add('hidden');
+});
 
 nextGameBtn.addEventListener('click', (evt) => {
   closePopup('popup2');
   showPopup('popup3');
-})
+});
