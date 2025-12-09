@@ -30,19 +30,16 @@ document.addEventListener('DOMContentLoaded', () => {
   if (startBtn) {
     startBtn.addEventListener('click', () => {
       showPopup('popup1');
-      homePage.classList.add('hidden');
     });
   }
   if (mathBtn) {
     mathBtn.addEventListener('click', () => {
       showPopup('popup2');
-      homePage.classList.add('hidden');
     });
   }
   if (wordgameBtn) {
     wordgameBtn.addEventListener('click', () => {
       showPopup('popup3');
-      homePage.classList.add('hidden');
     });
   }
 },
