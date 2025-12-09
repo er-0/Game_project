@@ -1,11 +1,22 @@
 'use strict';
 
+async function loadHighscorers() {
+  const response = await fetch('/scoreboard');
+  return await response.json()
+}
+
 document.addEventListener('DOMContentLoaded', function () {
-
-    // hide everything unnecessary
-
-    // const homePage = document.getElementById('homePage');
-    // homePage.classList.add('hidden');
+    const highscoreDiv = document.getElementById('highscorers')
+    loadHighscorers().then(highscorers => {
+        const ol = document.createElement('ol');
+        highscorers.forEach(entry => {
+            const li = document.createElement('li');
+            li.innerText = `${entry[0]} ${entry[1]}`;
+            ol.appendChild(li);
+        });
+        highscoreDiv.innerHTML = '';
+        highscoreDiv.appendChild(ol);
+    });
 });
 
 const map = L.map('map').setView([60.223876, 24.758061], 5);

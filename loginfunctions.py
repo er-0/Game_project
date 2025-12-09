@@ -93,3 +93,11 @@ def update_last_game(game_id, player_id):
     yhteys.commit()
 
     return True
+
+def get_highscorers():
+    sql = (f"SELECT user_name, lifetime_score from players ORDER BY lifetime_score DESC LIMIT 5")
+    kursori = yhteys.cursor()
+    kursori.execute(sql, )
+    highscorers = kursori.fetchall()
+
+    return highscorers

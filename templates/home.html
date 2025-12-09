@@ -11,14 +11,14 @@
     <script src="../static/parttwo.js" defer></script> -->
     <!-- <script src="../static/partthree.js" defer></script> -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="/static/login.js" defer></script>
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-extra-markers/1.2.0/css/leaflet.extra-markers.min.css">
+          href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-extra-markers/1.2.0/css/leaflet.extra-markers.min.css">
     <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-extra-markers/1.2.0/js/leaflet.extra-markers.min.js"></script>
+            src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-extra-markers/1.2.0/js/leaflet.extra-markers.min.js"></script>
     <!-- <script defer src="../static/AnimatedMarker.js"></script>  -->
 </head>
 
@@ -68,13 +68,8 @@
                 <p>Tulokset...</p>
             </div>
 
-            <div class="players">
-                <h3>Muut pelaajat - Top 5</h3>
-                <p>1.</p>
-                <p>2.</p>
-                <p>3.</p>
-                <p>4.</p>
-                <p>5.</p>
+            <h3>Pelaajat - Top 5</h3>
+            <div class="players" id="highscorers">
             </div>
         </article>
     </section>
@@ -161,8 +156,15 @@
 <div id="popup2" class="popup-overlay">
     <div class="popup-content">
         <div class="intro-container" id="intro-two">
+<<<<<<< Updated upstream
             <p>Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! Voit saada lisää polttoainetta ratkaisemalla tämän laskupelin.</p>
             <p>Tässä minipelissä ratkaiset yksinkertaisia päässälaskuja. Pelissä on aikaraja, pidä kiirettä!</p>
+=======
+            <p>Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! Voit saada lisää polttoainetta
+                ratkaisemalla tämän laskupelin.</p>
+            <p>Tässä minipelissä ratkaiset yksinkertaisia päässälaskuja, ja pääset jatkamaan lentoa turvallisesti kun
+                saat vähintään 55 pistettä tästä minipelistä. Pelissä on aikaraja, pidä kiirettä!</p>
+>>>>>>> Stashed changes
             <button onclick="openMinigame('two')">Aloita</button>
         </div>
         <section class="wrapper" id="part-two">
@@ -190,9 +192,15 @@
 <div id="popup3" class="popup-overlay">
     <div class="popup-content">
         <div class="intro-container" id="intro-three">
+<<<<<<< Updated upstream
             <p>Olet melkein perillä. Jäljellä on vielä onnistunut lasku. Laskeutuaksesi turvallisesti pelaa tämä peli läpi.</p>
+=======
+            <p>Olet melkein perillä määränpäässäsi. Jäljellä on vielä onnistunut lasku. Laskeutuaksesi turvallisesti
+                pelaa tämä peli läpi.</p>
+>>>>>>> Stashed changes
             <p>Muodosta suomenkielisiä sanoja arvotuista kirjaimista. Sadalla pisteellä voittaa pelin!</p>
-            <p>Sanan tule olla vähintään kaksi kirjainta pitkä. Saat käyttää samaa kirjainta monta kertaa. <br>Tarvittaessa paina enter ja sinulle arvotaan uudet kirjaimet.</p>
+            <p>Sanan tule olla vähintään kaksi kirjainta pitkä. Saat käyttää samaa kirjainta monta kertaa. <br>Tarvittaessa
+                paina enter ja sinulle arvotaan uudet kirjaimet.</p>
             <button onclick="openMinigame('three')">Aloita</button>
         </div>
         <section class="wrapper" id="part-three">

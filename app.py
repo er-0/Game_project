@@ -3,7 +3,7 @@ import secrets
 import os
 
 from loginfunctions import web_register_user, web_check_user_exists, player_information, random_airports, \
-    start_new_game, last_game_information, update_last_game
+    start_new_game, last_game_information, update_last_game, get_highscorers
 from capitals_game import generate_capitals_questions, update_score
 from count_game import generate_math_questions
 
@@ -227,6 +227,11 @@ def save_level():
     #update_last_game(session["game_id"], session["player_id"])
 
     return jsonify({"success": is_successful})
+
+@app.route("/scoreboard", methods=["GET"])
+def get_scoreboard():
+    highscorers = get_highscorers()
+    return jsonify(highscorers)
 
 
 if __name__ == "__main__":

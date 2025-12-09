@@ -115,3 +115,5 @@ nextGameBtn.addEventListener('click', (evt) => {
   closePopup('popup1');
   showPopup('popup2');
 })
+
+showpopup(`popup${lastlevel}`)
