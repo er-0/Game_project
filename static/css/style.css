@@ -1,14 +1,14 @@
 body {
-  font-family: 'Poppins', Arial, sans-serif;
-  color: black;
+    font-family: 'Poppins', Arial, sans-serif;
+    color: black;
     background-color: white;
-  margin: 0;
+    margin: 0;
 }
 
 h1, h2, h3 {
-  font-family: 'Orbitron', sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 header {
@@ -99,7 +99,7 @@ table td, table th {
     padding: 1rem;
     margin-bottom: 1rem;
     border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
 .thirdSection {
@@ -154,7 +154,7 @@ footer {
 }
 
 .first {
-    display:none;
+    display: none;
     background-color: cadetblue;
 }
 
@@ -164,7 +164,7 @@ footer {
 }
 
 .third {
-    display:none;
+    display: none;
     background-color: cadetblue;
 }
 
@@ -178,35 +178,35 @@ input {
 }
 
 .games-area {
-  max-width: 900px;
-  margin: 3rem auto;
-  padding: 2rem;
-  background: cadetblue;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: cadetblue;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .game-title {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .game-block {
-  margin: 2rem auto;
-  text-align: center;
+    margin: 2rem auto;
+    text-align: center;
 }
 
 .game-block input {
-  width: 80%;
-  max-width: 600px;
-  padding: 0.8rem;
-  font-size: 1.1rem;
-  border-radius: 8px;
-  border: 1px solid white;
+    width: 80%;
+    max-width: 600px;
+    padding: 0.8rem;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    border: 1px solid white;
 }
 
 .table,
@@ -220,7 +220,7 @@ input {
     padding: 1rem;
     margin: 1rem 0;
     border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
 .firstSection,
@@ -242,4 +242,36 @@ input {
 .map {
     margin-top: 0.5rem;
     padding-bottom: 2.4rem;
+}
+
+#achievement.popup-hidden {
+    width: 12rem;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: white;
+    border: 1px solid cadetblue;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    display: none;
+    z-index: 1000;
+    border-radius: 8px;
+}
+
+#achievement.popup-hidden.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#achievement button {
+    font-size: 1rem;
+    padding: 0.5rem;
+    background-color: #669bbc;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    width: 40%;
 }

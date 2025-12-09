@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, session, render_template
 import secrets
 import os
+from db import yhteys
 
 from loginfunctions import web_register_user, web_check_user_exists, player_information, random_airports, start_new_game, last_game_information
 from capitals_game import generate_capitals_questions, update_score
@@ -218,6 +219,40 @@ def save_level():
     is_successful = update_score(points, session["game_id"])
 
     return jsonify({"success": is_successful})
+
+
+# figuring out achievements
+@app.route("/update_score", methods=["POST"])
+def update_player_score():
+    data = request.get_json()
+    points = data.get("points")
+
+    player_id = session['player_id']
+
+    cursor = yhteys.cursor()
+    cursor.execute("SELECT lifetime_score FROM players WHERE id = %s", (player_id,))
+    current_score = cursor.fetchone()[0]
+
+    new_score = current_score + points
+
+    # update database
+    cursor.execute("UPDATE players SET lifetime_score = %s WHERE id = %s", (new_score, player_id))
+    yhteys.commit()
+    cursor.close()
+
+    # check if new achievement is unlocked
+    achievement_unlocked = False
+    achievement_number = 0
+    if current_score // 100 < new_score // 100 and new_score <= 500:
+        achievement_unlocked = True
+        achievement_number = new_score // 100
+
+    return jsonify({
+        "success": True,
+        "new_score": new_score,
+        "achievement_unlocked": achievement_unlocked,
+        "achievement_number": achievement_number
+    })
 
 
 if __name__ == "__main__":
