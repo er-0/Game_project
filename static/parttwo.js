@@ -25,7 +25,7 @@ export async function start() {
   points = 0;
   mathScoreDiv.innerText = 'Pisteitä: 0';
   await loadQuestions();
-  console.log(q, 'start q');
+  console.log('start loaded questions:', q.length);
   showQuestion();
 }
 
@@ -60,7 +60,6 @@ async function loadQuestions() {
   const response = await fetch('/part_two/questions');
   q = await response.json();
   console.log(q, 'loadQuestions');
-  showQuestion();
 }
 
 function startTimer(seconds) {
@@ -81,6 +80,7 @@ function startTimer(seconds) {
       setTimeout(() => {
         questionIndex++;
         if (questionIndex >= q.length) {
+            clearInterval(timerId);
           endGame();
           return;
         }
@@ -92,6 +92,12 @@ function startTimer(seconds) {
 }
 
 function showQuestion() {
+    if (questionIndex >= q.length) {
+        clearInterval(timerId);
+        endGame();
+        return;
+    }
+
   let currentQ = q[questionIndex];
   mathQuestionDiv.innerText = `${currentQ.question}`;
   input.focus();
