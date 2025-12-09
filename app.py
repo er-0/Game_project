@@ -32,7 +32,8 @@ def login_page():
 
         for user_information in users_information:
             (airport_ident, airport_name, latitude_deg, longitude_deg, airport_continent,
-             airport_municipality, airport_country, player_id, games_played, last_game) = user_information
+             airport_municipality, airport_country, player_id, games_played, last_game, lifetime_score) = (
+                user_information)
 
         session['airport_ident'] = airport_ident
         session['airport_name'] = airport_name
@@ -44,6 +45,7 @@ def login_page():
         session['player_id'] = player_id
         session['games_played'] = games_played
         session['last_game'] = last_game
+        session['lifetime_score'] = lifetime_score
 
         # Get 20 random airports
         random_airports_list = random_airports(airport_country)
@@ -184,6 +186,11 @@ def newgame():
     else:
         return jsonify({"success": False, "message": "Failed to create new game"})
 
+@app.route("/firstgame_finished")
+def first_game_finished():
+    if session['games_played'] > 0:
+        return {"first_game": False}
+
 
 # Start the first minigame: CAPITALS
 @app.route("/part_one/questions", methods=["GET"])
@@ -230,8 +237,8 @@ def save_level():
 
 @app.route("/scoreboard", methods=["GET"])
 def get_scoreboard():
-    highscorers = get_highscorers()
-    return jsonify(highscorers)
+    scoreboard = get_highscorers()
+    return jsonify(scoreboard)
 
 
 if __name__ == "__main__":

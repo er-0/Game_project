@@ -1,3 +1,5 @@
+'use strict';
+
 export function showPopup(id) {
   document.getElementById(id).classList.add('show');
 }
@@ -6,12 +8,16 @@ export function closePopup(id) {
   document.getElementById(id).classList.remove('show');
 }
 
-
 export async function openMinigame(number) {
   try {
     const module = await import(`/static/part${number}.js`);
-    module.start();
-    document.getElementById(`intro-${number}`).classList.add('hidden')
+    if (window.gameroute === true) {
+      module.start();
+    } else {
+      //if the openMinigame function is called from the practise buttons
+      module.start(false);
+    }
+    document.getElementById(`intro-${number}`).classList.add('hidden');
   } catch (err) {
     console.error(`Failed to load minigame: ${number}`, err);
   }
@@ -23,25 +29,28 @@ window.closePopup = closePopup;
 window.showPopup = showPopup;
 
 document.addEventListener('DOMContentLoaded', () => {
-  const startBtn = document.getElementById('startButton');
-  const mathBtn = document.getElementById('mathButton');
-  const wordgameBtn = document.getElementById('wordgameButton');
-  const homePage = document.getElementById('homePage');
-  if (startBtn) {
-    startBtn.addEventListener('click', () => {
-      showPopup('popup1');
-    });
-  }
-  if (mathBtn) {
-    mathBtn.addEventListener('click', () => {
-      showPopup('popup2');
-    });
-  }
-  if (wordgameBtn) {
-    wordgameBtn.addEventListener('click', () => {
-      showPopup('popup3');
-    });
-  }
-},
+      const startBtn = document.getElementById('startButton');
+      const mathBtn = document.getElementById('mathButton');
+      const wordgameBtn = document.getElementById('wordgameButton');
+      const homePage = document.getElementById('homePage');
+      if (startBtn) {
+        startBtn.addEventListener('click', () => {
+          window.gameroute = false
+          showPopup('popup1');
+        });
+      }
+      if (mathBtn) {
+        mathBtn.addEventListener('click', () => {
+          window.gameroute = false
+          showPopup('popup2');
+        });
+      }
+      if (wordgameBtn) {
+        wordgameBtn.addEventListener('click', () => {
+          window.gameroute = false
+          showPopup('popup3');
+        });
+      }
+    },
 )
-  ;
+;

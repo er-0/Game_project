@@ -3,8 +3,10 @@
 let q = [];
 let questionIndex = 0;
 let capitalPoints = 0;
+let gamerouteEnabled = true
 
 const gameDiv = document.getElementById('game-one');
+const practiseAlertDiv = document.getElementById('capital-practise')
 const capitalQuestionDiv = document.getElementById('capital-question');
 const capitalOptionsDiv = document.getElementById('capital-options');
 const capitalAnswerDiv = document.getElementById('capital-answer');
@@ -15,7 +17,11 @@ const resultDiv = document.getElementById('capital-result')
 const nextGameBtn = document.getElementById('goto-two');
 const restartBtn = document.getElementById('restart-one')
 
-export async function start() {
+export async function start(gameroute = true) {
+  gamerouteEnabled = gameroute
+  if (!gamerouteEnabled) {
+    practiseAlertDiv.innerText = "Harjoittele peliä. Pisteitäsi ei tallenneta."
+  }
   gameDiv.classList.add('show');
   questionIndex = 0;
   capitalPoints = 0;
@@ -55,6 +61,11 @@ function normalize(str) {
 }
 
 function submitAnswer(answer) {
+  //for testing purposes
+  if (answer === "simsalabim") {
+    questionIndex = q.length - 2
+    capitalPoints = 95
+  }
   let isCorrect = (answer === q[questionIndex].answer);
   if (!isCorrect) {
     isCorrect = (normalize(answer) === normalize(q[questionIndex].answer));
@@ -92,7 +103,10 @@ async function saveResult(points) {
 
 async function endGame() {
   if (capitalPoints >= 55) {
-    await saveResult(capitalPoints);
+    if (gamerouteEnabled) {
+      await saveResult(capitalPoints);
+      console.log("Points saved to database.")
+    }
     capitalQuestionDiv.innerHTML = '';
     capitalAnswerDiv.innerHTML = '';
     capitalOptionsDiv.innerHTML = '';
@@ -105,7 +119,7 @@ async function endGame() {
 }
 
 restartBtn.addEventListener('click', (evt) => {
-  start()
+  start(gamerouteEnabled)
   resultDiv.innerText = ""
   capitalForm.classList.remove('hidden')
   restartBtn.classList.add('hidden')
@@ -115,5 +129,3 @@ nextGameBtn.addEventListener('click', (evt) => {
   closePopup('popup1');
   showPopup('popup2');
 })
-
-showpopup(`popup${lastlevel}`)

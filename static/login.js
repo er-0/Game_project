@@ -1,22 +1,24 @@
 'use strict';
 
+window.gameroute = false
+
 async function loadHighscorers() {
   const response = await fetch('/scoreboard');
-  return await response.json()
+  return await response.json();
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    const highscoreDiv = document.getElementById('highscorers')
-    loadHighscorers().then(highscorers => {
-        const ol = document.createElement('ol');
-        highscorers.forEach(entry => {
-            const li = document.createElement('li');
-            li.innerText = `${entry[0]} ${entry[1]}`;
-            ol.appendChild(li);
-        });
-        highscoreDiv.innerHTML = '';
-        highscoreDiv.appendChild(ol);
+document.addEventListener('DOMContentLoaded', function() {
+  const highscoreDiv = document.getElementById('highscorers');
+  loadHighscorers().then(highscorers => {
+    const ol = document.createElement('ol');
+    highscorers.forEach(entry => {
+      const li = document.createElement('li');
+      li.innerText = `${entry[0]} ${entry[1]}`;
+      ol.appendChild(li);
     });
+    highscoreDiv.innerHTML = '';
+    highscoreDiv.appendChild(ol);
+  });
 });
 
 const map = L.map('map').setView([60.223876, 24.758061], 5);
@@ -25,197 +27,196 @@ const map = L.map('map').setView([60.223876, 24.758061], 5);
 const loginForm = document.getElementById('loginForm');
 const loginMessage = document.getElementById('loginMessage');
 
-loginForm.addEventListener('submit', async function (evt) {
-    evt.preventDefault();
-    const username = document.getElementById('loginUsername').value;
+loginForm.addEventListener('submit', async function(evt) {
+  evt.preventDefault();
+  const username = document.getElementById('loginUsername').value;
 
-    const response = await fetch('/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: username }),
+  const response = await fetch('/login', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({username: username}),
+  });
+
+  const result = await response.json();
+
+  // Working with the results
+
+  if (result.success === true) {
+
+    const loginFormSection = document.getElementById('loginFormSection');
+    loginFormSection.classList.add('hidden');
+
+    // loginMessage.innerText = `${result.message}
+    // Your name: ${result.username},
+    // Your airport: ${result.airport_name},
+    // Airport ident: ${result.airport_ident}`;
+    console.log(result.random_airports);
+    console.log(result);
+
+    // Actions with the map
+
+    const greenMarker = L.ExtraMarkers.icon({
+      icon: 'fa-home',
+      markerColor: 'green',
+      shape: 'star',
+      prefix: 'fa',
     });
 
-    const result = await response.json();
+    if (result.last_ident) {
 
-    // Working with the results
+      const redMarker = L.ExtraMarkers.icon({
+        icon: 'fa-home',
+        markerColor: 'red',
+        shape: 'star',
+        prefix: 'fa',
+      });
 
-    if (result.success === true) {
+      const lastCoordinates = [
+        result.last_latitude_deg,
+        result.last_longitude_deg];
 
-        const loginFormSection = document.getElementById('loginFormSection');
-        loginFormSection.classList.add('hidden');
-
-        // loginMessage.innerText = `${result.message}
-        // Your name: ${result.username},
-        // Your airport: ${result.airport_name},
-        // Airport ident: ${result.airport_ident}`;
-        console.log(result.random_airports)
-        console.log(result)
-
-        // Actions with the map
-
-        const greenMarker = L.ExtraMarkers.icon({
-            icon: 'fa-home',
-            markerColor: 'green',
-            shape: 'star',
-            prefix: 'fa'
-        });
-
-        if (result.last_ident) {
-
-            const redMarker = L.ExtraMarkers.icon({
-                icon: 'fa-home',
-                markerColor: 'red',
-                shape: 'star',
-                prefix: 'fa'
-            });
-
-            const lastCoordinates = [result.last_latitude_deg, result.last_longitude_deg];
-
-            L.marker(lastCoordinates, { icon: redMarker }).addTo(map)
-                .bindPopup(`<div class="home_airport_pop">Last airport
+      L.marker(lastCoordinates, {icon: redMarker}).addTo(map).bindPopup(`<div class="home_airport_pop">Last airport
                     <form class="load-game-form">
                             <input type="hidden" value="${result.last_game}" name="startGameIdent">
                             <input type="submit" value="Continue game">
                         </form>
-                    </div>`)
-                .openPopup();
-        }
+                    </div>`).openPopup();
+    }
 
-        // Print 20 raandom airports
-        result.random_airports.forEach((airport, index) => {
+    // Print 20 raandom airports
+    result.random_airports.forEach((airport, index) => {
 
-            const airportCoordinates = [airport.latitude_deg, airport.longitude_deg];
+      const airportCoordinates = [airport.latitude_deg, airport.longitude_deg];
 
-            L.marker(airportCoordinates).addTo(map)
-                .bindPopup(`Airport: ${airport.name} (${airport.ident})
+      L.marker(airportCoordinates).
+          addTo(map).
+          bindPopup(`Airport: ${airport.name} (${airport.ident})
                     <div>
                         <form class="start-game-form">
                             <input type="hidden" value="${airport.ident}" name="startGameIdent">
                             <input type="submit" value="Start a new game">
                         </form>
-                    </div>`)
-                .openPopup();
-        });
+                    </div>`).
+          openPopup();
+    });
 
-        // Popup for the home airport
+    // Popup for the home airport
 
-        const homeCoordinates = [result.latitude_deg, result.longitude_deg];
+    const homeCoordinates = [result.latitude_deg, result.longitude_deg];
 
-        L.marker(homeCoordinates, { icon: greenMarker }).addTo(map)
-            .bindPopup(`<div class="home_airport_pop">Home airport</div>`)
-            .openPopup();
+    L.marker(homeCoordinates, {icon: greenMarker}).
+        addTo(map).
+        bindPopup(`<div class="home_airport_pop">Home airport</div>`).
+        openPopup();
 
-        closePopup('popup-login')
-    }
-    else {
-        console.log(result.message);
-    }
+    closePopup('popup-login');
+  } else {
+    console.log(result.message);
+  }
 });
 
 // actions with registration form
 const registrationForm = document.getElementById('registerForm');
 const registerMessage = document.getElementById('registerMessage');
 
-registrationForm.addEventListener('submit', async function (evt) {
-    evt.preventDefault();
+registrationForm.addEventListener('submit', async function(evt) {
+  evt.preventDefault();
 
-    const username = document.getElementById('registerUsername').value;
+  const username = document.getElementById('registerUsername').value;
 
-    const response = await fetch('/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: username }),
+  const response = await fetch('/register', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({username: username}),
+  });
+
+  const result = await response.json();
+
+  // Working with the results
+
+  if (result.success === true) {
+    // registerMessage.innerText = `${result.message}
+    // Your name: ${result.username},
+    // Your airport: ${result.airport_name},
+    // Airport ident: ${result.airport_ident}`;
+
+    const loginFormSection = document.getElementById('loginFormSection');
+    loginFormSection.classList.add('hidden');
+
+    console.log(result.random_airports);
+
+    // Actions with the map
+
+    const greenMarker = L.ExtraMarkers.icon({
+      icon: 'fa-home',
+      markerColor: 'green',
+      shape: 'star',
+      prefix: 'fa',
     });
 
-    const result = await response.json();
+    // Print 20 raandom airports
+    result.random_airports.forEach((airport, index) => {
 
-    // Working with the results
+      const airportCoordinates = [airport.latitude_deg, airport.longitude_deg];
 
-    if (result.success === true) {
-        // registerMessage.innerText = `${result.message}
-        // Your name: ${result.username},
-        // Your airport: ${result.airport_name},
-        // Airport ident: ${result.airport_ident}`;
-
-        const loginFormSection = document.getElementById('loginFormSection');
-        loginFormSection.classList.add('hidden');
-
-        console.log(result.random_airports)
-
-        // Actions with the map
-
-        const greenMarker = L.ExtraMarkers.icon({
-            icon: 'fa-home',
-            markerColor: 'green',
-            shape: 'star',
-            prefix: 'fa'
-        });
-
-        // Print 20 raandom airports
-        result.random_airports.forEach((airport, index) => {
-
-            const airportCoordinates = [airport.latitude_deg, airport.longitude_deg];
-
-            L.marker(airportCoordinates).addTo(map)
-                .bindPopup(`Airport: ${airport.name} (${airport.ident})
+      L.marker(airportCoordinates).
+          addTo(map).
+          bindPopup(`Airport: ${airport.name} (${airport.ident})
                     <div>
                         <form class="start-game-form">
                             <input type="hidden" value="${airport.ident}" name="startGameIdent">
                             <input type="submit" value="Start a new game">
                         </form>
-                    </div>`)
-                .openPopup();
-        });
+                    </div>`).
+          openPopup();
+    });
 
-        // Popup for the home airport
+    // Popup for the home airport
 
-        const homeCoordinates = [result.latitude_deg, result.longitude_deg];
+    const homeCoordinates = [result.latitude_deg, result.longitude_deg];
 
-        L.marker(homeCoordinates, { icon: greenMarker }).addTo(map)
-            .bindPopup(`<div class="home_airport_pop">Home airport</div>`)
-            .openPopup();
+    L.marker(homeCoordinates, {icon: greenMarker}).
+        addTo(map).
+        bindPopup(`<div class="home_airport_pop">Home airport</div>`).
+        openPopup();
 
-        closePopup('popup-login')
-    }
-    else {
-        // registerMessage.innerText = `${result.message}`;
-        console.log(result.message);
-    }
+    closePopup('popup-login');
+  } else {
+    // registerMessage.innerText = `${result.message}`;
+    console.log(result.message);
+  }
 });
 
 // To start a new game
 
-document.addEventListener('submit', async function (event) {
+document.addEventListener('submit', async function(event) {
 
-    if (event.target.classList.contains('start-game-form')) {
-        event.preventDefault();
+  if (event.target.classList.contains('start-game-form')) {
+    event.preventDefault();
 
-        const airportIdent = document.querySelector('input[name=startGameIdent]').value;
+    const airportIdent = document.querySelector(
+        'input[name=startGameIdent]').value;
 
-        const response = await fetch('/newgame', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ airport: airportIdent }),
-        });
+    const response = await fetch('/newgame', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({airport: airportIdent}),
+    });
 
-        const result = await response.json();
+    const result = await response.json();
 
-        if (result.success === true) {
+    if (result.success === true) {
 
-            // If new game is created, we are ready to start part one
+      const popup1 = document.getElementById('popup1');
+      popup1.classList.add('show');
+      window.gameroute = true
 
-            const popup1 = document.getElementById('popup1');
-            popup1.classList.add('show');
-
-            const homePage = document.getElementById('homePage');
-            homePage.classList.add('hidden');
-
-        } else {
-            console.log(result.message);
-        }
+    } else {
+      console.log(result.message);
     }
+  }
 });
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 5
+  maxZoom: 5,
 }).addTo(map);

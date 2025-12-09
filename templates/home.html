@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
     <link rel="stylesheet" href="static/css/style.css">
-    <script type="module" src="/static/popups.js"></script>
     <!--  <script src="../static/partone.js" defer></script>
     <script src="../static/parttwo.js" defer></script> -->
     <!-- <script src="../static/partthree.js" defer></script> -->
@@ -15,6 +14,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="/static/login.js" defer></script>
+    <script type="module" src="/static/popups.js"></script>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-extra-markers/1.2.0/css/leaflet.extra-markers.min.css">
     <script
@@ -54,9 +54,12 @@
         </article>
         <article class="games">
             <h2>Aloita peli</h2>
-            <button id="startButton" class="game-btn">Aloita uusi peli</button>
+            <div id="main-intro">Aloita peli valitsemalla kartasta, minne haluat lentää.</div>
+            <div id="practise-buttons" class="hidden">
+            <button id="startButton" class="game-btn">Pääkaupungit</button>
             <button id="mathButton" class="game-btn">Matikka</button>
             <button id="wordgameButton" class="game-btn">Sanapeli</button>
+            </div>
         </article>
     </section>
     <section class="secondSection">
@@ -134,6 +137,7 @@
         <section class="wrapper" id="part-one">
             <div class="game-container" id="game-one">
                 <h2>Arvaa maan pääkaupunki</h2>
+                <div id="capital-practise"></div>
                 <div id="capital-question"></div>
                 <div id="capital-options"></div>
                 <div id="capital-answer">
@@ -156,19 +160,13 @@
 <div id="popup2" class="popup-overlay">
     <div class="popup-content">
         <div class="intro-container" id="intro-two">
-<<<<<<< Updated upstream
             <p>Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! Voit saada lisää polttoainetta ratkaisemalla tämän laskupelin.</p>
             <p>Tässä minipelissä ratkaiset yksinkertaisia päässälaskuja. Pelissä on aikaraja, pidä kiirettä!</p>
-=======
-            <p>Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! Voit saada lisää polttoainetta
-                ratkaisemalla tämän laskupelin.</p>
-            <p>Tässä minipelissä ratkaiset yksinkertaisia päässälaskuja, ja pääset jatkamaan lentoa turvallisesti kun
-                saat vähintään 55 pistettä tästä minipelistä. Pelissä on aikaraja, pidä kiirettä!</p>
->>>>>>> Stashed changes
             <button onclick="openMinigame('two')">Aloita</button>
         </div>
         <section class="wrapper" id="part-two">
             <div class="game-container" id="game-two">
+                <div id="math-practise"></div>
                 <div id="math-question"></div>
                 <div id="math-options"></div>
                 <div id="math-answer">
@@ -192,12 +190,7 @@
 <div id="popup3" class="popup-overlay">
     <div class="popup-content">
         <div class="intro-container" id="intro-three">
-<<<<<<< Updated upstream
             <p>Olet melkein perillä. Jäljellä on vielä onnistunut lasku. Laskeutuaksesi turvallisesti pelaa tämä peli läpi.</p>
-=======
-            <p>Olet melkein perillä määränpäässäsi. Jäljellä on vielä onnistunut lasku. Laskeutuaksesi turvallisesti
-                pelaa tämä peli läpi.</p>
->>>>>>> Stashed changes
             <p>Muodosta suomenkielisiä sanoja arvotuista kirjaimista. Sadalla pisteellä voittaa pelin!</p>
             <p>Sanan tule olla vähintään kaksi kirjainta pitkä. Saat käyttää samaa kirjainta monta kertaa. <br>Tarvittaessa
                 paina enter ja sinulle arvotaan uudet kirjaimet.</p>
@@ -205,6 +198,7 @@
         </div>
         <section class="wrapper" id="part-three">
             <div class="game-container" id="game-three">
+                <div id="word-practise"></div>
                 <div id="word-options"></div>
                 <div id="word-answer">
                     <form action="" id="word-form">

@@ -44,7 +44,8 @@ def web_register_user(name):
 # get player information
 def player_information(name):
     sql = (f"SELECT a.ident, a.name, a.latitude_deg, a.longitude_deg, a.continent, a.municipality, a.country_name, "
-           f"p.id, p.games_played, p.last_game FROM game_airports AS a INNER JOIN players AS p ON p.starting_airport "
+           f"p.id, p.games_played, p.last_game, p.lifetime_score FROM game_airports AS a INNER JOIN players AS p ON "
+           f"p.starting_airport "
            f"= a.ident where p.user_name = %s;")
     kursori = yhteys.cursor()
     kursori.execute(sql, (name,))
