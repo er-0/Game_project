@@ -5,19 +5,21 @@ let questionIndex = 0;
 let points = 0;
 let timeLeft = 60;
 let timerId = null;
-let level = 1;
+let level;
 
 const timerDiv = document.getElementById('MathTimer');
 const MathStartBtn = document.getElementById('MathStart');
 const MathQuestionDiv = document.getElementById('MathQuestion');
-const MathAnswerDiv = document.getElementById('Mathanswer');
+const MathAnswerDiv = document.getElementById('MathAnswer');
 const mathForm = document.getElementById('mathForm');
 const MathScoreDiv = document.getElementById('MathScore');
+const levelBoundaries = [10, 15, 17];
+
 
 function getTimeForLevel(level) {
-    if (level === 1) return 15;
+    if (level === 1) return 5;
     if (level === 2) return 10;
-    if (level === 3) return 5;
+    if (level === 3) return 15;
     return 60;
 }
 
@@ -32,9 +34,20 @@ function showQuestion() {
         return;
     }
 
+    level = getLevel(questionIndex);
+     console.log('questionIndex:', questionIndex, 'level:', level);
+    if (!level) {
+        endGame();
+        return;
+    }
+
+
     const currentQ = q[questionIndex];
-    MathQuestionDiv.innerText = currentQ.question;
+    MathQuestionDiv.innerText = `Level ${level}: ${currentQ.question}`;
     MathAnswerDiv.innerText = '';
+
+    clearInterval(timerId);
+        startTimer(getTimeForLevel(level));
 }
 
 mathForm.addEventListener('submit', function(evt) {
@@ -57,18 +70,32 @@ mathForm.addEventListener('submit', function(evt) {
     showQuestion();
 });
 
+function getLevel(questionIndex) {
+    if (questionIndex < Math.min(levelBoundaries[0])) return 1;
+    else if (questionIndex < Math.min(levelBoundaries[1])) return 2;
+    else if (questionIndex < Math.min(levelBoundaries[2])) return 3;
+    else return null;
+}
+
 function startTimer(seconds) {
-    timeLeft = seconds;
+    let timeLeft = seconds;
     timerDiv.innerText = `Aikaa: ${timeLeft}`;
 
-    if (timerId) clearInterval(timerId);
-
+   clearInterval(timerId);
     timerId = setInterval(() => {
         timeLeft--;
         timerDiv.innerText = `Aikaa: ${timeLeft}`;
+
         if (timeLeft <= 0) {
             clearInterval(timerId);
-            endGame();
+
+            MathAnswerDiv.innerText = `Aika loppui! Oikea vastaus: ${q[questionIndex].answer}`;
+
+            setTimeout(() => {
+                questionIndex++;
+                mathForm.reset();
+                showQuestion();
+            }, 1000);
         }
     }, 1000);
 }
@@ -78,6 +105,7 @@ function endGame() {
     MathQuestionDiv.innerHTML = 'Peli loppui!';
     MathAnswerDiv.innerHTML = '';
     mathForm.style.display = 'none';
+    MathResultDiv.innerText = `Sait ${points} pistettä!`;
     saveResult(points);
 }
 
@@ -102,7 +130,6 @@ async function startMathGame() {
     MathScoreDiv.innerText = 'Pisteitä: 0';
     mathForm.style.display = 'block';
     showQuestion();
-    startTimer(getTimeForLevel(level) * q.length);
 }
 
 MathStartBtn.addEventListener('click', startMathGame);
