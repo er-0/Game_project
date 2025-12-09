@@ -16,7 +16,7 @@ app.secret_key = secrets.token_hex(16)
 def home():
     return render_template("home.html")
 
-
+ 
 # Login form actions
 
 @app.route("/login", methods=["POST"])
@@ -167,7 +167,7 @@ def register():
     else:
         return jsonify({"success": False, "message": "Username already exists"})
 
-
+# To start a new game
 @app.route("/newgame", methods=["POST"])
 def newgame():
     data = request.get_json()
@@ -184,7 +184,20 @@ def newgame():
     else:
         return jsonify({"success": False, "message": "Failed to create new game"})
 
+@app.route("/loadgame", methods=["POST"])
+def loadgame():
+    data = request.get_json()
+    last_game_id = data.get("last_game_id")
 
+    if last_game_id:
+
+        session['game_id'] = last_game_id
+
+        return jsonify({"success": True,
+                        "game_id": session['game_id']})
+    else:
+        return jsonify({"success": False, "message": "Failed to load game"})
+    
 # Start the first minigame: CAPITALS
 @app.route("/part_one/questions", methods=["GET"])
 def start_part_one():
@@ -224,7 +237,7 @@ def save_level():
     print(points, session["game_id"], "from approute")
     is_successful = update_score(points, session["game_id"])
 
-    #update_last_game(session["game_id"], session["player_id"])
+    update_last_game(session["game_id"], session["player_id"])
 
     return jsonify({"success": is_successful})
 

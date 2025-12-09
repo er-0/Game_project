@@ -63,8 +63,9 @@ loginForm.addEventListener('submit', async function (evt) {
             L.marker(lastCoordinates, { icon: redMarker }).addTo(map)
                 .bindPopup(`<div class="home_airport_pop">Last airport
                     <form class="load-game-form">
-                            <input type="hidden" value="${result.last_game}" name="startGameIdent">
-                            <input type="submit" value="Continue game">
+                            <input type="hidden" value="${result.last_game}" name="loadGameId">
+                            <input type="hidden" value="${result.last_level_reached}" name="lastLevelReached">
+                            <input type="submit" value="load game">
                         </form>
                     </div>`)
                 .openPopup();
@@ -172,7 +173,7 @@ registrationForm.addEventListener('submit', async function (evt) {
     }
 });
 
-// To start a new game
+// To start a new game or to load an old games
 
 document.addEventListener('submit', async function (event) {
 
@@ -196,8 +197,40 @@ document.addEventListener('submit', async function (event) {
             const popup1 = document.getElementById('popup1');
             popup1.classList.add('show');
 
-            const homePage = document.getElementById('homePage');
-            homePage.classList.add('hidden');
+        } else {
+            console.log(result.message);
+        }
+
+    } else if (event.target.classList.contains('load-game-form')) {
+        event.preventDefault();
+
+        const last_game_id = document.querySelector('input[name=loadGameId]').value;
+        const last_level_reached = document.querySelector('input[name=lastLevelReached]').value;
+
+
+
+        const response = await fetch('/loadgame', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ last_game_id: last_game_id }),
+        });
+
+        const result = await response.json();
+
+        if (result.success === true) {
+
+            // If new game is created, we are ready to start part one
+
+            if (last_level_reached === "1") {
+
+                console.log(last_level_reached)
+
+                showPopup("popup2");
+
+            } else if (last_level_reached === "2") {
+
+                showPopup("popup3");
+            }
 
         } else {
             console.log(result.message);
