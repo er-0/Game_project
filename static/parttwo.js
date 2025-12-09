@@ -38,7 +38,8 @@ function submitAnswer(answer) {
   clearInterval(timerId);
   questionIndex += 1;
   showQuestion();
-  if (questionIndex + 1 === q.length) {
+    console.log(q.length, 'length', questionIndex + 1, 'qindex')
+  if (questionIndex === q.length) {
     endGame();
   }
 }
