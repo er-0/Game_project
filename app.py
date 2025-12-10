@@ -3,7 +3,7 @@ import secrets
 import os
 
 from loginfunctions import web_register_user, web_check_user_exists, player_information, random_airports, \
-    start_new_game, last_game_information, update_last_game, get_highscorers
+    start_new_game, last_game_information, update_last_game, get_highscorers, delete_last_game
 from capitals_game import generate_capitals_questions, update_score
 from count_game import generate_math_questions
 
@@ -52,12 +52,15 @@ def login_page():
 
         airports_data = []
         for airport in random_airports_list:
-            ident, name, lat, lon = airport
+            ident, name, lat, lon, iso_country, municipality, country_name = airport
             airports_data.append({
                 'ident': ident,
                 'name': name,
                 'latitude_deg': lat,
-                'longitude_deg': lon
+                'longitude_deg': lon,
+                'iso_country': iso_country,
+                'municipality': municipality,
+                'country_name': country_name
             })
 
         # Base response dictionary
@@ -169,22 +172,53 @@ def register():
     else:
         return jsonify({"success": False, "message": "Username already exists"})
 
-
+# To start new game
 @app.route("/newgame", methods=["POST"])
 def newgame():
     data = request.get_json()
     airport = data.get("airport")
 
-    game_id = start_new_game(session['player_id'], airport)
+    start_new_game_info = start_new_game(session['player_id'], airport)
+
+    print(start_new_game_info)
+
+    game_id, start_time = start_new_game_info
+
+    start_time = str(start_time)
 
     if game_id:
 
         session['game_id'] = game_id
 
         return jsonify({"success": True,
-                        "game_id": game_id})
+                        "game_id": game_id,
+                        "start_time": start_time})
     else:
         return jsonify({"success": False, "message": "Failed to create new game"})
+    
+# To load last game 
+@app.route("/loadgame", methods=["POST"])
+def loadgame():
+    data = request.get_json()
+    last_game_id = data.get("last_game_id")
+
+    if last_game_id:
+
+        session['game_id'] = last_game_id
+
+        return jsonify({"success": True,
+                        "game_id": session['game_id']})
+    else:
+        return jsonify({"success": False, "message": "Failed to load game"})
+    
+# To delte last game id from the players table after user completes the game
+@app.route("/delete_last_game_id", methods=["POST"])
+def delete_last_game_id():
+    if 'player_id' in session:
+        delete_last_game(session['player_id'])
+        return jsonify({"success": True, "message": "Last game id deleted"})
+    else:
+        return jsonify({"success": False, "message": "No player in session"})
 
 @app.route("/firstgame_finished")
 def first_game_finished():
@@ -231,7 +265,7 @@ def save_level():
     print(points, session["game_id"], "from approute")
     is_successful = update_score(points, session["game_id"])
 
-    #update_last_game(session["game_id"], session["player_id"])
+    update_last_game(session["game_id"], session["player_id"])
 
     return jsonify({"success": is_successful})
 

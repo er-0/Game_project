@@ -57,7 +57,7 @@ def player_information(name):
 
 def random_airports(country):
 
-    sql = f"SELECT ident, name, latitude_deg, longitude_deg FROM game_airports WHERE country_name != %s ORDER BY RAND() LIMIT 20;"
+    sql = f"SELECT ident, name, latitude_deg, longitude_deg, iso_country, municipality, country_name FROM game_airports WHERE country_name != %s ORDER BY RAND() LIMIT 20;"
     kursori = yhteys.cursor()
     kursori.execute(sql, (country,))
     random_airports = kursori.fetchall()
@@ -66,14 +66,17 @@ def random_airports(country):
 
 # start new game
 def start_new_game(player_id, goal_ident):
-
-    sql = f"INSERT INTO games (player_id, goal_airport) VALUES (%s, %s) RETURNING game_id;"
     kursori = yhteys.cursor()
+    sql = " INSERT INTO games (player_id, goal_airport, start_time) VALUES (%s, %s, CURTIME())"
     kursori.execute(sql, (player_id, goal_ident))
-    game_id = kursori.fetchone()[0]
     yhteys.commit()
 
-    return game_id
+    game_id = kursori.lastrowid
+
+    kursori.execute("SELECT start_time FROM games WHERE game_id = %s", (game_id,))
+    start_time = kursori.fetchone()[0]
+
+    return game_id, start_time 
 
 # get information about the old game
 def last_game_information(id):
@@ -102,3 +105,21 @@ def get_highscorers():
     highscorers = kursori.fetchall()
 
     return highscorers
+
+def delete_last_game(id):
+    sql = "UPDATE players SET last_game = 0 WHERE id = %s;"
+    kursori = yhteys.cursor()
+    kursori.execute(sql, (id,))
+    yhteys.commit()
+    
+    return True
+
+# To get information about the destination airport
+
+# def game_information(id):
+#     sql = (f"SELECT a.ident, a.municipality, a.country_name, g.goal_airport from games as g LEFT JOIN game_airports AS a ON g.goal_airport = a.ident WHERE g.game_id = %s;")
+#     kursori = yhteys.cursor()
+#     kursori.execute(sql, (id,))
+#     information = kursori.fetchall()
+
+#     return information
