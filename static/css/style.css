@@ -316,7 +316,7 @@ footer {
     display: none;
     justify-content: center;
     align-items: center;
-    background-color: rgb(216, 224, 228);
+    background-color: rgb(250, 242, 229);
     z-index: 9999 !important; /* ABOVE Leaflet */
 }
 
