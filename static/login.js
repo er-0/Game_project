@@ -114,7 +114,7 @@ loginForm.addEventListener('submit', async function (evt) {
                             <input type="hidden" value="${airport.iso_country}" name="startGameIsoCountry">
                             <input type="hidden" value="${airport.municipality}" name="startGameMunicipality">
                             <input type="hidden" value="${airport.country_name}" name="startGameCountryName">
-                            <input type="submit" value="Start a new game">
+                            <input type="submit" value="Aloita uusi lento" style="background-color: #669bbc; margin-top: 1rem; width: 100%;" >
                         </form>
                     </div>`).
         openPopup();
@@ -125,7 +125,7 @@ loginForm.addEventListener('submit', async function (evt) {
     const homeCoordinates = [result.latitude_deg, result.longitude_deg];
 
     L.marker(homeCoordinates, { icon: greenMarker }).addTo(markers).
-      bindPopup(`<div class="home_airport_pop">Home airport</div>`).
+      bindPopup(`<div class="home_airport_pop">Kotikenttä</div>`).
       openPopup();
 
     closePopup('popup-login');
@@ -199,7 +199,7 @@ registrationForm.addEventListener('submit', async function (evt) {
     const homeCoordinates = [result.latitude_deg, result.longitude_deg];
 
     L.marker(homeCoordinates, { icon: greenMarker }).addTo(markers).
-      bindPopup(`<div class="home_airport_pop">Home airport</div>`).
+      bindPopup(`<div class="home_airport_pop">Kotikenttä</div>`).
       openPopup();
 
     closePopup('popup-login');
