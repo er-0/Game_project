@@ -29,7 +29,7 @@
 <div class="article">
     <section class="firstSection">
         <article class="table">
-            <h2><img src="../static/achievements/departure.png" width="50px" height="45"> Departures</h2>
+            <h2><img src="../static/achievements/departure.png" style="padding-right: 1rem; width: 3rem;"> Departures</h2>
             <table>
                 <thead>
                 <tr>
@@ -55,6 +55,18 @@
         <article class="games">
             <h2>Aloita peli</h2>
             <div id="main-intro">Aloita peli valitsemalla kartasta, minne haluat lentää.</div>
+            <div id="just-a-backround">
+            <div id="map-markers">
+                <img src="../static/achievements/home-airport.png">
+                <img src="../static/achievements/destination-option.png">
+                <img src="../static/achievements/last-airport.png">
+            </div>
+            <div id="map-info">
+                <p>Lähtölentokenttä</p>
+                <p>Kenttä, jonne voi lentää</p>
+                <p>Edellinen lentokenttä</p>
+            </div>
+            </div>
             <div id="practise-buttons" class="hidden">
                 <button id="startButton" class="game-btn">Pääkaupungit</button>
                 <button id="mathButton" class="game-btn">Matikka</button>
@@ -66,13 +78,8 @@
         <div id="map">
         </div>
         <article class="scores">
-            <div class="personal">
-                <h3>Sinun pisteesi</h3>
-                <p>Tulokset...</p>
-            </div>
-
-            <h3>Pelaajat - Top 5</h3>
-            <div class="players" id="highscorers">
+            <h3>kaikki pelaajat - Top 5</h3>
+            <div class="players" id="highscorers" style="font-size: 1.5rem">
             </div>
         </article>
     </section>
@@ -104,6 +111,7 @@
     </section>
 
 </div>
+
 
 <footer>
     <p>Ryhmä 5</p>
