@@ -145,11 +145,15 @@ async function deleteLastGame() {
 
 finishBtn.addEventListener('click', () => {
   if (window.gameroute) {
-    saveResult(points);
+    try {
+      saveResult(points)
+    } catch (err) {
+      console.log(err)
+    }
+
     deleteLastGame()
     console.log('Game saved.');
     practiseBtns.classList.remove('hidden');
   }
-  deleteLastGame()
   closePopup('popup3');
 });
