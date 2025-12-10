@@ -78,7 +78,8 @@ def login_page():
             "player_id": player_id,
             "games_played": games_played,
             "last_game": last_game,
-            "random_airports": airports_data
+            "random_airports": airports_data,
+            "lifetime_score": lifetime_score
         }
 
         # Add last game info if available

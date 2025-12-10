@@ -1,13 +1,24 @@
 'use strict';
 
-window.gameroute = false
+window.gameroute = false;
 
 async function loadHighscorers() {
   const response = await fetch('/scoreboard');
   return await response.json();
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+function showAchievements(lifetime_score) {
+  console.log(lifetime_score, 'toimii')
+  for (let i = 1; i <= 5; i++) {
+    if (lifetime_score / 100 >= i) {
+      const rewardImg = document.getElementById(`reward${i}`);
+      console.log(rewardImg, 'hei')
+      rewardImg.src = `/static/achievements/achievement${i}.jpeg`;
+    }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
   const highscoreDiv = document.getElementById('highscorers');
   loadHighscorers().then(highscorers => {
     const ol = document.createElement('ol');
@@ -27,14 +38,14 @@ const map = L.map('map').setView([60.223876, 24.758061], 5);
 const loginForm = document.getElementById('loginForm');
 const loginMessage = document.getElementById('loginMessage');
 
-loginForm.addEventListener('submit', async function (evt) {
+loginForm.addEventListener('submit', async function(evt) {
   evt.preventDefault();
   const username = document.getElementById('loginUsername').value;
 
   const response = await fetch('/login', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username: username }),
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({username: username}),
   });
 
   const result = await response.json();
@@ -75,25 +86,25 @@ loginForm.addEventListener('submit', async function (evt) {
         result.last_latitude_deg,
         result.last_longitude_deg];
 
-      L.marker(lastCoordinates, { icon: redMarker }).addTo(map)
-        .bindPopup(`<div class="home_airport_pop">Last airport
+      L.marker(lastCoordinates, {icon: redMarker}).addTo(map).bindPopup(`<div class="home_airport_pop">Last airport
                     <form class="load-game-form">
                             <input type="hidden" value="${result.last_game}" name="loadGameId">
                             <input type="hidden" value="${result.last_level_reached}" name="lastLevelReached">
                             <input type="submit" value="load game">
                         </form>
-                    </div>`)
-        .openPopup();
+                    </div>`).openPopup();
     }
 
     // Print 20 raandom airports
     result.random_airports.forEach((airport, index) => {
 
-      const airportCoordinates = [airport.latitude_deg, airport.longitude_deg];
+      const airportCoordinates = [
+        airport.latitude_deg,
+        airport.longitude_deg];
 
       L.marker(airportCoordinates).
-        addTo(map).
-        bindPopup(`Airport: ${airport.name} (${airport.ident})
+          addTo(map).
+          bindPopup(`Airport: ${airport.name} (${airport.ident})
                     <div>
                         <form class="start-game-form">
                             <input type="hidden" value="${airport.ident}" name="startGameIdent">
@@ -103,19 +114,21 @@ loginForm.addEventListener('submit', async function (evt) {
                             <input type="submit" value="Start a new game">
                         </form>
                     </div>`).
-        openPopup();
+          openPopup();
     });
 
     // Popup for the home airport
 
     const homeCoordinates = [result.latitude_deg, result.longitude_deg];
 
-    L.marker(homeCoordinates, { icon: greenMarker }).
-      addTo(map).
-      bindPopup(`<div class="home_airport_pop">Home airport</div>`).
-      openPopup();
+    L.marker(homeCoordinates, {icon: greenMarker}).
+        addTo(map).
+        bindPopup(`<div class="home_airport_pop">Home airport</div>`).
+        openPopup();
 
     closePopup('popup-login');
+
+    showAchievements(result.lifetime_score);
   } else {
     console.log(result.message);
   }
@@ -125,15 +138,15 @@ loginForm.addEventListener('submit', async function (evt) {
 const registrationForm = document.getElementById('registerForm');
 const registerMessage = document.getElementById('registerMessage');
 
-registrationForm.addEventListener('submit', async function (evt) {
+registrationForm.addEventListener('submit', async function(evt) {
   evt.preventDefault();
 
   const username = document.getElementById('registerUsername').value;
 
   const response = await fetch('/register', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username: username }),
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({username: username}),
   });
 
   const result = await response.json();
@@ -163,11 +176,13 @@ registrationForm.addEventListener('submit', async function (evt) {
     // Print 20 raandom airports
     result.random_airports.forEach((airport, index) => {
 
-      const airportCoordinates = [airport.latitude_deg, airport.longitude_deg];
+      const airportCoordinates = [
+        airport.latitude_deg,
+        airport.longitude_deg];
 
       L.marker(airportCoordinates).
-        addTo(map).
-        bindPopup(`Airport: ${airport.name} (${airport.ident})
+          addTo(map).
+          bindPopup(`Airport: ${airport.name} (${airport.ident})
                     <div>
                         <form class="start-game-form">
                             <input type="hidden" value="${airport.ident}" name="startGameIdent">
@@ -177,17 +192,17 @@ registrationForm.addEventListener('submit', async function (evt) {
                             <input type="submit" value="Start a new game">
                         </form>
                     </div>`).
-        openPopup();
+          openPopup();
     });
 
     // Popup for the home airport
 
     const homeCoordinates = [result.latitude_deg, result.longitude_deg];
 
-    L.marker(homeCoordinates, { icon: greenMarker }).
-      addTo(map).
-      bindPopup(`<div class="home_airport_pop">Home airport</div>`).
-      openPopup();
+    L.marker(homeCoordinates, {icon: greenMarker}).
+        addTo(map).
+        bindPopup(`<div class="home_airport_pop">Home airport</div>`).
+        openPopup();
 
     closePopup('popup-login');
   } else {
@@ -206,9 +221,7 @@ async function addRowToTable(time, destination, remark) {
     tbody.removeChild(currentRows[0]);
   }
 
-
   const newRow = document.createElement('tr');
-
 
   const timeCell = document.createElement('td');
   timeCell.textContent = time;
@@ -226,23 +239,26 @@ async function addRowToTable(time, destination, remark) {
   tbody.appendChild(newRow);
 }
 
-
 // To start a new game
 
-document.addEventListener('submit', async function (event) {
+document.addEventListener('submit', async function(event) {
 
   if (event.target.classList.contains('start-game-form')) {
     event.preventDefault();
 
-    const airportIdent = document.querySelector('input[name=startGameIdent]').value;
-    const startGameIsoCountry = document.querySelector('input[name=startGameIsoCountry]').value;
-    const startGameMunicipality = document.querySelector('input[name=startGameMunicipality]').value;
-    const startGameCountryName = document.querySelector('input[name=startGameCountryName]').value;
+    const airportIdent = document.querySelector(
+        'input[name=startGameIdent]').value;
+    const startGameIsoCountry = document.querySelector(
+        'input[name=startGameIsoCountry]').value;
+    const startGameMunicipality = document.querySelector(
+        'input[name=startGameMunicipality]').value;
+    const startGameCountryName = document.querySelector(
+        'input[name=startGameCountryName]').value;
 
     const response = await fetch('/newgame', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ airport: airportIdent }),
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({airport: airportIdent}),
     });
 
     const result = await response.json();
@@ -251,9 +267,9 @@ document.addEventListener('submit', async function (event) {
 
       const popup1 = document.getElementById('popup1');
       popup1.classList.add('show');
-      window.gameroute = true
+      window.gameroute = true;
 
-      const remark = "hello";
+      const remark = 'hello';
 
       addRowToTable(result.start_time, startGameMunicipality, remark);
 
@@ -263,15 +279,15 @@ document.addEventListener('submit', async function (event) {
   } else if (event.target.classList.contains('load-game-form')) {
     event.preventDefault();
 
-    const last_game_id = document.querySelector('input[name=loadGameId]').value;
-    const last_level_reached = document.querySelector('input[name=lastLevelReached]').value;
-
-
+    const last_game_id = document.querySelector(
+        'input[name=loadGameId]').value;
+    const last_level_reached = document.querySelector(
+        'input[name=lastLevelReached]').value;
 
     const response = await fetch('/loadgame', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ last_game_id: last_game_id }),
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({last_game_id: last_game_id}),
     });
 
     const result = await response.json();
@@ -280,15 +296,15 @@ document.addEventListener('submit', async function (event) {
 
       // If new game is created, we are ready to start part one
 
-      if (last_level_reached === "1") {
+      if (last_level_reached === '1') {
 
-        console.log(last_level_reached)
+        console.log(last_level_reached);
 
-        showPopup("popup2");
+        showPopup('popup2');
 
-      } else if (last_level_reached === "2") {
+      } else if (last_level_reached === '2') {
 
-        showPopup("popup3");
+        showPopup('popup3');
       }
 
     } else {

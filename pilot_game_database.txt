@@ -20,6 +20,8 @@ CREATE TABLE games (game_id INT PRIMARY KEY AUTO_INCREMENT, player_id INT(11) NO
  
 ALTER TABLE games ADD CONSTRAINT player_id FOREIGN KEY (player_id) REFERENCES players(id);
 
+ALTER TABLE games ADD COLUMN start_time TIME;
+
 CREATE TABLE capital_game (id INT PRIMARY KEY AUTO_INCREMENT, question VARCHAR(256) NOT NULL,
  answer VARCHAR(100) NOT NULL, points INT(11) DEFAULT 0, level INT(11) DEFAULT 0);
  
