@@ -132,16 +132,6 @@ async function saveResult(points) {
   console.log(res, 'saveResult');
 }
 
-async function saveEndResult(points) {
-  const response = await fetch('/saveEndResult', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({points: points}),
-  });
-  const res = await response.json();
-  console.log(res, 'saveEndResult');
-}
-
 async function deleteLastGame() {
   const response = await fetch('/delete_last_game_id', {
     method: 'POST',
@@ -156,7 +146,7 @@ async function deleteLastGame() {
 finishBtn.addEventListener('click', async () => {
   if (window.gameroute) {
     try {
-      await saveEndResult(points);
+      await saveResult(points);
       console.log('saved...');
 
       await deleteLastGame();

@@ -276,20 +276,6 @@ def save_level():
 
     return jsonify({"success": is_successful})
 
-@app.route("/saveEndResult", methods=["POST"])
-def save_game():
-    data = request.get_json()
-    points = data.get("points")
-
-    print(points, session["game_id"], "from save_game")
-    is_successful = update_score(points, session["game_id"])
-    print(is_successful, 'is_successful')
-
-    update = update_last_game(session["game_id"], session["player_id"])
-    print(update, 'update')
-
-    return jsonify({"success": is_successful})
-
 @app.route("/scoreboard", methods=["GET"])
 def get_scoreboard():
     scoreboard = get_highscorers()
