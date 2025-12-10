@@ -30,8 +30,8 @@ export async function start(gameroute) {
 
 function randomLetters() {
   return [...'abcdefghijklmnoprstuvyöä'].sort(() => Math.random() - 0.5).
-      slice(0, 8).
-      join('');
+    slice(0, 8).
+    join('');
 }
 
 function checkLetters(word) {
@@ -47,8 +47,8 @@ function checkLetters(word) {
 async function checkWord(word) {
   const response = await fetch('/part_three/check_word', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({word: word}),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ word: word }),
   });
   const res = await response.json();
   return res.valid;
@@ -65,9 +65,9 @@ async function verify(word) {
   const validInDictionary = await checkWord(word);
 
   if (!validInDictionary) {
-    return {valid: false, message: 'Sana ei ole sanakirjassa.'};
+    return { valid: false, message: 'Sana ei ole sanakirjassa.' };
   } else {
-    return {valid: true, message: 'Oikein!'};
+    return { valid: true, message: 'Oikein!' };
   }
 }
 
@@ -109,7 +109,7 @@ function showQuestion() {
   optionsDiv.innerText = letters;
 }
 
-form.addEventListener('submit', async function(evt) {
+form.addEventListener('submit', async function (evt) {
   evt.preventDefault();  // <--- this stops the page reload
 
   const answer = document.querySelector('input[id=word-input]').value;
@@ -120,8 +120,8 @@ form.addEventListener('submit', async function(evt) {
 async function saveResult(points) {
   const response = await fetch('/saveResult', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({points: points}),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ points: points }),
   });
   const res = await response.json();
   console.log(res, 'saveResult');
@@ -153,6 +153,9 @@ finishBtn.addEventListener('click', async () => {
       await deleteLastGame();
       console.log('deleted...');
       await saveEndResult()
+
+      markers.clearLayers();
+
       console.log('Game saved.');
       practiseBtns.classList.remove('hidden');
     } catch (error) {
@@ -160,4 +163,4 @@ finishBtn.addEventListener('click', async () => {
     }
   }
   closePopup('popup3');
-}, {once: true});
+}, { once: true });
