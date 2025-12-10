@@ -3,7 +3,7 @@ import secrets
 import os
 
 from loginfunctions import web_register_user, web_check_user_exists, player_information, random_airports, \
-    start_new_game, last_game_information, update_last_game, get_highscorers, delete_last_game
+    start_new_game, last_game_information, update_last_game, get_highscorers, delete_last_game, add_game_score_to_lifetime
 from capitals_game import generate_capitals_questions, update_score
 from count_game import generate_math_questions
 
@@ -275,6 +275,19 @@ def save_level():
     update_last_game(session["game_id"], session["player_id"])
 
     return jsonify({"success": is_successful})
+
+@app.route("/saveEndResult", methods=["POST"])
+def save_end_result():
+    player_id = session.get("player_id")
+    game_id = session.get("game_id")
+
+    if not player_id or not game_id:
+        return jsonify({"success": False, "error": "Missing session IDs"}), 400
+
+    success = add_game_score_to_lifetime(player_id, game_id)
+
+    return jsonify({"success": success})
+
 
 @app.route("/scoreboard", methods=["GET"])
 def get_scoreboard():

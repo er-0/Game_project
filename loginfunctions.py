@@ -114,6 +114,24 @@ def delete_last_game(id):
     
     return True
 
+def add_game_score_to_lifetime(player_id, game_id):
+    sql = (f"SELECT score FROM games WHERE game_id = %s;")
+    cursor = yhteys.cursor()
+    cursor.execute(sql, (game_id,))
+    row = cursor.fetchone()
+    if not row:
+        print(f"Game {game_id} not found.")
+        return False
+
+    score = row[0]
+
+    # Update player's lifetime_score and games_played
+    sql = "UPDATE players SET lifetime_score = lifetime_score + %s, games_played = games_played + 1 WHERE id = %s"
+    cursor.execute(sql, (score, player_id))
+    connection.commit()
+    print(f"Added {score} points to player {player_id}'s lifetime_score.")
+    return True
+
 # To get information about the destination airport
 
 # def game_information(id):

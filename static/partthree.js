@@ -143,6 +143,12 @@ async function deleteLastGame() {
   console.log(result);
 }
 
+async function saveEndResult() {
+  const response = await fetch("/saveEndResult", { method: "POST" })
+  const res = await response.json();
+  console.log(res, 'saveEndResult');
+}
+
 finishBtn.addEventListener('click', async () => {
   if (window.gameroute) {
     try {
@@ -151,6 +157,7 @@ finishBtn.addEventListener('click', async () => {
 
       await deleteLastGame();
       console.log('deleted...');
+      await saveEndResult()
       console.log('Game saved.');
       practiseBtns.classList.remove('hidden');
     } catch (error) {
