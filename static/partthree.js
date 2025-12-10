@@ -22,7 +22,7 @@ function reset() {
   scoreDiv.innerText = 'Pisteitä: 0';
 }
 
-export async function start(gameroute){
+export async function start(gameroute) {
   if (!gameroute) {
     practiseAlertDiv.innerText = 'Harjoittele peliä. Pisteitäsi ei tallenneta.';
   }
@@ -146,10 +146,10 @@ async function deleteLastGame() {
 finishBtn.addEventListener('click', () => {
   if (window.gameroute) {
     saveResult(points);
+    deleteLastGame()
     console.log('Game saved.');
     practiseBtns.classList.remove('hidden');
   }
-  reset()
   deleteLastGame()
   closePopup('popup3');
 });

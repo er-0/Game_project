@@ -128,8 +128,9 @@ def register():
         users_information = player_information(username)
 
         for user_information in users_information:
-            (airport_ident, airport_name, latitude_deg, longitude_deg, airport_continent, airport_municipality,
-             airport_country, player_id, games_played, last_game) = user_information
+            (airport_ident, airport_name, latitude_deg, longitude_deg, airport_continent,
+             airport_municipality, airport_country, player_id, games_played, last_game, lifetime_score) = (
+                user_information)
 
         session['airport_ident'] = airport_ident
         session['airport_name'] = airport_name
@@ -141,6 +142,7 @@ def register():
         session['player_id'] = player_id
         session['games_played'] = games_played
         session['last_game'] = last_game
+        session['lifetime_score'] = lifetime_score
 
         # Get 20 random airports
 
@@ -148,12 +150,15 @@ def register():
 
         airports_data = []
         for airport in random_airports_list:
-            ident, name, lat, lon = airport
+            ident, name, lat, lon, iso_country, municipality, country_name = airport
             airports_data.append({
                 'ident': ident,
                 'name': name,
                 'latitude_deg': lat,
-                'longitude_deg': lon
+                'longitude_deg': lon,
+                'iso_country': iso_country,
+                'municipality': municipality,
+                'country_name': country_name
             })
 
         return jsonify({"success": True,
@@ -190,6 +195,7 @@ def newgame():
     if game_id:
 
         session['game_id'] = game_id
+        session['last_game'] = game_id
 
         return jsonify({"success": True,
                         "game_id": game_id,
@@ -274,6 +280,73 @@ def save_level():
 def get_scoreboard():
     scoreboard = get_highscorers()
     return jsonify(scoreboard)
+
+# To fetch data once again to reload map after we return to the main dashboard
+@app.route("/reload_map", methods=["POST"])
+def reload_map():
+
+    print(session["airport_country"], session["player_id"], session["last_game"])
+
+
+    random_airports_list = random_airports(session["airport_country"])
+
+    airports_data = []
+    for airport in random_airports_list:
+        ident, name, lat, lon, iso_country, municipality, country_name = airport
+        airports_data.append({
+            'ident': ident,
+            'name': name,
+            'latitude_deg': lat,
+            'longitude_deg': lon,
+            'iso_country': iso_country,
+            'municipality': municipality,
+            'country_name': country_name
+        })
+
+    response_data = {
+        "success": True,
+        "message": "Load success",
+        "airport_ident": session["airport_ident"],
+        "airport_name": session["airport_name"],
+        "latitude_deg": session["latitude_deg"],
+        "longitude_deg": session["longitude_deg"],
+        "airport_continent": session["airport_continent"],
+        "airport_municipality": session["airport_municipality"],
+        "airport_country": session["airport_country"],
+        "player_id": session["player_id"],
+        "games_played": session["games_played"],
+        "last_game": session["last_game"],
+        "random_airports": airports_data
+    }
+
+    if session['last_game'] != 0:
+        last_game_info = last_game_information(session['last_game'])
+
+        if last_game_info:
+            for last_game_data in last_game_info:
+                (last_ident, last_name, last_latitude_deg, last_longitude_deg,
+                 last_continent, last_municipality, last_country, last_goal_airport,
+                 last_kilometers_traveled, last_score, last_level_reached) = last_game_data
+
+                response_data.update({
+                    "last_ident": last_ident,
+                    "last_name": last_name,
+                    "last_latitude_deg": last_latitude_deg,
+                    "last_longitude_deg": last_longitude_deg,
+                    "last_continent": last_continent,
+                    "last_municipality": last_municipality,
+                    "last_country": last_country,
+                    "last_goal_airport": last_goal_airport,
+                    "last_kilometers_traveled": last_kilometers_traveled,
+                    "last_score": last_score,
+                    "last_level_reached": last_level_reached
+                })
+                break
+
+        return jsonify(response_data)
+    else:
+        return jsonify({"success": False, "message": "User not found"})
+    
 
 
 if __name__ == "__main__":
