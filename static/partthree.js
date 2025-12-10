@@ -32,8 +32,8 @@ export async function start(gameroute){
 
 function randomLetters() {
   return [...'abcdefghijklmnoprstuvyöä'].sort(() => Math.random() - 0.5).
-      slice(0, 8).
-      join('');
+    slice(0, 8).
+    join('');
 }
 
 function checkLetters(word) {
@@ -49,8 +49,8 @@ function checkLetters(word) {
 async function checkWord(word) {
   const response = await fetch('/part_three/check_word', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({word: word}),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ word: word }),
   });
   const res = await response.json();
   console.log(res, 'checkWord');
@@ -68,9 +68,9 @@ async function verify(word) {
   const validInDictionary = await checkWord(word);
 
   if (!validInDictionary) {
-    return {valid: false, message: 'Sana ei ole sanakirjassa.'};
+    return { valid: false, message: 'Sana ei ole sanakirjassa.' };
   } else {
-    return {valid: true, message: 'Oikein!'};
+    return { valid: true, message: 'Oikein!' };
   }
 }
 
@@ -114,7 +114,7 @@ function showQuestion() {
   optionsDiv.innerText = letters;
 }
 
-form.addEventListener('submit', async function(evt) {
+form.addEventListener('submit', async function (evt) {
   evt.preventDefault();  // <--- this stops the page reload
 
   const answer = document.querySelector('input[id=word-input]').value;
@@ -125,11 +125,22 @@ form.addEventListener('submit', async function(evt) {
 async function saveResult(points) {
   const response = await fetch('/saveResult', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({points: points}),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ points: points }),
   });
   const res = await response.json();
   console.log(res, 'saveResult');
+}
+
+async function deleteLastGame() {
+  const response = await fetch('/delete_last_game_id', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  const result = await response.json();
+  console.log(result);
 }
 
 finishBtn.addEventListener('click', () => {
@@ -139,5 +150,6 @@ finishBtn.addEventListener('click', () => {
     practiseBtns.classList.remove('hidden');
   }
   reset()
+  deleteLastGame()
   closePopup('popup3');
 });
