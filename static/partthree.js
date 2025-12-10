@@ -16,14 +16,18 @@ const finishBtn = document.getElementById('finish-game');
 const closeBtn = document.getElementById('close-popup3');
 const practiseBtns = document.getElementById('practise-buttons');
 
-export async function start() {
-  if (!window.gameroute) {
-    practiseAlertDiv.innerText = 'Harjoittele peliä. Pisteitäsi ei tallenneta.';
-  }
-  showQuestion();
-  gameDiv.classList.add('show');
+function reset() {
+  resultDiv.innerText = '';
   points = 0;
   scoreDiv.innerText = 'Pisteitä: 0';
+}
+
+export async function start(gameroute) {
+  if (!gameroute) {
+    practiseAlertDiv.innerText = 'Harjoittele peliä. Pisteitäsi ei tallenneta.';
+  }
+  gameDiv.classList.add('show');
+  showQuestion();
 }
 
 function randomLetters() {
@@ -146,5 +150,6 @@ finishBtn.addEventListener('click', () => {
     console.log('Game saved.');
     practiseBtns.classList.remove('hidden');
   }
+  deleteLastGame()
   closePopup('popup3');
 });

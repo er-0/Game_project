@@ -19,18 +19,28 @@ const resultDiv = document.getElementById('math-result');
 const nextGameBtn = document.getElementById('goto-three');
 const restartBtn = document.getElementById('restart-two');
 
-export async function start() {
+function reset() {
   if (!window.gameroute) {
     practiseAlertDiv.innerText = 'Harjoittele peliä. Pisteitäsi ei tallenneta.';
+    nextGameBtn.classList.add('hidden');
   }
-  gameDiv.classList.add('show');
-  mathForm.style.display = 'block';
   questionIndex = 0;
   points = 0;
   mathScoreDiv.innerText = 'Pisteitä: 0';
+  resultDiv.innerText = '';
+  mathForm.classList.remove('hidden');
+  timerDiv.classList.remove('hidden')
+  restartBtn.classList.add('hidden');
+}
+
+export async function start(gameroute) {
+  if (!gameroute) {
+    practiseAlertDiv.innerText = 'Harjoittele peliä. Pisteitäsi ei tallenneta.';
+    nextGameBtn.classList.add('hidden');
+  }
+  gameDiv.classList.add('show');
   await loadQuestions();
   console.log(q, 'start q');
-  showQuestion();
 }
 
 function submitAnswer(answer) {
@@ -45,21 +55,23 @@ function submitAnswer(answer) {
   mathScoreDiv.innerText = 'Pisteitä: ' + points;
   clearInterval(timerId);
   questionIndex += 1;
-  showQuestion();
-  if (questionIndex + 1 === q.length) {
+  if (questionIndex === q.length) {
     endGame();
+    return;
   }
+  showQuestion();
 }
 
 async function endGame() {
+  mathForm.classList.add('hidden');
+  timerDiv.classList.add('hidden')
+  mathQuestionDiv.innerHTML = '';
+  mathOptionsDiv.innerHTML = '';
   if (points >= 55) {
     if (window.gameroute) {
       await saveResult(points);
       console.log('Game saved.');
     }
-    mathQuestionDiv.innerHTML = '';
-    mathAnswerDiv.innerHTML = '';
-    mathOptionsDiv.innerHTML = '';
     nextGameBtn.classList.remove('hidden');
   } else {
     resultDiv.innerText = 'Pisteesi eivät riittäneet. Haluatko yrittää uudelleen?';
@@ -136,13 +148,12 @@ async function saveResult(points) {
 }
 
 restartBtn.addEventListener('click', (evt) => {
+  reset();
   start();
-  resultDiv.innerText = '';
-  mathForm.classList.remove('hidden');
-  restartBtn.classList.add('hidden');
 });
 
 nextGameBtn.addEventListener('click', (evt) => {
+  reset();
   closePopup('popup2');
   showPopup('popup3');
 });

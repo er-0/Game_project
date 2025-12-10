@@ -11,11 +11,8 @@ export function closePopup(id) {
 export async function openMinigame(number) {
   try {
     const module = await import(`/static/part${number}.js`);
-    if (window.gameroute === true) {
-      module.start();
-    } else {
-      //if the openMinigame function is called from the practise buttons
-      module.start(false);
+    if (module.start) {
+      module.start(window.gameroute);
     }
     document.getElementById(`intro-${number}`).classList.add('hidden');
   } catch (err) {
@@ -32,23 +29,25 @@ document.addEventListener('DOMContentLoaded', () => {
       const startBtn = document.getElementById('startButton');
       const mathBtn = document.getElementById('mathButton');
       const wordgameBtn = document.getElementById('wordgameButton');
-      const homePage = document.getElementById('homePage');
       if (startBtn) {
         startBtn.addEventListener('click', () => {
           window.gameroute = false
           showPopup('popup1');
+          openMinigame('one')
         });
       }
       if (mathBtn) {
         mathBtn.addEventListener('click', () => {
           window.gameroute = false
           showPopup('popup2');
+          openMinigame('two')
         });
       }
       if (wordgameBtn) {
         wordgameBtn.addEventListener('click', () => {
           window.gameroute = false
           showPopup('popup3');
+          openMinigame('three')
         });
       }
     },

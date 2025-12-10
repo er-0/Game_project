@@ -5,25 +5,36 @@ let questionIndex = 0;
 let capitalPoints = 0;
 
 const gameDiv = document.getElementById('game-one');
-const practiseAlertDiv = document.getElementById('capital-practise')
+const practiseAlertDiv = document.getElementById('capital-practise');
 const capitalQuestionDiv = document.getElementById('capital-question');
 const capitalOptionsDiv = document.getElementById('capital-options');
 const capitalAnswerDiv = document.getElementById('capital-answer');
 const capitalForm = document.getElementById('capital-form');
 const input = document.getElementById('capital-input');
 const capitalScoreDiv = document.getElementById('capital-score');
-const resultDiv = document.getElementById('capital-result')
+const resultDiv = document.getElementById('capital-result');
 const nextGameBtn = document.getElementById('goto-two');
-const restartBtn = document.getElementById('restart-one')
+const restartBtn = document.getElementById('restart-one');
 
-export async function start() {
-  if (!window.gameroute) {
-    practiseAlertDiv.innerText = "Harjoittele peliä. Pisteitäsi ei tallenneta."
-  }
-  gameDiv.classList.add('show');
+function reset() {
+
   questionIndex = 0;
   capitalPoints = 0;
   capitalScoreDiv.innerText = 'Pisteitä: 0';
+  gameDiv.classList.add('show');
+  resultDiv.innerText = '';
+  restartBtn.classList.add('hidden');
+  capitalQuestionDiv.classList.remove('hidden')
+  capitalForm.classList.remove('hidden');
+  capitalAnswerDiv.classList.remove('hidden');
+}
+
+export async function start(gameroute) {
+  reset();
+  if (!gameroute) {
+    practiseAlertDiv.innerText = 'Harjoittele peliä. Pisteitäsi ei tallenneta.';
+    nextGameBtn.classList.add('hidden');
+  }
   await loadQuestions();
 }
 
@@ -35,12 +46,13 @@ async function loadQuestions() {
 }
 
 function showQuestion(q) {
+  console.log(q, questionIndex);
   let currentQ = q[questionIndex];
   capitalQuestionDiv.innerText = currentQ.question;
   capitalOptionsDiv.innerHTML = '';
   console.log(currentQ.options, 'options');
   if (currentQ.options.length > 0) {
-    capitalForm.classList.add('hidden')
+    capitalForm.classList.add('hidden');
     for (let opt of currentQ.options) {
       const btn = document.createElement('button');
       btn.innerText = opt;
@@ -48,11 +60,11 @@ function showQuestion(q) {
       capitalOptionsDiv.appendChild(btn);
     }
   }
-  input.focus()
+  input.focus();
 }
 
 function normalize(str) {
-  return str.normalize('NFD')                  // split accent marks
+  return str.normalize('NFD')            // split accent marks
       .replace(/[\u0300-\u036f]/g, '')   // no accents
       .replace(/[^a-zA-Z]/g, '')         // only letters
       .toLowerCase();                    // all lowercase
@@ -60,9 +72,9 @@ function normalize(str) {
 
 function submitAnswer(answer) {
   //for testing purposes
-  if (answer === "simsalabim") {
-    questionIndex = q.length - 2
-    capitalPoints = 95
+  if (answer === 'simsalabim') {
+    questionIndex = q.length - 2;
+    capitalPoints = 95;
   }
   let isCorrect = (answer === q[questionIndex].answer);
   if (!isCorrect) {
@@ -103,27 +115,25 @@ async function endGame() {
   if (capitalPoints >= 55) {
     if (window.gameroute) {
       await saveResult(capitalPoints);
-      console.log("Points saved to database.")
+      console.log('Points saved to database.');
+      nextGameBtn.classList.remove('hidden');
     }
-    capitalQuestionDiv.innerHTML = '';
-    capitalAnswerDiv.innerHTML = '';
+    capitalQuestionDiv.classList.add('hidden');
+    capitalAnswerDiv.classList.add('hidden');
     capitalOptionsDiv.innerHTML = '';
-    nextGameBtn.classList.remove('hidden')
-  }
-  else {
-    resultDiv.innerText = "Pisteesi eivät riittäneet. Haluatko yrittää uudelleen?"
-    restartBtn.classList.remove('hidden')
+  } else {
+    resultDiv.innerText = 'Pisteesi eivät riittäneet. Haluatko yrittää uudelleen?';
+    restartBtn.classList.remove('hidden');
   }
 }
 
 restartBtn.addEventListener('click', (evt) => {
-  start()
-  resultDiv.innerText = ""
-  capitalForm.classList.remove('hidden')
-  restartBtn.classList.add('hidden')
-})
+  start();
+});
 
 nextGameBtn.addEventListener('click', (evt) => {
+  restartBtn.classList.remove('hidden');
+  reset();
   closePopup('popup1');
   showPopup('popup2');
-})
+});
