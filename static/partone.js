@@ -41,7 +41,6 @@ export async function start(gameroute) {
 async function loadQuestions() {
   const response = await fetch('/part_one/questions');
   q = await response.json();
-  console.log(q, 'loadQuestions');
   showQuestion(q);
 }
 
@@ -50,7 +49,6 @@ function showQuestion(q) {
   let currentQ = q[questionIndex];
   capitalQuestionDiv.innerText = currentQ.question;
   capitalOptionsDiv.innerHTML = '';
-  console.log(currentQ.options, 'options');
   if (currentQ.options.length > 0) {
     capitalForm.classList.add('hidden');
     for (let opt of currentQ.options) {
@@ -96,7 +94,6 @@ capitalForm.addEventListener('submit', async function(evt) {
   evt.preventDefault();
 
   const answer = document.querySelector('input[id=capital-input]').value;
-  console.log(q[questionIndex], 'questionIndex from form');
   submitAnswer(answer);
   capitalForm.reset();
 });

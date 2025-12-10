@@ -11,7 +11,6 @@ const timerDiv = document.getElementById('MathTimer');
 const gameDiv = document.getElementById('game-two');
 const mathQuestionDiv = document.getElementById('math-question');
 const mathOptionsDiv = document.getElementById('math-options');
-const mathAnswerDiv = document.getElementById('math-answer');
 const mathForm = document.getElementById('math-form');
 const input = document.getElementById('math-input');
 const mathScoreDiv = document.getElementById('math-score');
@@ -40,7 +39,6 @@ export async function start(gameroute) {
   }
   gameDiv.classList.add('show');
   await loadQuestions();
-  console.log(q, 'start q');
 }
 
 function submitAnswer(answer) {
@@ -82,7 +80,6 @@ async function endGame() {
 async function loadQuestions() {
   const response = await fetch('/part_two/questions');
   q = await response.json();
-  console.log(q, 'loadQuestions');
   showQuestion();
 }
 
@@ -128,7 +125,6 @@ mathForm.addEventListener('submit', async function(evt) {
     return;
   }
   const answer = document.querySelector('input[id=math-input]').value;
-  console.log(q[questionIndex], 'questionIndex from form');
   submitAnswer(answer);
   mathForm.reset();
 });

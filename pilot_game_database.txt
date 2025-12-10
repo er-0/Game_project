@@ -261,7 +261,7 @@ VALUES
 ('Mikä on maan Fidži pääkaupunki?','Suva',15,3),
 ('Mikä on maan Pakistan pääkaupunki?','Islamabad',10,2),
 ('Mikä on maan Suriname pääkaupunki?','Paramaribo',15,3),
-('Mikä on maan Dijibouti pääkaupunki?','Djibouti',15,3),
+('Mikä on maan Djibouti pääkaupunki?','Djibouti',15,3),
 ('Mikä on maan Gambia pääkaupunki?','Banjul',15,3),
 ('Mikä on maan Mongolia pääkaupunki?','Ulan Bator',15,3),
 ('Mikä on maan Zimbabwe pääkaupunki?','Harare',10,3),
