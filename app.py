@@ -285,7 +285,7 @@ def get_scoreboard():
 @app.route("/reload_map", methods=["POST"])
 def reload_map():
 
-    print(session["airport_country"], session["player_id"], session["last_game"])
+
 
 
     random_airports_list = random_airports(session["airport_country"])
@@ -321,7 +321,9 @@ def reload_map():
 
     if session['last_game'] != 0:
         last_game_info = last_game_information(session['last_game'])
-
+        print(session["airport_country"])
+        print(session["player_id"])
+        print(session["last_game"])
         if last_game_info:
             for last_game_data in last_game_info:
                 (last_ident, last_name, last_latitude_deg, last_longitude_deg,
