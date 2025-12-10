@@ -24,12 +24,12 @@
 
 <body>
     <header>
-        <h1>Flight Game</h1>
+        <h1>Lentopeli</h1>
     </header>
     <div class="article">
         <section class="firstSection">
             <article class="table">
-                <h2>Departures</h2>
+                <h2> <img src="../static/achievements/departure.png" width="50px" height="45"> Departures</h2>
                 <table>
                     <thead>
                         <tr>
@@ -40,14 +40,14 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>12:00</td>
+                            <td>12:55</td>
                             <td>Tokyo</td>
-                            <td>On time</td>
+                            <td>Boarding</td>
                         </tr>
                         <tr>
-                            <td>13:00</td>
+                            <td>13:15</td>
                             <td>London</td>
-                            <td>On time</td>
+                            <td>Delayed</td>
                         </tr>
                     </tbody>
                 </table>
@@ -80,25 +80,20 @@
         <h2>Saavutukset</h2>
         <div class="rewards">
             <div>
-                <p>First Reward</p>
                <!--<button class="reward-btn">Claim</button> -->
-                <img id="reward1" src="{{ url_for('static', filename='achievements/default.jpg') }}" height="150" width="150"/>
+                <img id="reward1" src="{{ url_for('static', filename='achievements/default.jpg') }}" title="Pelaa lentopeliä avataksesi tämän saavutuksen" height="150" width="150"/>
             </div>
             <div>
-                <p>Second Reward</p>
-                <img id="reward2" src="{{ url_for('static', filename='achievements/default.jpg') }}" height="150" width="150"/>
+                <img id="reward2" src="{{ url_for('static', filename='achievements/default.jpg') }}" title="Pelaa lentopeliä avataksesi tämän saavutuksen" height="150" width="150"/>
             </div>
             <div>
-                <p>Third Reward</p>
-                <img id="reward3" src="{{ url_for('static', filename='achievements/default.jpg') }}" height="150" width="150"/>
+                <img id="reward3" src="{{ url_for('static', filename='achievements/default.jpg') }}" title="Pelaa lentopeliä avataksesi tämän saavutuksen" height="150" width="150"/>
             </div>
             <div>
-                <p>Fourth Reward</p>
-                <img id="reward4" src="{{ url_for('static', filename='achievements/default.jpg') }}" height="150" width="150"/>
+                <img id="reward4" src="{{ url_for('static', filename='achievements/default.jpg') }}" title="Pelaa lentopeliä avataksesi tämän saavutuksen" height="150" width="150"/>
             </div>
             <div>
-                <p>Fifth Reward</p>
-                <img id="reward5" src="{{ url_for('static', filename='achievements/default.jpg') }}" height="150" width="150"/>
+                <img id="reward5" src="{{ url_for('static', filename='achievements/default.jpg') }}" title="Pelaa lentopeliä avataksesi tämän saavutuksen" height="150" width="150"/>
             </div>
         </div>
     </section>
@@ -106,7 +101,7 @@
     </div>
 
     <footer>
-        <p>GROUP 5</p>
+        <p>Ryhmä 5</p>
     </footer>
 
     <!-- game starrt/before capitals -->
