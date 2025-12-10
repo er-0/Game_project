@@ -104,19 +104,32 @@
         <p>Ryhmä 5</p>
     </footer>
 
-    <!-- game starrt/before capitals -->
+    <!-- game start/before capitals -->
     <div id="popup-login" class="popup-overlay show">
-        <section id="loginFormSection">
-            <h1>Welcome</h1>
-            <p>Login</p>
+        <section id="loginFormSection"
+                 style="background-color: #fffdf8;
+                        border-radius: 13px;
+                        padding: 1rem 0 5rem 5rem;
+                        display: grid;
+                        gap: 20px;
+                        border: 3px solid #669bbc;
+                        ">
+            <h1 style="color: #669bbc; margin-top: 1rem; text-align: center; padding-right: 5rem;">Tervetuloa</h1>
+            <p style="margin: 2rem 0 0 0;
+                    font-weight: bold;
+                    color: #669bbc;
+                    ">Kirjaudu sisään</p>
             <form id="loginForm">
-                <input type="text" id="loginUsername" placeholder="Enter your username">
-                <input type="submit" value="Login">
+                <input type="text" id="loginUsername" placeholder="Syötä käyttäjänimi">
+                <input type="submit" value="Kirjaudu sisään" style="margin-top: 10px; background-color: #9acae4;">
             </form>
-            <p>Register as a new player</p>
+            <p style="margin: 3rem 0 0 0;
+                    font-weight: bold;
+                    color: #669bbc;
+                    ">Rekisteröidy</p>
             <form id="registerForm">
-                <input type="text" id="registerUsername" placeholder="Choose a username">
-                <input type="submit" value="Register">
+                <input type="text" id="registerUsername" placeholder="Keksi käyttäjänimi">
+                <input type="submit" value="Rekisteröidy" style="margin-top: 10px; background-color: #9acae4">
             </form>
         </section>
     </div>

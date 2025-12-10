@@ -316,12 +316,13 @@ footer {
     display: none;
     justify-content: center;
     align-items: center;
-    background-color: rgb(216, 224, 228);
+    background-color: rgb(255, 248, 233);
     z-index: 9999 !important; /* ABOVE Leaflet */
 }
 
+
 .popup-content {
-    background: #fffbf3;
+    background: #fdf0d5;
     padding: 2rem;
     border-radius: 6px;
     border-style: solid;
