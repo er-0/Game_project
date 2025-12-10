@@ -1,1 +1,0 @@
-ALTER TABLE players ADD COLUMN lifetime_score INT(11) DEFAULT 0;
