@@ -73,7 +73,7 @@ async function verify(word) {
 
 async function submitAnswer(answer) {
   //for testing purposes
-  if (answer === 'simsalabim') {
+  if (answer === 'debug') {
     points = 95;
   }
   if (answer.length === 0) {

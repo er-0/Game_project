@@ -42,7 +42,7 @@ export async function start(gameroute) {
 }
 
 function submitAnswer(answer) {
-  if (answer === 'simsalabim') {
+  if (answer === 'debug') {
     questionIndex = q.length - 3;
     points = 95;
   }

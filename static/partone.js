@@ -70,8 +70,8 @@ function normalize(str) {
 
 function submitAnswer(answer) {
   //for testing purposes
-  if (answer === 'simsalabim') {
-    questionIndex = q.length - 2;
+  if (answer === 'debug') {
+    questionIndex = q.length - 1;
     capitalPoints = 95;
   }
   let isCorrect = (answer === q[questionIndex].answer);
