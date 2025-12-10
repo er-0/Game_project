@@ -6,11 +6,9 @@ let wordList = [];
 
 const practiseAlertDiv = document.getElementById('word-practise');
 const gameDiv = document.getElementById('game-three');
-const questionDiv = document.getElementById('word-question');
 const optionsDiv = document.getElementById('word-options');
 const resultDiv = document.getElementById('word-result');
 const form = document.getElementById('word-form');
-const input = document.getElementById('word-input');
 const scoreDiv = document.getElementById('word-score');
 const finishBtn = document.getElementById('finish-game');
 const closeBtn = document.getElementById('close-popup3');
@@ -53,7 +51,6 @@ async function checkWord(word) {
     body: JSON.stringify({word: word}),
   });
   const res = await response.json();
-  console.log(res, 'checkWord');
   return res.valid;
 }
 
@@ -83,12 +80,10 @@ async function submitAnswer(answer) {
     showQuestion('reload');
   }
   if (wordList.includes(answer)) {
-    console.log('arvattu jo');
     resultDiv.innerText = `Arvasit jo sanan ${answer}.`;
   }
   if (answer.length > 2 && !wordList.includes(answer)) {
     let result = await verify(answer);
-    console.log(result, 'isTrue');
     resultDiv.innerText = result.message;
     if (result.valid) {
       wordList.push(answer);

@@ -14,6 +14,7 @@ function showAchievements(lifetime_score) {
       const rewardImg = document.getElementById(`reward${i}`);
       console.log(rewardImg, 'hei')
       rewardImg.src = `/static/achievements/achievement${i}.jpeg`;
+      rewardImg.title = '';
     }
   }
 }
