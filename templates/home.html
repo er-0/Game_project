@@ -10,247 +10,249 @@
     <script src="../static/parttwo.js" defer></script> -->
     <!-- <script src="../static/partthree.js" defer></script> -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="/static/login.js" defer></script>
     <script type="module" src="/static/popups.js"></script>
     <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-extra-markers/1.2.0/css/leaflet.extra-markers.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-extra-markers/1.2.0/css/leaflet.extra-markers.min.css">
     <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-extra-markers/1.2.0/js/leaflet.extra-markers.min.js"></script>
+        src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-extra-markers/1.2.0/js/leaflet.extra-markers.min.js"></script>
     <!-- <script defer src="../static/AnimatedMarker.js"></script>  -->
 </head>
 
 <body>
-<header>
-    <h1>Lentopeli</h1>
-</header>
-<div class="article">
-    <section class="firstSection">
-        <article class="table">
-            <h2><img src="../static/achievements/departure.png" style="padding-right: 1rem; width: 3rem;"> Departures</h2>
-            <table>
-                <thead>
-                <tr>
-                    <th>Time</th>
-                    <th>Destination</th>
-                    <th>Remark</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>12:55</td>
-                    <td>Tokyo</td>
-                    <td>Boarding</td>
-                </tr>
-                <tr>
-                    <td>13:15</td>
-                    <td>London</td>
-                    <td>Delayed</td>
-                </tr>
-                </tbody>
-            </table>
-        </article>
-        <article class="games">
-            <h2>Aloita peli</h2>
-            <div id="main-intro">Aloita peli valitsemalla kartasta, minne haluat lentää.</div>
-            <div id="just-a-backround">
-            <div id="map-markers">
-                <img src="../static/achievements/home-airport.png">
-                <img src="../static/achievements/destination-option.png">
-                <img src="../static/achievements/last-airport.png">
+    <header>
+        <h1>Lentopeli</h1>
+    </header>
+    <div class="article">
+        <section class="firstSection">
+            <article class="table">
+                <h2><img src="../static/achievements/departure.png" style="padding-right: 1rem; width: 3rem;">
+                    Departures</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Destination</th>
+                            <th>Remark</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>12:55</td>
+                            <td>Tokyo</td>
+                            <td>Boarding</td>
+                        </tr>
+                        <tr>
+                            <td>13:15</td>
+                            <td>London</td>
+                            <td>Delayed</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </article>
+            <article class="games">
+                <h2>Aloita peli</h2>
+                <div id="main-intro">Aloita peli valitsemalla kartasta, minne haluat lentää.</div>
+                <div id="just-a-backround">
+                    <div id="map-markers">
+                        <img src="../static/achievements/home-airport.png">
+                        <img src="../static/achievements/destination-option.png">
+                        <img src="../static/achievements/last-airport.png">
+                    </div>
+                    <div id="map-info">
+                        <p>Lähtölentokenttä</p>
+                        <p>Kenttä, jonne voi lentää</p>
+                        <p>Edellinen lentokenttä</p>
+                    </div>
+                </div>
+                <div id="practise-buttons" class="hidden">
+                    <button id="startButton" class="game-btn">Pääkaupungit</button>
+                    <button id="mathButton" class="game-btn">Matikka</button>
+                    <button id="wordgameButton" class="game-btn">Sanapeli</button>
+                </div>
+            </article>
+        </section>
+        <section class="secondSection">
+            <div id="map">
             </div>
-            <div id="map-info">
-                <p>Lähtölentokenttä</p>
-                <p>Kenttä, jonne voi lentää</p>
-                <p>Edellinen lentokenttä</p>
+            <article class="scores">
+                <h3>kaikki pelaajat - Top 5</h3>
+                <div class="players" id="highscorers" style="font-size: 1.5rem">
+                </div>
+            </article>
+        </section>
+        <section class="thirdSection">
+            <h2>Saavutukset</h2>
+            <div class="rewards">
+                <div>
+                    <!--<button class="reward-btn">Claim</button> -->
+                    <img id="reward1" src="{{ url_for('static', filename='achievements/default.jpg') }}"
+                        title="Pelaa lentopeliä avataksesi tämän saavutuksen" height="150" width="150" />
+                </div>
+                <div>
+                    <img id="reward2" src="{{ url_for('static', filename='achievements/default.jpg') }}"
+                        title="Pelaa lentopeliä avataksesi tämän saavutuksen" height="150" width="150" />
+                </div>
+                <div>
+                    <img id="reward3" src="{{ url_for('static', filename='achievements/default.jpg') }}"
+                        title="Pelaa lentopeliä avataksesi tämän saavutuksen" height="150" width="150" />
+                </div>
+                <div>
+                    <img id="reward4" src="{{ url_for('static', filename='achievements/default.jpg') }}"
+                        title="Pelaa lentopeliä avataksesi tämän saavutuksen" height="150" width="150" />
+                </div>
+                <div>
+                    <img id="reward5" src="{{ url_for('static', filename='achievements/default.jpg') }}"
+                        title="Pelaa lentopeliä avataksesi tämän saavutuksen" height="150" width="150" />
+                </div>
             </div>
-            </div>
-            <div id="practise-buttons" class="hidden">
-                <button id="startButton" class="game-btn">Pääkaupungit</button>
-                <button id="mathButton" class="game-btn">Matikka</button>
-                <button id="wordgameButton" class="game-btn">Sanapeli</button>
-            </div>
-        </article>
-    </section>
-    <section class="secondSection">
-        <div id="map">
-        </div>
-        <article class="scores">
-            <h3>kaikki pelaajat - Top 5</h3>
-            <div class="players" id="highscorers" style="font-size: 1.5rem">
-            </div>
-        </article>
-    </section>
-    <section class="thirdSection">
-        <h2>Saavutukset</h2>
-        <div class="rewards">
-            <div>
-                <!--<button class="reward-btn">Claim</button> -->
-                <img id="reward1" src="{{ url_for('static', filename='achievements/default.jpg') }}"
-                     title="Pelaa lentopeliä avataksesi tämän saavutuksen" height="150" width="150"/>
-            </div>
-            <div>
-                <img id="reward2" src="{{ url_for('static', filename='achievements/default.jpg') }}"
-                     title="Pelaa lentopeliä avataksesi tämän saavutuksen" height="150" width="150"/>
-            </div>
-            <div>
-                <img id="reward3" src="{{ url_for('static', filename='achievements/default.jpg') }}"
-                     title="Pelaa lentopeliä avataksesi tämän saavutuksen" height="150" width="150"/>
-            </div>
-            <div>
-                <img id="reward4" src="{{ url_for('static', filename='achievements/default.jpg') }}"
-                     title="Pelaa lentopeliä avataksesi tämän saavutuksen" height="150" width="150"/>
-            </div>
-            <div>
-                <img id="reward5" src="{{ url_for('static', filename='achievements/default.jpg') }}"
-                     title="Pelaa lentopeliä avataksesi tämän saavutuksen" height="150" width="150"/>
-            </div>
-        </div>
-    </section>
+        </section>
 
-</div>
+    </div>
 
 
-<footer>
-    <p>Ryhmä 5</p>
-</footer>
+    <footer>
+        <p>Ryhmä 5</p>
+    </footer>
 
-<!-- game starrt/before capitals -->
-<div id="popup-login" class="popup-overlay show">
-    <section id="loginFormSection"
-             style="background-color: #fffdf8;
+    <!-- game starrt/before capitals -->
+    <div id="popup-login" class="popup-overlay show">
+        <section id="loginFormSection" style="background-color: #fffdf8;
                         border-radius: 13px;
                         padding: 1rem 0 5rem 5rem;
                         display: grid;
                         gap: 20px;
                         border: 3px solid #669bbc;
                         ">
-        <h1 style="color: #669bbc; margin-top: 1rem; text-align: center; padding-right: 5rem;">Tervetuloa</h1>
-        <p style="margin: 2rem 0 0 0;
+            <h1 style="color: #669bbc; margin-top: 1rem; text-align: center; padding-right: 5rem;">Tervetuloa</h1>
+            <p style="margin: 2rem 0 0 0;
                     font-weight: bold;
                     color: #669bbc;
                     ">Kirjaudu sisään</p>
-        <form id="loginForm">
-            <input type="text" id="loginUsername" placeholder="Syötä käyttäjänimi">
-            <input type="submit" value="Kirjaudu sisään" style="margin-top: 10px; background-color: #9acae4;">
-        </form>
-        <p style="margin: 3rem 0 0 0;
+            <form id="loginForm">
+                <input type="text" id="loginUsername" placeholder="Syötä käyttäjänimi">
+                <input type="submit" value="Kirjaudu sisään" style="margin-top: 10px; background-color: #9acae4;">
+            </form>
+            <p id="loginMessage"></p>
+            <p style="margin: 3rem 0 0 0;
                     font-weight: bold;
                     color: #669bbc;
                     ">Rekisteröidy</p>
-        <form id="registerForm">
-            <input type="text" id="registerUsername" placeholder="Keksi käyttäjänimi">
-            <input type="submit" value="Rekisteröidy" style="margin-top: 10px; background-color: #9acae4">
-        </form>
-    </section>
-</div>
-
-
-<div id="popup1" class="popup-overlay">
-    <div class="popup-content">
-        <div class="intro-container" id="intro-one">
-            <p>Hei ja tervetuloa!</p>
-            <p>Tämä on kevyt lentosimulaatiopeli, jossa pelaat kolmea minipeliä suorittaaksesi onnistuneen lennon.
-            </p>
-            <p>Tässä minipelissä arvaat maiden pääkaupunkeja.</p>
-            <button onclick="openMinigame('one')">Aloita</button>
-        </div>
-        <section class="wrapper" id="part-one">
-            <div class="game-container" id="game-one">
-                <h2>Arvaa maan pääkaupunki</h2>
-                <div id="capital-practise"></div>
-                <div id="capital-question"></div>
-                <div id="capital-options"></div>
-                <div id="capital-answer">
-                    <form id="capital-form">
-                        <input type="text" id="capital-input" placeholder="Vastauksesi" autocomplete="off"/>
-                        <button type="submit">Arvaa</button>
-                    </form>
-                </div>
-                <div id="capital-score"></div>
-                <div id="capital-result"></div>
-            </div>
+            <form id="registerForm">
+                <input type="text" id="registerUsername" placeholder="Keksi käyttäjänimi">
+                <input type="submit" value="Rekisteröidy" style="margin-top: 10px; background-color: #9acae4">
+            </form>
+            <p id="registerMessage"></p>
         </section>
-        <button class="reload_map" onclick="closePopup('popup1')">Lopeta peli</button>
-        <button id="restart-one" class="hidden">Yritä uudelleen</button>
-        <button id="goto-two" class="hidden">Seuraava peli</button>
     </div>
-</div>
 
-<!-- count game -->
-<div id="popup2" class="popup-overlay">
-    <div class="popup-content">
-        <div class="intro-container" id="intro-two">
-            <p>Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! Voit saada lisää
-                polttoainetta ratkaisemalla tämän laskupelin.</p>
-            <p>Tässä minipelissä ratkaiset yksinkertaisia päässälaskuja. Pelissä on aikaraja, pidä kiirettä!</p>
-            <button onclick="openMinigame('two')">Aloita</button>
-        </div>
-        <section class="wrapper" id="part-two">
-            <div class="game-container" id="game-two">
-                <div id="math-practise"></div>
-                <div id="math-question"></div>
-                <div id="math-options"></div>
-                <div id="math-answer">
-                    <form action="" id="math-form">
-                        <input type="text" id="math-input" placeholder="Vastauksesi" autocomplete="off"/>
-                        <input type="submit">
-                    </form>
-                </div>
-                <div id="math-score"></div>
-                <div id="MathTimer"></div>
-                <div id="math-result"></div>
+
+    <div id="popup1" class="popup-overlay">
+        <div class="popup-content">
+            <div class="intro-container" id="intro-one">
+                <p>Hei ja tervetuloa!</p>
+                <p>Tämä on kevyt lentosimulaatiopeli, jossa pelaat kolmea minipeliä suorittaaksesi onnistuneen lennon.
+                </p>
+                <p>Tässä minipelissä arvaat maiden pääkaupunkeja.</p>
+                <button onclick="openMinigame('one')">Aloita</button>
             </div>
-        </section>
-        <button class="reload_map" onclick="closePopup('popup2')">Lopeta peli</button>
-        <button id="restart-two" class="hidden">Yritä uudelleen</button>
-        <button id="goto-three" class="hidden">Seuraava peli</button>
-    </div>
-</div>
-
-<!-- word game -->
-<div id="popup3" class="popup-overlay">
-    <div class="popup-content">
-        <div class="intro-container" id="intro-three">
-            <p>Olet melkein perillä. Jäljellä on vielä onnistunut lasku. Laskeutuaksesi turvallisesti pelaa tämä
-                peli läpi.</p>
-            <p>Muodosta suomenkielisiä sanoja arvotuista kirjaimista. Sadalla pisteellä voittaa pelin!</p>
-            <p>Sanan tule olla vähintään kaksi kirjainta pitkä. Saat käyttää samaa kirjainta monta kertaa.
-                <br>Tarvittaessa
-                paina enter ja sinulle arvotaan uudet kirjaimet.
-            </p>
-            <button onclick="openMinigame('three')">Aloita</button>
-        </div>
-        <section class="wrapper" id="part-three">
-            <div class="game-container" id="game-three">
-                <div id="word-practise"></div>
-                <div id="word-options"></div>
-                <div id="word-answer">
-                    <form action="" id="word-form">
-                        <input type="text" id="word-input" placeholder="Vastauksesi" autocomplete="off"/>
-                        <input type="submit">
-                    </form>
+            <section class="wrapper" id="part-one">
+                <div class="game-container" id="game-one">
+                    <h2>Arvaa maan pääkaupunki</h2>
+                    <div id="capital-practise"></div>
+                    <div id="capital-question"></div>
+                    <div id="capital-options"></div>
+                    <div id="capital-answer">
+                        <form id="capital-form">
+                            <input type="text" id="capital-input" placeholder="Vastauksesi" autocomplete="off" />
+                            <button type="submit">Arvaa</button>
+                        </form>
+                    </div>
+                    <div id="capital-score"></div>
+                    <div id="capital-result"></div>
                 </div>
-                <div id="word-score"></div>
-                <div id="word-result"></div>
-            </div>
-        </section>
-        <button id="finish-game" class="hidden">Tallenna ja lopeta</button>
-        <button id="close-popup3" onclick="closePopup('popup3')">Lopeta peli</button>
+            </section>
+            <button class="reload_map" onclick="closePopup('popup1')">Lopeta peli</button>
+            <button id="restart-one" class="hidden">Yritä uudelleen</button>
+            <button id="goto-two" class="hidden">Seuraava peli</button>
+        </div>
     </div>
-</div>
 
-<!-- end: wind/lose -->
-<div id="popupEnd" class="popup-overlay">
-    <div class="popup-content">
-        <h2>Peli ohi</h2>
-        <p id="endMessage"></p>
-        <p id="finalScore"></p>
-        <button onclick="closePopup('popupEnd')">Lopeta</button>
+    <!-- count game -->
+    <div id="popup2" class="popup-overlay">
+        <div class="popup-content">
+            <div class="intro-container" id="intro-two">
+                <p>Olet ilmassa matkalla määränpäähäsi. Hätätilanne! Polttoaine on vähissä! Voit saada lisää
+                    polttoainetta ratkaisemalla tämän laskupelin.</p>
+                <p>Tässä minipelissä ratkaiset yksinkertaisia päässälaskuja. Pelissä on aikaraja, pidä kiirettä!</p>
+                <button onclick="openMinigame('two')">Aloita</button>
+            </div>
+            <section class="wrapper" id="part-two">
+                <div class="game-container" id="game-two">
+                    <div id="math-practise"></div>
+                    <div id="math-question"></div>
+                    <div id="math-options"></div>
+                    <div id="math-answer">
+                        <form action="" id="math-form">
+                            <input type="text" id="math-input" placeholder="Vastauksesi" autocomplete="off" />
+                            <input type="submit">
+                        </form>
+                    </div>
+                    <div id="math-score"></div>
+                    <div id="MathTimer"></div>
+                    <div id="math-result"></div>
+                </div>
+            </section>
+            <button class="reload_map" onclick="closePopup('popup2')">Lopeta peli</button>
+            <button id="restart-two" class="hidden">Yritä uudelleen</button>
+            <button id="goto-three" class="hidden">Seuraava peli</button>
+        </div>
     </div>
-</div>
+
+    <!-- word game -->
+    <div id="popup3" class="popup-overlay">
+        <div class="popup-content">
+            <div class="intro-container" id="intro-three">
+                <p>Olet melkein perillä. Jäljellä on vielä onnistunut lasku. Laskeutuaksesi turvallisesti pelaa tämä
+                    peli läpi.</p>
+                <p>Muodosta suomenkielisiä sanoja arvotuista kirjaimista. Sadalla pisteellä voittaa pelin!</p>
+                <p>Sanan tule olla vähintään kaksi kirjainta pitkä. Saat käyttää samaa kirjainta monta kertaa.
+                    <br>Tarvittaessa
+                    paina enter ja sinulle arvotaan uudet kirjaimet.
+                </p>
+                <button onclick="openMinigame('three')">Aloita</button>
+            </div>
+            <section class="wrapper" id="part-three">
+                <div class="game-container" id="game-three">
+                    <div id="word-practise"></div>
+                    <div id="word-options"></div>
+                    <div id="word-answer">
+                        <form action="" id="word-form">
+                            <input type="text" id="word-input" placeholder="Vastauksesi" autocomplete="off" />
+                            <input type="submit">
+                        </form>
+                    </div>
+                    <div id="word-score"></div>
+                    <div id="word-result"></div>
+                </div>
+            </section>
+            <button id="finish-game" class="hidden">Tallenna ja lopeta</button>
+            <button id="close-popup3" onclick="closePopup('popup3')">Lopeta peli</button>
+        </div>
+    </div>
+
+    <!-- end: wind/lose -->
+    <div id="popupEnd" class="popup-overlay">
+        <div class="popup-content">
+            <h2>Peli ohi</h2>
+            <p id="endMessage"></p>
+            <p id="finalScore"></p>
+            <button onclick="closePopup('popupEnd')">Lopeta</button>
+        </div>
+    </div>
 
 
 </body>

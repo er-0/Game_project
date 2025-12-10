@@ -19,7 +19,7 @@ function showAchievements(lifetime_score) {
   }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const highscoreDiv = document.getElementById('highscorers');
   loadHighscorers().then(highscorers => {
     const ol = document.createElement('ol');
@@ -132,6 +132,7 @@ loginForm.addEventListener('submit', async function (evt) {
 
     showAchievements(result.lifetime_score);
   } else {
+    loginMessage.innerText = `${result.message}`;
     console.log(result.message);
   }
 });
@@ -204,7 +205,7 @@ registrationForm.addEventListener('submit', async function (evt) {
 
     closePopup('popup-login');
   } else {
-    // registerMessage.innerText = `${result.message}`;
+    registerMessage.innerText = `${result.message}`;
     console.log(result.message);
   }
 });
