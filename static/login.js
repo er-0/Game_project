@@ -23,6 +23,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 const map = L.map('map').setView([60.223876, 24.758061], 5);
 
+const markers = L.layerGroup().addTo(map);
+
+
 // actions with login form
 const loginForm = document.getElementById('loginForm');
 const loginMessage = document.getElementById('loginMessage');
@@ -75,7 +78,7 @@ loginForm.addEventListener('submit', async function (evt) {
         result.last_latitude_deg,
         result.last_longitude_deg];
 
-      L.marker(lastCoordinates, { icon: redMarker }).addTo(map)
+      L.marker(lastCoordinates, { icon: redMarker }).addTo(markers)
         .bindPopup(`<div class="home_airport_pop">Last airport
                     <form class="load-game-form">
                             <input type="hidden" value="${result.last_game}" name="loadGameId">
@@ -91,8 +94,7 @@ loginForm.addEventListener('submit', async function (evt) {
 
       const airportCoordinates = [airport.latitude_deg, airport.longitude_deg];
 
-      L.marker(airportCoordinates).
-        addTo(map).
+      L.marker(airportCoordinates).addTo(markers).
         bindPopup(`Airport: ${airport.name} (${airport.ident})
                     <div>
                         <form class="start-game-form">
@@ -110,8 +112,7 @@ loginForm.addEventListener('submit', async function (evt) {
 
     const homeCoordinates = [result.latitude_deg, result.longitude_deg];
 
-    L.marker(homeCoordinates, { icon: greenMarker }).
-      addTo(map).
+    L.marker(homeCoordinates, { icon: greenMarker }).addTo(markers).
       bindPopup(`<div class="home_airport_pop">Home airport</div>`).
       openPopup();
 
@@ -165,8 +166,7 @@ registrationForm.addEventListener('submit', async function (evt) {
 
       const airportCoordinates = [airport.latitude_deg, airport.longitude_deg];
 
-      L.marker(airportCoordinates).
-        addTo(map).
+      L.marker(airportCoordinates).addTo(markers).
         bindPopup(`Airport: ${airport.name} (${airport.ident})
                     <div>
                         <form class="start-game-form">
@@ -184,8 +184,7 @@ registrationForm.addEventListener('submit', async function (evt) {
 
     const homeCoordinates = [result.latitude_deg, result.longitude_deg];
 
-    L.marker(homeCoordinates, { icon: greenMarker }).
-      addTo(map).
+    L.marker(homeCoordinates, { icon: greenMarker }).addTo(markers).
       bindPopup(`<div class="home_airport_pop">Home airport</div>`).
       openPopup();
 
@@ -295,6 +294,95 @@ document.addEventListener('submit', async function (event) {
       console.log(result.message);
     }
   }
+});
+
+document.querySelectorAll('.reload_map').forEach(button => {
+  button.addEventListener('click', async function (evt) {
+
+    evt.preventDefault();
+
+    markers.clearLayers();
+
+    const response = await fetch('/reload_map', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const result = await response.json();
+    console.log(result);
+
+    if (result.success === true) {
+
+      // loginMessage.innerText = `${result.message}
+      // Your name: ${result.username},
+      // Your airport: ${result.airport_name},
+      // Airport ident: ${result.airport_ident}`;
+      console.log(result.random_airports);
+      console.log(result);
+
+      // Actions with the map
+
+      const greenMarker = L.ExtraMarkers.icon({
+        icon: 'fa-home',
+        markerColor: 'green',
+        shape: 'star',
+        prefix: 'fa',
+      });
+
+      if (result.last_ident) {
+
+        const redMarker = L.ExtraMarkers.icon({
+          icon: 'fa-home',
+          markerColor: 'red',
+          shape: 'star',
+          prefix: 'fa',
+        });
+
+        const lastCoordinates = [
+          result.last_latitude_deg,
+          result.last_longitude_deg];
+
+        L.marker(lastCoordinates, { icon: redMarker }).addTo(markers)
+          .bindPopup(`<div class="home_airport_pop">Last airport
+                    <form class="load-game-form">
+                            <input type="hidden" value="${result.last_game}" name="loadGameId">
+                            <input type="hidden" value="${result.last_level_reached}" name="lastLevelReached">
+                            <input type="submit" value="load game">
+                        </form>
+                    </div>`)
+          .openPopup();
+      }
+
+      // Print 20 raandom airports
+      result.random_airports.forEach((airport, index) => {
+
+        const airportCoordinates = [airport.latitude_deg, airport.longitude_deg];
+
+        L.marker(airportCoordinates).addTo(markers).
+          bindPopup(`Airport: ${airport.name} (${airport.ident})
+                    <div>
+                        <form class="start-game-form">
+                            <input type="hidden" value="${airport.ident}" name="startGameIdent">
+                            <input type="hidden" value="${airport.iso_country}" name="startGameIsoCountry">
+                            <input type="hidden" value="${airport.municipality}" name="startGameMunicipality">
+                            <input type="hidden" value="${airport.country_name}" name="startGameCountryName">
+                            <input type="submit" value="Start a new game">
+                        </form>
+                    </div>`).
+          openPopup();
+      });
+
+      // Popup for the home airport
+
+      const homeCoordinates = [result.latitude_deg, result.longitude_deg];
+
+      L.marker(homeCoordinates, { icon: greenMarker }).addTo(markers).
+        bindPopup(`<div class="home_airport_pop">Home airport</div>`).
+        openPopup();
+    }
+  });
 });
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
