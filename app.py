@@ -36,8 +36,10 @@ def login_page():
                 user_information)
 
         session['airport_ident'] = airport_ident
+        session['airport_name'] = airport_name
         session['latitude_deg'] = latitude_deg
         session['longitude_deg'] = longitude_deg
+        session['airport_continent'] = airport_continent
         session['airport_municipality'] = airport_municipality
         session['airport_country'] = airport_country
         session['player_id'] = player_id
@@ -67,6 +69,7 @@ def login_page():
             "message": "Login successful",
             "username": username,
             "airport_ident": airport_ident,
+            "airport_name": airport_name,
             "latitude_deg": latitude_deg,
             "longitude_deg": longitude_deg,
             "airport_municipality": airport_municipality,
@@ -93,6 +96,7 @@ def login_page():
                         "last_name": last_name,
                         "last_latitude_deg": last_latitude_deg,
                         "last_longitude_deg": last_longitude_deg,
+                        "last_continent": last_continent,
                         "last_municipality": last_municipality,
                         "last_country": last_country,
                         "last_goal_airport": last_goal_airport,
@@ -128,6 +132,7 @@ def register():
                 user_information)
 
         session['airport_ident'] = airport_ident
+        session['airport_name'] = airport_name
         session['latitude_deg'] = latitude_deg
         session['longitude_deg'] = longitude_deg
         session['airport_municipality'] = airport_municipality
@@ -158,6 +163,7 @@ def register():
                         "message": "Registration successful",
                         "username": username,
                         "airport_ident": airport_ident,
+                        "airport_name": airport_name,
                         "latitude_deg": latitude_deg,
                         "longitude_deg": longitude_deg,
                         "airport_municipality": airport_municipality,
@@ -338,6 +344,7 @@ def reload_map():
                     "last_name": last_name,
                     "last_latitude_deg": last_latitude_deg,
                     "last_longitude_deg": last_longitude_deg,
+                    "last_continent": last_continent,
                     "last_municipality": last_municipality,
                     "last_country": last_country,
                     "last_goal_airport": last_goal_airport,
