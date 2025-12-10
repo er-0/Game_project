@@ -265,7 +265,7 @@ document.addEventListener('submit', async function (event) {
       popup1.classList.add('show');
       window.gameroute = true
 
-      const remark = "hello";
+      const remark = "On time";
 
       addRowToTable(result.start_time, startGameMunicipality, remark);
 
