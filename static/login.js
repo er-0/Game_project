@@ -95,7 +95,7 @@ loginForm.addEventListener('submit', async function (evt) {
                     <form class="load-game-form">
                             <input type="hidden" value="${result.last_game}" name="loadGameId">
                             <input type="hidden" value="${result.last_level_reached}" name="lastLevelReached">
-                            <input type="submit" value="load game">
+                            <input type="submit" value="Jatka peliä" style="background-color: #669bbc; text-align: center; width: auto; margin-top: 5px; cursor: pointer;">
                         </form>
                     </div>`)
         .openPopup();
@@ -114,7 +114,7 @@ loginForm.addEventListener('submit', async function (evt) {
                             <input type="hidden" value="${airport.iso_country}" name="startGameIsoCountry">
                             <input type="hidden" value="${airport.municipality}" name="startGameMunicipality">
                             <input type="hidden" value="${airport.country_name}" name="startGameCountryName">
-                            <input type="submit" value="Aloita uusi lento" style="background-color: #669bbc; margin-top: 1rem; width: 100%;" >
+                            <input type="submit" value="Aloita uusi lento" style="background-color: #669bbc; margin-top: 1rem; width: 100%; cursor: pointer;" >
                         </form>
                     </div>`).
         openPopup();
@@ -189,7 +189,7 @@ registrationForm.addEventListener('submit', async function (evt) {
                             <input type="hidden" value="${airport.iso_country}" name="startGameIsoCountry">
                             <input type="hidden" value="${airport.municipality}" name="startGameMunicipality">
                             <input type="hidden" value="${airport.country_name}" name="startGameCountryName">
-                            <input type="submit" value="Start a new game">
+                            <input type="submit" value="Aloita uusi lento" style="cursor: pointer">
                         </form>
                     </div>`).
         openPopup();
@@ -364,7 +364,7 @@ document.querySelectorAll('.reload_map').forEach(button => {
                     <form class="load-game-form">
                             <input type="hidden" value="${result.last_game}" name="loadGameId">
                             <input type="hidden" value="${result.last_level_reached}" name="lastLevelReached">
-                            <input type="submit" value="load game">
+                            <input type="submit" value="Jatka peliä" style="cursor: pointer">
                         </form>
                     </div>`)
           .openPopup();
@@ -383,7 +383,7 @@ document.querySelectorAll('.reload_map').forEach(button => {
                             <input type="hidden" value="${airport.iso_country}" name="startGameIsoCountry">
                             <input type="hidden" value="${airport.municipality}" name="startGameMunicipality">
                             <input type="hidden" value="${airport.country_name}" name="startGameCountryName">
-                            <input type="submit" value="Start a new game">
+                            <input type="submit" value="Aloita uusi lento" style="cursor: pointer">
                         </form>
                     </div>`).
           openPopup();
