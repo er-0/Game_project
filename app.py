@@ -295,9 +295,6 @@ def get_scoreboard():
 @app.route("/reload_map", methods=["POST"])
 def reload_map():
 
-
-
-
     random_airports_list = random_airports(session["airport_country"])
 
     airports_data = []
