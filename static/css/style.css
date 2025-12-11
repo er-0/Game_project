@@ -353,7 +353,8 @@ h4 {
     display: block;
 }
 
-#word-options {
+#word-options,
+#math-question {
     letter-spacing: 2px;
     text-transform: uppercase;
     font-size: xx-large;
